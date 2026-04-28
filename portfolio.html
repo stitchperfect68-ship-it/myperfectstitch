@@ -220,8 +220,10 @@ nav {
 .pf-gallery.g-1 { grid-template-columns: 1fr; }
 .pf-gallery.g-2 { grid-template-columns: 1fr 1fr; }
 .pf-gallery.g-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+.pf-gallery.g-3 { grid-template-columns: 1fr 1fr 1fr; }
 .pf-gallery.g-main-plus { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
 .pf-gallery.g-main-plus .pf-img-main { grid-column: span 2; }
+.pf-gallery-full { margin-top: 24px; }
 
 .pf-gallery img {
   width: 100%; height: 260px; object-fit: cover; border-radius: 4px;
@@ -273,7 +275,7 @@ nav {
   .pf-stats-strip { gap: 40px; }
 }
 @media (max-width: 600px) {
-  .pf-gallery.g-2, .pf-gallery.g-2x2, .pf-gallery.g-main-plus { grid-template-columns: 1fr; }
+  .pf-gallery.g-2, .pf-gallery.g-2x2, .pf-gallery.g-3, .pf-gallery.g-main-plus { grid-template-columns: 1fr; }
   .pf-gallery.g-main-plus .pf-img-main { grid-column: span 1; }
   .pf-project { padding: 60px 5%; }
   .pf-hero { padding: 130px 5% 60px; }
@@ -357,7 +359,7 @@ nav {
       <img src="assets/extracted/img_01.jpg" alt="My Perfect Stitch Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;"/>
       <div class="nav-logo-text">
         <strong>My Perfect Stitch</strong>
-        <span>Creating Happiness · Lusaka</span>
+        <span>Creating Happiness</span>
       </div>
     </a>
     <ul class="nav-links">
@@ -406,7 +408,7 @@ nav {
   <div class="pf-filter-row" id="subFilterBags" style="display:none;">
     <button class="pf-sub-btn active" onclick="filterClient('all', this)">All Bags</button>
     <button class="pf-sub-btn" onclick="filterClient('stanbic', this)">Stanbic Bank</button>
-    <button class="pf-sub-btn" onclick="filterClient('mof', this)">Ministry of Fisheries</button>
+    <button class="pf-sub-btn" onclick="filterClient('mof', this)">LuSE</button>
     <button class="pf-sub-btn" onclick="filterClient('hobbiton', this)">Hobbiton</button>
     <button class="pf-sub-btn" onclick="filterClient('airtel', this)">Airtel</button>
   </div>
@@ -415,6 +417,13 @@ nav {
     <button class="pf-sub-btn" onclick="filterClient('bongohive', this)">Bongohive</button>
     <button class="pf-sub-btn" onclick="filterClient('hybrid', this)">Hybrid</button>
     <button class="pf-sub-btn" onclick="filterClient('mosi-absa', this)">Mosi-oa-Tunya ABSA</button>
+  </div>
+  <div class="pf-filter-row" id="subFilterFurniture" style="display:none;">
+    <button class="pf-sub-btn active" onclick="filterClient('all', this)">All Furniture</button>
+    <button class="pf-sub-btn" onclick="filterClient('furn-absa', this)">ABSA</button>
+    <button class="pf-sub-btn" onclick="filterClient('latitude15', this)">Latitude15</button>
+    <button class="pf-sub-btn" onclick="filterClient('furn-bongohive', this)">Bongohive</button>
+    <button class="pf-sub-btn" onclick="filterClient('furn-hybrid', this)">Hybrid</button>
   </div>
 </div>
 
@@ -430,10 +439,10 @@ nav {
     <div class="pf-layout layout-wide">
       <div class="pf-gallery g-2 reveal">
         <img src="assets/stanbic1.jpg" alt="Stanbic embroidered laptop bag"/>
-        <img src="assets/stanbic2.jpg" alt="Stanbic embroidered laptop bag detail"/>
+        
       </div>
       <div class="pf-text reveal">
-        <p>#TBT to our embroidered laptop bags for Anakazi Banking.</p>
+        <p>Embroidered laptop bags for Anakazi Banking.</p>
         <p>Embroidery remains one of the strongest branding methods for logos that are bold, simple, and built to stand out.</p>
         <p>The result? A professional finish that carries your identity everywhere your team goes.</p>
         <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Get a Quote</a>
@@ -442,25 +451,24 @@ nav {
   </div>
 </section>
 
-<!-- PROJECT: MINISTRY OF FISHERIES -->
+<!-- PROJECT: LUSE -->
 <section class="pf-project" id="mof" data-category="bags" data-client="mof">
   <div class="pf-project-inner">
     <div class="pf-project-header reveal">
       <div style="width:100%">
-        <div class="pf-client-badge">Government · Corporate Branding</div>
-        <h2 style="margin-top:10px;">Ministry of Fisheries<br/>&amp; <em>Livestock</em></h2>
+        <div class="pf-client-badge">Financial Services · Corporate Branding</div>
+        <h2 style="margin-top:10px;">Lusaka Securities<br/><em>Exchange (LuSE)</em></h2>
       </div>
     </div>
     <div class="pf-layout">
       <div class="pf-text reveal">
-        <p>The Ministry of Fisheries and Livestock has leveled up their corporate branding with custom laptop bags and backpacks from My Perfect Stitch.</p>
-        <p>Get in touch today to learn how My Perfect Stitch can help you tell your story through high-quality, branded bags.</p>
+        <p>The Lusaka Securities Exchange has elevated their corporate identity with custom branded bags from My Perfect Stitch — purpose-built for a professional team at the heart of Zambia's capital markets.</p>
+        <p>Get in touch today to learn how My Perfect Stitch can help your organisation tell its story through high-quality, branded bags.</p>
         <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Start Your Order</a>
       </div>
       <div class="pf-gallery g-main-plus reveal">
-        <img class="pf-img-main" src="assets/mof1.jpg" alt="Ministry of Fisheries branded bag"/>
-        <img src="assets/mof2.jpg" alt="Ministry of Fisheries branded bag"/>
-        <img src="assets/mof3.jpg" alt="Ministry of Fisheries branded bag"/>
+        <img src="assets/mof1.jpeg" alt="LuSE branded bag"/>
+        <img src="assets/mof2.jpeg" alt="LuSE branded bag detail"/>
       </div>
     </div>
   </div>
@@ -591,17 +599,126 @@ nav {
         <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Work With Us</a>
       </div>
     </div>
+    <div class="pf-gallery g-3 pf-gallery-full reveal">
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (1).jpeg" alt="ABSA innovation hub — view 1"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (2).jpeg" alt="ABSA innovation hub — view 2"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (3).jpeg" alt="ABSA innovation hub — view 3"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (4).jpeg" alt="ABSA innovation hub — view 4"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (5).jpeg" alt="ABSA innovation hub — view 5"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (6).jpeg" alt="ABSA innovation hub — view 6"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (7).jpeg" alt="ABSA innovation hub — view 7"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (8).jpeg" alt="ABSA innovation hub — view 8"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation ABSA/mos (9).jpeg" alt="ABSA innovation hub — view 9"/>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — ABSA -->
+<section class="pf-project" id="furn-absa" data-category="furniture" data-client="furn-absa">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Financial Services · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>ABSA</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-main-plus reveal">
+        <img class="pf-img-main" src="assets/portfolio/furniture/absa (1).jpeg" alt="ABSA custom furniture"/>
+        <img src="assets/portfolio/furniture/absa (2).jpeg" alt="ABSA furniture detail"/>
+        <img src="assets/portfolio/furniture/absa (3).jpeg" alt="ABSA furniture finish"/>
+      </div>
+      <div class="pf-text reveal">
+        <p>For ABSA, we designed and delivered bespoke furniture that meets the high standards of a leading African financial institution — combining durability, aesthetics, and brand alignment.</p>
+        <p>Every piece was crafted to complement the professional environment while reflecting ABSA's identity through material choice and finish.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Get a Quote</a>
+      </div>
+    </div>
+    <div class="pf-gallery g-2 pf-gallery-full reveal">
+      <img src="assets/portfolio/furniture/absa (4).jpeg" alt="ABSA furniture — view 4"/>
+      <img src="assets/portfolio/furniture/absa (5).jpeg" alt="ABSA furniture — view 5"/>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — LATITUDE15 -->
+<section class="pf-project" id="latitude15" data-category="furniture" data-client="latitude15">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Tech & Innovation · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>Latitude15</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout">
+      <div class="pf-text reveal">
+        <p>Latitude15 needed furniture that matched the premium and modern feel of their workspace. We delivered custom pieces built to their exact specifications — functional, refined, and built to last.</p>
+        <p>The result is a work environment that reflects the quality and professionalism Latitude15 is known for.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Start Your Project</a>
+      </div>
+      <div class="pf-gallery g-2 reveal">
+        <img src="assets/portfolio/furniture/latitude15 (1).jpeg" alt="Latitude15 custom furniture"/>
+        <img src="assets/portfolio/furniture/latitude15 (2).jpeg" alt="Latitude15 furniture detail"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — BONGOHIVE -->
+<section class="pf-project" id="furn-bongohive" data-category="furniture" data-client="furn-bongohive">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Innovation Hub · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>Bongohive</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-main-plus reveal">
+        <img class="pf-img-main" src="assets/portfolio/furniture/bongohive (1).jpeg" alt="Bongohive custom furniture"/>
+        <img src="assets/portfolio/furniture/bongohive (2).jpeg" alt="Bongohive furniture detail"/>
+        <img src="assets/portfolio/furniture/bongohive (3).jpeg" alt="Bongohive furniture finish"/>
+      </div>
+      <div class="pf-text reveal">
+        <p>Bongohive's collaborative spirit demanded furniture that is as dynamic as the people using it. We crafted custom pieces that support both focused work and open collaboration — built to move with the space.</p>
+        <p>Durable, thoughtfully designed, and perfectly aligned with the hub's creative identity.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — HYBRID -->
+<section class="pf-project" id="furn-hybrid" data-category="furniture" data-client="furn-hybrid">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Corporate · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>Hybrid</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout">
+      <div class="pf-text reveal">
+        <p>For Hybrid, we produced custom furniture that elevates the office environment — designed to reflect the company's modern, professional brand while providing comfort and longevity.</p>
+        <p>Each piece was tailored to fit the specific dimensions and aesthetic of their workspace.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Start Your Project</a>
+      </div>
+      <div class="pf-gallery g-2 reveal">
+        <img src="assets/portfolio/furniture/hybrid (1).jpeg" alt="Hybrid custom furniture"/>
+        <img src="assets/portfolio/furniture/hybrid (2).jpeg" alt="Hybrid furniture detail"/>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- STATS STRIP -->
 <div class="pf-stats-strip">
   <div>
-    <div class="pf-stat-num">50+</div>
+    <div class="pf-stat-num">200+</div>
     <div class="pf-stat-lbl">Corporate Clients</div>
   </div>
   <div>
-    <div class="pf-stat-num">500+</div>
+    <div class="pf-stat-num">20,000+</div>
     <div class="pf-stat-lbl">Bags Crafted</div>
   </div>
   <div>
@@ -609,15 +726,15 @@ nav {
     <div class="pf-stat-lbl">Made in Zambia</div>
   </div>
   <div>
-    <div class="pf-stat-num">4+</div>
+    <div class="pf-stat-num">15+</div>
     <div class="pf-stat-lbl">Industries Served</div>
   </div>
 </div>
 
 <!-- CTA BANNER -->
 <div class="pf-cta-banner">
-  <h2>Ready to Brand Your Team?</h2>
-  <p>Let's design something your team will be proud to carry every single day.</p>
+  
+  <p>From concept to completion, we design and deliver solutions that fit your needs.</p>
   <a href="https://wa.me/260968531630" target="_blank" class="btn-white">WhatsApp Us Now</a>
 </div>
 
@@ -629,10 +746,12 @@ nav {
 
 <script>
 // Page loader
-window.addEventListener('load', () => {
+function hideLoader() {
   const loader = document.getElementById('page-loader');
-  setTimeout(() => loader.classList.add('hidden'), 400);
-});
+  if (loader) loader.classList.add('hidden');
+}
+setTimeout(hideLoader, 1500);
+window.addEventListener('load', () => setTimeout(hideLoader, 400));
 
 // Mobile menu
 const hamburger = document.querySelector('.hamburger');
@@ -670,9 +789,11 @@ function filterCategory(cat, btn) {
   btn.classList.add('active');
   document.getElementById('subFilterBags').style.display = cat === 'bags' ? 'flex' : 'none';
   document.getElementById('subFilterInterior').style.display = cat === 'interior' ? 'flex' : 'none';
+  document.getElementById('subFilterFurniture').style.display = cat === 'furniture' ? 'flex' : 'none';
   document.querySelectorAll('.pf-sub-btn').forEach(b => b.classList.remove('active'));
   if (cat === 'bags') document.querySelector('#subFilterBags .pf-sub-btn').classList.add('active');
   if (cat === 'interior') document.querySelector('#subFilterInterior .pf-sub-btn').classList.add('active');
+  if (cat === 'furniture') document.querySelector('#subFilterFurniture .pf-sub-btn').classList.add('active');
   applyProjectFilter(cat, 'all');
 }
 function filterClient(client, btn) {
@@ -750,12 +871,14 @@ function sendQuoteToWhatsApp() {
       <div class="qstep" id="qstep-1">
         <div class="qstep-header"><span class="qstep-num">01 / 05</span><h2 class="qstep-title">What service are you looking for?</h2><p class="qstep-desc">Select the option that best describes your order.</p></div>
         <div class="qchoices">
-          <label class="qchoice"><input type="radio" name="service" value="Custom Clothing Design"/> <span>Custom Clothing Design</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Corporate Uniforms"/> <span>Corporate Uniforms</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="School Uniforms"/> <span>School Uniforms</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Alterations &amp; Repairs"/> <span>Alterations &amp; Repairs</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Event / Occasion Wear"/> <span>Event / Occasion Wear</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Other"/> <span>Other</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Branded Corporate Bags"/> <span>Branded Corporate Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Conference &amp; Event Bags"/> <span>Conference &amp; Event Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Retail / Individual Bags"/> <span>Retail / Individual Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Custom Bag Design"/> <span>Custom Bag Design</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Custom Furniture"/> <span>Custom Furniture</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Furniture Reupholstery &amp; Repairs"/> <span>Furniture Reupholstery &amp; Repairs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Interior Design &amp; Fit-Outs"/> <span>Interior Design &amp; Fit-Outs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Other / General Enquiry"/> <span>Other / General Enquiry</span></label>
         </div>
         <p class="qerr" id="err-1"></p>
         <div class="qnav"><button type="button" class="qbtn-next" onclick="qNext(1)">Next &rarr;</button></div>

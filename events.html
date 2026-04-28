@@ -327,7 +327,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var
       <img src="assets/extracted/img_01.jpg" alt="My Perfect Stitch Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;"/>
       <div class="nav-logo-text">
         <strong>My Perfect Stitch</strong>
-        <span>Creating Happiness · Lusaka</span>
+        <span>Creating Happiness</span>
       </div>
     </a>
     <ul class="nav-links">
@@ -392,7 +392,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var
       </div>
 
       <div class="ev-text reveal">
-        <p>Over the weekend, our Founder &amp; CEO <strong>Ruth Mooto</strong> was a speaker and Business Excellence Award recipient at the <strong>She Entrepreneur Founders Summit 2026</strong> in Lusaka.</p>
+        <p>Our Founder &amp; CEO <strong>Ruth Mooto</strong> was a speaker and Business Excellence Award recipient at the <strong>She Entrepreneur Founders Summit 2026</strong> in Lusaka.</p>
         <p>A proud moment for My Perfect Stitch.</p>
       </div>
     </div>
@@ -409,7 +409,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var
 
     <div class="ev-layout text-first">
       <div class="ev-text reveal">
-        <p>Today we celebrate the women of My Perfect Stitch, and women everywhere.</p>
+        <p>We celebrate the women of My Perfect Stitch, and women everywhere.</p>
         <p>Women who continue to learn, grow, and support one another every day.</p>
         <p>This year's International Women's Day theme, <strong>"Give to Gain,"</strong> reminds us that when we uplift and support one another, everyone moves forward.</p>
         <p>Happy International Women's Day.</p>
@@ -444,7 +444,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var
       </div>
 
       <div class="ev-text reveal">
-        <p>Today marks the final day of a one-week, hands-on leather training for three members of our tailoring team, delivered in collaboration with <strong>Fine Stitches Leather</strong>.</p>
+        <p>We wrapped up a one week, hands-on leather training for three members of our tailoring team, delivered in collaboration with <strong>Fine Stitches Leather</strong>.</p>
         <p>Throughout the week, the team strengthened their leather techniques — from precise cutting and sewing to clean, professional finishing.</p>
         <p>This training, supported through the <strong>Time and Tide Foundation</strong> grant, is part of our continued investment in craftsmanship and capacity building.</p>
         <p>The learning continues — and it shows in the work. Proud of the team for committing to growth.</p>
@@ -496,9 +496,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var
 
 <script>
 // Page loader
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('page-loader').classList.add('hidden'), 400);
-});
+function hideLoader() {
+  const loader = document.getElementById('page-loader');
+  if (loader) loader.classList.add('hidden');
+}
+setTimeout(hideLoader, 1500);
+window.addEventListener('load', () => setTimeout(hideLoader, 400));
 
 // Nav
 const hamburger = document.querySelector('.hamburger');

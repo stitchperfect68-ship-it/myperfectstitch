@@ -433,16 +433,33 @@ h2 em { font-style: normal; font-weight: 700; color: #F9B040; }
   font-family: var(--font-body); font-weight: 700; transition: all 0.2s;
 }
 .ftab.active, .ftab:hover { background: #F9B040; color: #100736; }
-.ftab-sub {
-  padding: 6px 16px; border: 1.5px solid #ddd; border-radius: 50px;
-  background: transparent; color: #555; cursor: pointer;
-  font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
-  font-family: var(--font-body); font-weight: 600; transition: all 0.2s;
-}
-.ftab-sub.active, .ftab-sub:hover { background: #100736; color: white; border-color: #100736; }
-.sub-tabs { flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .price-req { font-size: 0.82rem; color: #888; font-style: italic; }
-.shop-filters { display: flex; flex-direction: column; align-items: flex-end; }
+.shop-filters { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.sub-dropdown-wrap { position: relative; }
+.sub-dropdown-wrap::after {
+  content: '';
+  pointer-events: none;
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  border: 5px solid transparent; border-top: 6px solid #100736; border-bottom: none;
+  margin-top: 3px;
+}
+.sub-dropdown {
+  appearance: none; -webkit-appearance: none;
+  padding: 8px 38px 8px 18px;
+  border: 1.5px solid #ddd; border-radius: 50px;
+  font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em; color: #333;
+  background: white; cursor: pointer; outline: none; transition: border-color 0.2s;
+}
+.sub-dropdown:hover, .sub-dropdown:focus { border-color: #100736; }
+.load-more-wrap { display: none; justify-content: center; padding: 40px 0 10px; }
+.load-more-btn {
+  padding: 12px 44px; background: transparent; border: 2px solid #100736;
+  border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #100736; cursor: pointer; transition: all 0.2s;
+}
+.load-more-btn:hover { background: #100736; color: white; }
 .products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
 .product-card {
   background: white; border-radius: 5px; overflow: hidden;
@@ -1513,9 +1530,9 @@ footer {
 
   <!-- STATS BAR -->
   <div class="hero-stats-bar">
-    <div class="stat-item"><div class="stat-num" data-target="8" data-suffix="+">0+</div><div class="stat-lbl">Years in Operation</div></div>
+    <div class="stat-item"><div class="stat-num" data-target="10" data-suffix="+">0+</div><div class="stat-lbl">Years in Operation</div></div>
     <div class="stat-item"><div class="stat-num" data-target="25" data-suffix="+">0+</div><div class="stat-lbl">Specialist Team</div></div>
-    <div class="stat-item"><div class="stat-num" data-target="50" data-suffix="+">0+</div><div class="stat-lbl">Institutional Clients</div></div>
+    <div class="stat-item"><div class="stat-num" data-target="200" data-suffix="+">0+</div><div class="stat-lbl">Institutional Clients</div></div>
   </div>
 
 <!-- SHOP -->
@@ -1532,24 +1549,28 @@ footer {
         <button class="ftab" onclick="setShopParent('bags',this)">Bags</button>
         <button class="ftab" onclick="setShopParent('furniture',this)">Furniture</button>
       </div>
-      <div class="filter-row sub-tabs" id="subTabsBags" style="display:none;">
-        <button class="ftab-sub active" onclick="setShopSub('all',this)">All Bags</button>
-        <button class="ftab-sub" onclick="setShopSub('backpacks',this)">Backpacks</button>
-        <button class="ftab-sub" onclick="setShopSub('coin-purses',this)">Coin Purses</button>
-        <button class="ftab-sub" onclick="setShopSub('laptop-bags',this)">Laptop Bags</button>
-        <button class="ftab-sub" onclick="setShopSub('laptop-sleeves',this)">Laptop Sleeves</button>
-        <button class="ftab-sub" onclick="setShopSub('pencil-cases',this)">Pencil Cases</button>
-        <button class="ftab-sub" onclick="setShopSub('tote-bags',this)">Tote Bags</button>
-        <button class="ftab-sub" onclick="setShopSub('travel-bags',this)">Travel Bags</button>
+      <div class="sub-dropdown-wrap" id="dropdownBags" style="display:none;">
+        <select class="sub-dropdown" id="bagSubSelect" onchange="setShopSub(this.value)">
+          <option value="all">All Bags</option>
+          <option value="backpacks">Backpacks</option>
+          <option value="coin-purses">Coin Purses</option>
+          <option value="laptop-bags">Laptop Bags</option>
+          <option value="laptop-sleeves">Laptop Sleeves</option>
+          <option value="pencil-cases">Pencil Cases</option>
+          <option value="tote-bags">Tote Bags</option>
+          <option value="travel-bags">Travel Bags</option>
+        </select>
       </div>
-      <div class="filter-row sub-tabs" id="subTabsFurniture" style="display:none;">
-        <button class="ftab-sub active" onclick="setShopSub('all',this)">All Furniture</button>
-        <button class="ftab-sub" onclick="setShopSub('arm-chairs',this)">Arm Chairs</button>
-        <button class="ftab-sub" onclick="setShopSub('benches',this)">Benches</button>
-        <button class="ftab-sub" onclick="setShopSub('love-seats',this)">Love Seats</button>
-        <button class="ftab-sub" onclick="setShopSub('modular-sofas',this)">Modular Sofas</button>
-        <button class="ftab-sub" onclick="setShopSub('sofas',this)">Sofas</button>
-        <button class="ftab-sub" onclick="setShopSub('stools',this)">Stools</button>
+      <div class="sub-dropdown-wrap" id="dropdownFurniture" style="display:none;">
+        <select class="sub-dropdown" id="furnSubSelect" onchange="setShopSub(this.value)">
+          <option value="all">All Furniture</option>
+          <option value="arm-chairs">Arm Chairs</option>
+          <option value="benches">Benches</option>
+          <option value="love-seats">Love Seats</option>
+          <option value="modular-sofas">Modular Sofas</option>
+          <option value="sofas">Sofas</option>
+          <option value="stools">Stools</option>
+        </select>
       </div>
     </div>
   </div>
@@ -1563,7 +1584,7 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Backpack</h3>
+        <h3>Muchinga</h3>
         <div>Spacious chitenge backpacks with padded straps and multiple compartments.</div>
         <div class="product-footer">
           <span class="price">K750</span>
@@ -1620,7 +1641,7 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Nyika 2</h3>
+        <h3>Nyika</h3>
         <div>Spacious chitenge backpack with padded straps and multiple compartments.</div>
         <div class="product-footer">
           <span class="price">K750</span>
@@ -1698,7 +1719,7 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Luapula</h3>
+        <h3>Luangwa</h3>
         <div>Padded chitenge laptop bags designed to protect and impress.</div>
         <div class="product-footer">
           <span class="price">K750</span>
@@ -1717,10 +1738,10 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Luapula 1</h3>
+        <h3>Luapula</h3>
         <div>Padded chitenge laptop bags designed to protect and impress.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K650</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2ALuapula%201%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1736,7 +1757,7 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Luapula 2</h3>
+        <h3>Luangwa Chitenge & leather</h3>
         <div>Padded chitenge laptop bags designed to protect and impress.</div>
         <div class="product-footer">
           <span class="price">K750</span>
@@ -1756,10 +1777,10 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Laptop Sleeve</h3>
+        <h3>Chambeshi</h3>
         <div>Slim, protective laptop sleeves in bold African print fabrics.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K375</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2ALaptop%20Sleeve%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1775,10 +1796,10 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Laptop Sleeve 1</h3>
+        <h3>Chambeshi</h3>
         <div>Slim, protective laptop sleeves in bold African print fabrics.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K375</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2ALaptop%20Sleeve%201%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1794,10 +1815,10 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Laptop Sleeve 2</h3>
+        <h3>Chambeshi</h3>
         <div>Slim, protective laptop sleeves in bold African print fabrics.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K375</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2ALaptop%20Sleeve%202%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.942-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1853,10 +1874,10 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Tote Bag</h3>
+        <h3>Kariba</h3>
         <div>Stylish chitenge tote bags — spacious, structured, and unmistakably Zambian.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K275</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2ATote%20Bag%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1875,7 +1896,7 @@ footer {
         <h3>Kafue</h3>
         <div>Stylish chitenge tote bags — spacious, structured, and unmistakably Zambian.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K600</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2AKafue%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1891,10 +1912,10 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Kafue 1</h3>
+        <h3>Kafue</h3>
         <div>Stylish chitenge tote bags — spacious, structured, and unmistakably Zambian.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K600</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2AKafue%201%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1910,7 +1931,7 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Tote</h3>
+        <h3>Kariba</h3>
         <div>Stylish chitenge tote bags — spacious, structured, and unmistakably Zambian.</div>
         <div class="product-footer">
           <span class="price">K750</span>
@@ -1932,7 +1953,7 @@ footer {
         <h3>Mosi-oa-Tunya</h3>
         <div>Durable chitenge travel bag — roomy, structured, and built for the journey.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K850</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2AMosi-oa-Tunya%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -1948,10 +1969,10 @@ footer {
         </div>
       </div>
       <div class="product-info">
-        <h3>Mosi-oa-Tunya 2</h3>
+        <h3>Mosi-oa-Tunya</h3>
         <div>Durable chitenge travel bag — roomy, structured, and built for the journey.</div>
         <div class="product-footer">
-          <span class="price">K750</span>
+          <span class="price">K850</span>
           <a href="https://wa.me/260968531630?text=Hello%20My%20Perfect%20Stitch%21%20%F0%9F%91%8B%0A%0AI%27m%20interested%20in%20purchasing%3A%0A%0A%2AMosi-oa-Tunya%202%2A%0APrice%3A%20K750%0A%0APlease%20let%20me%20know%20about%20availability%20and%20delivery%20options.%20Thank%20you%21" target="_blank" class="buy-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Buy via WhatsApp
@@ -2079,6 +2100,9 @@ footer {
         </div>
       </div>
     </div>
+  </div>
+  <div class="load-more-wrap" id="loadMoreWrap">
+    <button class="load-more-btn" onclick="loadMoreShop()">Load More</button>
   </div>
 </section>
 
@@ -2267,7 +2291,7 @@ function hideLoader() {
   if (loader) loader.classList.add('hidden');
 }
 setTimeout(hideLoader, 1500);
-window.addEventListener('load', () => setTimeout(hideLoader, 400));
+window.addEventListener('load', () => { setTimeout(hideLoader, 400); renderShop(); });
 
 // Nav scroll effect
 window.addEventListener('scroll', () => {
@@ -2336,32 +2360,54 @@ const statsObs = new IntersectionObserver(entries => {
 statsObs.observe(document.querySelector('.hero-stats-bar'));
 
 // Product filter
+let _shopParent = 'all', _shopSub = 'all', _shopPage = 0;
+const SHOP_PAGE_SIZE = 6;
+
 function setShopParent(parent, btn) {
   document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('subTabsBags').style.display = parent === 'bags' ? 'flex' : 'none';
-  document.getElementById('subTabsFurniture').style.display = parent === 'furniture' ? 'flex' : 'none';
-  document.querySelectorAll('.ftab-sub').forEach(t => t.classList.remove('active'));
-  if (parent === 'bags' || parent === 'furniture') {
-    document.querySelector('#subTabs' + parent.charAt(0).toUpperCase() + parent.slice(1) + ' .ftab-sub').classList.add('active');
+  document.getElementById('dropdownBags').style.display = parent === 'bags' ? 'block' : 'none';
+  document.getElementById('dropdownFurniture').style.display = parent === 'furniture' ? 'block' : 'none';
+  if (parent === 'bags') document.getElementById('bagSubSelect').value = 'all';
+  if (parent === 'furniture') document.getElementById('furnSubSelect').value = 'all';
+  _shopParent = parent; _shopSub = 'all'; _shopPage = 0;
+  renderShop();
+}
+function setShopSub(val) {
+  _shopSub = val; _shopPage = 0;
+  renderShop();
+}
+function loadMoreShop() {
+  _shopPage++;
+  renderShop();
+}
+function renderShop() {
+  const allCards = Array.from(document.querySelectorAll('.product-card'));
+  let filtered;
+  if (_shopParent === 'all') {
+    const bags = allCards.filter(c => c.dataset.parent === 'bags');
+    const furn = allCards.filter(c => c.dataset.parent === 'furniture');
+    filtered = [];
+    for (let i = 0; i < Math.max(bags.length, furn.length); i++) {
+      if (furn[i]) filtered.push(furn[i]);
+      if (bags[i]) filtered.push(bags[i]);
+    }
+  } else {
+    filtered = allCards.filter(c => {
+      if (c.dataset.parent !== _shopParent) return false;
+      if (_shopSub !== 'all' && c.dataset.sub !== _shopSub) return false;
+      return true;
+    });
   }
-  applyShopFilter(parent, 'all');
-}
-function setShopSub(sub, btn) {
-  document.querySelectorAll('.ftab-sub').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const parent = document.querySelector('.ftab.active').dataset.parent ||
-    (document.getElementById('subTabsBags').style.display !== 'none' ? 'bags' : 'furniture');
-  applyShopFilter(parent, sub);
-}
-function applyShopFilter(parent, sub) {
-  document.querySelectorAll('.product-card').forEach(card => {
-    let show = true;
-    if (parent !== 'all' && card.dataset.parent !== parent) show = false;
-    if (sub !== 'all' && card.dataset.sub !== sub) show = false;
-    card.style.display = show ? 'block' : 'none';
-    if (show) card.style.animation = 'popIn 0.35s ease forwards';
+  allCards.forEach(c => { c.style.display = 'none'; c.style.order = ''; });
+  const showCount = (_shopPage + 1) * SHOP_PAGE_SIZE;
+  filtered.slice(0, showCount).forEach((c, idx) => {
+    c.style.display = 'block';
+    c.style.order = idx;
+    c.style.animation = 'popIn 0.35s ease forwards';
   });
+  const lmWrap = document.getElementById('loadMoreWrap');
+  if (lmWrap) lmWrap.style.display = showCount < filtered.length ? 'flex' : 'none';
 }
 
 // ===== SEARCH =====
@@ -2381,7 +2427,7 @@ const SEARCH_INDEX = [
   { title:'Laptop Bag',     sub:'Bags — K750',               icon:'fa-bag-shopping',     href:'#shop', action:()=>setShopParent('bags',document.querySelector('.ftab[onclick*="bags"]')) },
   { title:'Laptop Sleeve',  sub:'Bags — K750',               icon:'fa-bag-shopping',     href:'#shop', action:()=>setShopParent('bags',document.querySelector('.ftab[onclick*="bags"]')) },
   { title:'Pencil Case',    sub:'Bags — K185',               icon:'fa-bag-shopping',     href:'#shop', action:()=>setShopParent('bags',document.querySelector('.ftab[onclick*="bags"]')) },
-  { title:'Tote Bag',       sub:'Bags — K750',               icon:'fa-bag-shopping',     href:'#shop', action:()=>setShopParent('bags',document.querySelector('.ftab[onclick*="bags"]')) },
+  { title:'Tote Bag',       sub:'Bags — K275',               icon:'fa-bag-shopping',     href:'#shop', action:()=>setShopParent('bags',document.querySelector('.ftab[onclick*="bags"]')) },
   // Furniture
   { title:'Arm Chair',      sub:'Furniture — Price on Request', icon:'fa-couch',         href:'#shop', action:()=>setShopParent('furniture',document.querySelector('.ftab[onclick*="furniture"]')) },
   { title:'Bench',          sub:'Furniture — Price on Request', icon:'fa-couch',         href:'#shop', action:()=>setShopParent('furniture',document.querySelector('.ftab[onclick*="furniture"]')) },
@@ -2600,12 +2646,14 @@ function sendQuoteToWhatsApp() {
           <p class="qstep-desc">Select the option that best describes your order.</p>
         </div>
         <div class="qchoices">
-          <label class="qchoice"><input type="radio" name="service" value="Custom Clothing Design"/> <span>Custom Clothing Design</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Corporate Uniforms"/> <span>Corporate Uniforms</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="School Uniforms"/> <span>School Uniforms</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Alterations & Repairs"/> <span>Alterations &amp; Repairs</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Event / Occasion Wear"/> <span>Event / Occasion Wear</span></label>
-          <label class="qchoice"><input type="radio" name="service" value="Other"/> <span>Other</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Branded Corporate Bags"/> <span>Branded Corporate Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Conference &amp; Event Bags"/> <span>Conference &amp; Event Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Retail / Individual Bags"/> <span>Retail / Individual Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Custom Bag Design"/> <span>Custom Bag Design</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Custom Furniture"/> <span>Custom Furniture</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Furniture Reupholstery &amp; Repairs"/> <span>Furniture Reupholstery &amp; Repairs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Interior Design &amp; Fit-Outs"/> <span>Interior Design &amp; Fit-Outs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Other / General Enquiry"/> <span>Other / General Enquiry</span></label>
         </div>
         <p class="qerr" id="err-1"></p>
         <div class="qnav"><button type="button" class="qbtn-next" onclick="qNext(1)">Next &rarr;</button></div>

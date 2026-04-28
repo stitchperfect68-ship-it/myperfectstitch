@@ -283,7 +283,7 @@ nav {
       <img src="assets/extracted/img_01.jpg" alt="My Perfect Stitch Logo"/>
       <div class="nav-logo-text">
         <strong>My Perfect Stitch</strong>
-        <span>Creating Happiness · Lusaka</span>
+        <span>Creating Happiness</span>
       </div>
     </a>
     <ul class="nav-links">
@@ -374,14 +374,7 @@ nav {
       <img src="assets/gallery/bags15.jpg" alt="Bags" loading="lazy"/>
       <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
     </div>
-    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
-      <img src="assets/gallery/bags16.jpg" alt="Bags" loading="lazy"/>
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
-    </div>
-    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
-      <img src="assets/gallery/bags18.jpg" alt="Bags" loading="lazy"/>
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
-    </div>
+    
     <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
       <img src="assets/gallery/bags20.jpg" alt="Bags" loading="lazy"/>
       <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
@@ -590,9 +583,12 @@ nav {
 
 <script>
 // Page loader
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('page-loader').classList.add('hidden'), 400);
-});
+function hideLoader() {
+  const loader = document.getElementById('page-loader');
+  if (loader) loader.classList.add('hidden');
+}
+setTimeout(hideLoader, 1500);
+window.addEventListener('load', () => setTimeout(hideLoader, 400));
 
 // Mobile menu
 const hamburger = document.querySelector('.hamburger');
