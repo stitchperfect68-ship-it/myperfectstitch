@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio — My Perfect Stitch</title>
+<link rel="icon" type="image/jpeg" href="assets/extracted/img_01.jpg"/>
+<link rel="apple-touch-icon" href="assets/extracted/img_01.jpg"/>
+<meta name="description" content="Explore our portfolio of branded bags, bespoke furniture, and interior projects crafted for Zambia's leading organisations."/>
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Portfolio — My Perfect Stitch"/>
+<meta property="og:description" content="Explore our portfolio of branded bags, bespoke furniture, and interior projects crafted for Zambia's leading organisations."/>
+<meta property="og:image" content="assets/extracted/img_01.jpg"/>
+<meta property="og:image:alt" content="My Perfect Stitch — Lusaka, Zambia"/>
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Portfolio — My Perfect Stitch"/>
+<meta name="twitter:description" content="Explore our portfolio of branded bags, bespoke furniture, and interior projects crafted for Zambia's leading organisations."/>
+<meta name="twitter:image" content="assets/extracted/img_01.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com/"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --red:        #F9B040;
+  --orange:     #F9B040;
+  --orange-light:#FF8C00;
+  --navy:       #140f37;
+  --cream:      #FFFFFF;
+  --cream-bg:   #f9f5f0;
+  --font-display: 'Poppins', sans-serif;
+  --font-body:    'Poppins', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: #1a1a1a; background: #fff; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; }
+
+/* ===== PAGE LOADER ===== */
+#page-loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--navy);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 28px;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#page-loader.hidden { opacity: 0; visibility: hidden; }
+.loader-brand { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: 0.12em; text-transform: uppercase; }
+.loader-brand span { color: #F9B040; }
+.loader-thread { position: relative; width: 180px; height: 60px; }
+.loader-thread svg { width: 100%; height: 100%; overflow: visible; }
+.thread-path { fill: none; stroke: #F9B040; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 12 8; stroke-dashoffset: 200; animation: stitch 1.8s linear infinite; }
+.thread-path-back { fill: none; stroke: rgba(255,140,0,0.18); stroke-width: 2.5; stroke-linecap: round; }
+.needle { animation: needleMove 1.8s linear infinite; transform-origin: center; }
+@keyframes stitch { to { stroke-dashoffset: 0; } }
+@keyframes needleMove { 0% { transform: translateX(0px); } 100% { transform: translateX(180px); } }
+.loader-dots { display: flex; gap: 10px; }
+.loader-dots span { width: 7px; height: 7px; border-radius: 50%; background: #F9B040; animation: dotBounce 1.2s ease-in-out infinite; }
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; background: #FF8C00; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; background: #FFA726; }
+@keyframes dotBounce { 0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; } 40% { transform: scale(1.3); opacity: 1; } }
+.loader-stripe { position: absolute; bottom: 0; left: 0; right: 0; height: 6px; background: #F9B040; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--navy);
+  border-bottom: 3px solid #F9B040;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5%; height: 68px;
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; }
+.nav-logo-badge {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #FF8C00;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: #fff;
+}
+.nav-logo-text { color: #fff; font-family: var(--font-display); line-height: 1.2; }
+.nav-logo-text strong { font-size: 1rem; display: block; }
+.nav-logo-text span { font-size: 0.6rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.15em; }
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.9); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: #FF8C00; }
+.nav-cta { background: #F9B040 !important; color: #fff !important; padding: 8px 20px; border-radius: 3px; font-weight: 700 !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: #FF8C00 !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.hamburger span { width: 24px; height: 2px; background: white; transition: transform 0.3s ease, opacity 0.3s ease; display: block; transform-origin: center; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none; background: var(--navy); padding: 20px 5%;
+  border-bottom: 3px solid #F9B040;
+  position: fixed; top: 73px; left: 0; right: 0; z-index: 999;
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 12px 0; color: white; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+/* ===== HERO BANNER ===== */
+.pf-hero {
+  background: var(--navy);
+  padding: 160px 5% 80px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.pf-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(230,81,0,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.pf-hero .sec-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: #FF8C00; font-weight: 700; margin-bottom: 14px;
+}
+.pf-hero .sec-label::before { content: ''; width: 28px; height: 3px; background: #FF8C00; border-radius: 2px; }
+.pf-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: #fff; font-weight: 700; line-height: 1.15;
+  margin-bottom: 18px;
+}
+.pf-hero h1 em { color: #FF8C00; font-style: normal; }
+.pf-hero p {
+  color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.8;
+  max-width: 560px; margin: 0 auto;
+}
+
+/* ===== FILTER NAV ===== */
+.pf-filter {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 28px 5%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky; top: 73px; z-index: 100;
+}
+.pf-filter-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.pf-filter-btn {
+  background: none; border: 2px solid #ddd; color: #555;
+  padding: 8px 22px; border-radius: 30px; font-family: var(--font-body);
+  font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+  cursor: pointer; transition: all 0.2s;
+}
+.pf-filter-btn:hover, .pf-filter-btn.active {
+  background: #F9B040; border-color: #F9B040; color: #fff;
+}
+.pf-sub-btn {
+  background: none; border: 1.5px solid #ddd; color: #555;
+  padding: 6px 16px; border-radius: 30px; font-family: var(--font-body);
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  cursor: pointer; transition: all 0.2s;
+}
+.pf-sub-btn:hover, .pf-sub-btn.active { background: #100736; border-color: #100736; color: #fff; }
+
+/* ===== PROJECT SECTIONS ===== */
+.pf-project {
+  padding: 90px 5%;
+  scroll-margin-top: 140px;
+}
+.pf-project:nth-child(even) { background: var(--cream-bg); }
+
+.pf-project-inner {
+  max-width: 1200px; margin: 0 auto;
+}
+.pf-project-header {
+  display: flex; align-items: flex-start; gap: 20px;
+  margin-bottom: 48px; flex-wrap: wrap;
+}
+.pf-client-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.22em;
+  color: #F9B040; font-weight: 700;
+}
+.pf-client-badge::before { content: ''; width: 20px; height: 3px; background: #F9B040; border-radius: 2px; }
+.pf-project-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  color: var(--navy); font-weight: 700; line-height: 1.2;
+  flex: 1 1 340px;
+}
+.pf-project-header h2 em { color: #F9B040; font-style: normal; }
+
+.pf-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: start;
+}
+.pf-layout.layout-wide { grid-template-columns: 1.1fr 0.9fr; }
+
+.pf-text p {
+  font-size: 1rem; line-height: 1.85; color: #444;
+  margin-bottom: 16px;
+}
+.pf-text p:last-child { margin-bottom: 0; }
+.pf-text ul {
+  margin: 10px 0 16px 0; padding-left: 0; list-style: none;
+}
+.pf-text ul li {
+  position: relative; padding-left: 18px;
+  font-size: 1rem; line-height: 1.8; color: #444; margin-bottom: 6px;
+}
+.pf-text ul li::before { content: '•'; color: #F9B040; position: absolute; left: 0; font-weight: 700; }
+.pf-text .pf-cta {
+  display: inline-block; margin-top: 28px;
+  background: #F9B040; color: #fff;
+  padding: 13px 30px; border-radius: 3px;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background 0.2s, transform 0.2s;
+}
+.pf-text .pf-cta:hover { background: var(--navy); transform: translateY(-2px); }
+
+/* Image gallery layouts */
+.pf-gallery { display: grid; gap: 12px; }
+.pf-gallery.g-1 { grid-template-columns: 1fr; }
+.pf-gallery.g-2 { grid-template-columns: 1fr 1fr; }
+.pf-gallery.g-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+.pf-gallery.g-3 { grid-template-columns: 1fr 1fr 1fr; }
+.pf-gallery.g-main-plus { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+.pf-gallery.g-main-plus .pf-img-main { grid-column: span 2; }
+.pf-gallery-full { margin-top: 24px; }
+
+.pf-gallery img {
+  width: 100%; height: 260px; object-fit: cover; border-radius: 4px;
+  transition: transform 0.4s ease;
+}
+.pf-gallery img:hover { transform: scale(1.02); }
+.pf-gallery .pf-img-main { height: 340px; }
+
+/* ===== STATS STRIP ===== */
+.pf-stats-strip {
+  background: var(--navy);
+  display: flex; justify-content: center; gap: 80px;
+  padding: 52px 5%; flex-wrap: wrap;
+  text-align: center;
+}
+.pf-stat-num { font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; color: #FF8C00; line-height: 1; }
+.pf-stat-lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.6); margin-top: 6px; }
+
+/* ===== CTA BANNER ===== */
+.pf-cta-banner {
+  background: #F9B040;
+  padding: 70px 5%;
+  text-align: center;
+}
+.pf-cta-banner h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: #fff; font-weight: 700; margin-bottom: 14px; }
+.pf-cta-banner p { color: rgba(255,255,255,0.85); font-size: 1rem; max-width: 500px; margin: 0 auto 32px; line-height: 1.8; }
+.btn-white { background: #fff; color: #F9B040; padding: 14px 36px; border-radius: 3px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.2s; display: inline-block; }
+.btn-white:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+
+/* ===== FOOTER ===== */
+.pf-footer {
+  background: var(--navy); padding: 40px 5%;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+}
+.pf-footer p { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+.pf-footer a { color: #FF8C00; font-size: 0.8rem; font-weight: 600; transition: opacity 0.2s; }
+.pf-footer a:hover { opacity: 0.75; }
+
+/* ===== REVEAL ===== */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .pf-layout, .pf-layout.layout-wide { grid-template-columns: 1fr; }
+  .pf-stats-strip { gap: 40px; }
+}
+@media (max-width: 600px) {
+  .pf-gallery.g-2, .pf-gallery.g-2x2, .pf-gallery.g-3, .pf-gallery.g-main-plus { grid-template-columns: 1fr; }
+  .pf-gallery.g-main-plus .pf-img-main { grid-column: span 1; }
+  .pf-project { padding: 60px 5%; }
+  .pf-hero { padding: 130px 5% 60px; }
+}
+
+.nav-quote-btn {
+  background: transparent; border: 2px solid #F9B040; color: #F9B040;
+  padding: 7px 18px; border-radius: 3px; font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.nav-quote-btn:hover { background: #F9B040; color: #100736; }
+.mobile-quote-btn {
+  display: block; width: 100%; margin-top: 12px;
+  background: #F9B040; color: #100736; border: none;
+  padding: 13px 0; font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; cursor: pointer; border-radius: 3px;
+}
+.qmodal-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(10,4,34,0.78); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 16px; }
+.qmodal-overlay.active { display: flex; }
+.qmodal-box { background: #fff; border-radius: 6px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.45); animation: qSlideUp 0.3s ease; }
+@keyframes qSlideUp { from { opacity:0; transform: translateY(28px); } to { opacity:1; transform: translateY(0); } }
+.qmodal-progress { height: 4px; background: #e8e4f0; border-radius: 4px 4px 0 0; overflow: hidden; }
+.qmodal-progress-bar { height: 100%; background: linear-gradient(90deg,#F9B040,#d4880a); transition: width 0.4s ease; }
+.qmodal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 1.6rem; line-height: 1; color: #555; cursor: pointer; z-index: 2; transition: color 0.2s; }
+.qmodal-close:hover { color: #100736; }
+.qstep { padding: 36px 36px 28px; }
+.qstep-header { margin-bottom: 24px; }
+.qstep-num { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #F9B040; }
+.qstep-title { font-size: 1.35rem; font-weight: 700; color: #100736; margin: 6px 0 8px; }
+.qstep-desc { font-size: 0.88rem; color: #555; line-height: 1.6; }
+.qchoices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.qchoice { display: flex; align-items: center; gap: 10px; border: 2px solid #e0dce8; border-radius: 4px; padding: 10px 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; font-size: 0.87rem; color: #222; }
+.qchoice:hover { border-color: #F9B040; background: #fffbf2; }
+.qchoice input[type=radio] { accent-color: #F9B040; width: 16px; height: 16px; flex-shrink: 0; }
+.qchoice:has(input:checked) { border-color: #F9B040; background: #fffbf2; font-weight: 600; }
+.qfield { margin-bottom: 18px; }
+.qfield label { display: block; font-size: 0.82rem; font-weight: 600; color: #333; margin-bottom: 6px; }
+.qfield input, .qfield textarea { width: 100%; border: 2px solid #e0dce8; border-radius: 4px; padding: 11px 14px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: #1a1a1a; outline: none; transition: border-color 0.2s; resize: vertical; }
+.qfield input:focus, .qfield textarea:focus { border-color: #F9B040; }
+.qerr { font-size: 0.8rem; color: #c0392b; min-height: 18px; margin-bottom: 4px; }
+.qnav { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+.qbtn-back { background: transparent; border: 2px solid #ccc; color: #555; padding: 10px 22px; border-radius: 3px; font-family: 'Poppins', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.qbtn-back:hover { border-color: #100736; color: #100736; }
+.qbtn-next { background: #100736; color: #fff; border: none; padding: 10px 28px; border-radius: 3px; font-family: 'Poppins', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.qbtn-next:hover { background: #1a0f4a; }
+.qbtn-send { background: #25D366; color: #fff; border: none; padding: 12px 28px; border-radius: 3px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; transition: background 0.2s; }
+.qbtn-send:hover { background: #1ebe5d; }
+.qreview { background: #f9f7ff; border: 2px solid #e0dce8; border-radius: 4px; padding: 18px 20px; font-size: 0.88rem; line-height: 1.9; color: #222; }
+.qreview strong { color: #100736; }
+@media (max-width: 520px) { .qstep { padding: 28px 20px 20px; } .qchoices { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-brand">My Perfect <span>Stitch</span></div>
+  <div class="loader-thread">
+    <svg viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+      <path class="thread-path-back" d="M0 30 Q45 10 90 30 Q135 50 180 30"/>
+      <path class="thread-path" d="M0 30 Q45 10 90 30 Q135 50 180 30"/>
+      <g class="needle" transform="translate(-18,0)">
+        <rect x="0" y="27" width="18" height="3" rx="1.5" fill="#fff"/>
+        <ellipse cx="2.5" cy="28.5" rx="1.5" ry="1" fill="#140f37"/>
+        <line x1="0" y1="28.5" x2="-8" y2="28.5" stroke="#F9B040" stroke-width="1.5" stroke-dasharray="3 2"/>
+      </g>
+    </svg>
+  </div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-stripe"></div>
+</div>
+
+<!-- TOP BORDER -->
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/extracted/img_01.jpg" alt="My Perfect Stitch Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;"/>
+      <div class="nav-logo-text">
+        <strong>My Perfect Stitch</strong>
+        <span>Creating Happiness</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#shop">Shop</a></li>
+      <li><a href="portfolio.html" class="active">Portfolio</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="https://wa.me/260968531630" target="_blank" class="nav-cta">Order Now</a></li>
+      <li><button class="nav-quote-btn" onclick="openQuoteModal()">Request a Quote</button></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMenu()">Home</a>
+  <a href="index.html#about" onclick="closeMenu()">About</a>
+  <a href="index.html#shop" onclick="closeMenu()">Shop</a>
+  <a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
+  <a href="events.html" onclick="closeMenu()">Events</a>
+  <a href="gallery.html" onclick="closeMenu()">Gallery</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+  <a href="https://wa.me/260968531630" target="_blank" onclick="closeMenu()">Order Now</a>
+  <button class="mobile-quote-btn" onclick="closeMenu(); openQuoteModal()">Request a Quote</button>
+</div>
+
+<!-- HERO -->
+<div class="pf-hero">
+  <div class="reveal">
+    <div class="sec-label">Portfolio</div>
+    <h1>Work We're <em>Proud Of</em></h1>
+    <p>A look at some of the organisations we've partnered with to bring their brand identity to life — one stitch at a time.</p>
+  </div>
+</div>
+
+<!-- FILTER -->
+<div class="pf-filter">
+  <div class="pf-filter-row">
+    <button class="pf-filter-btn active" data-cat="all" onclick="filterCategory('all', this)">All Projects</button>
+    <button class="pf-filter-btn" data-cat="bags" onclick="filterCategory('bags', this)">Bags</button>
+    <button class="pf-filter-btn" data-cat="interior" onclick="filterCategory('interior', this)">Interior Design</button>
+    <button class="pf-filter-btn" data-cat="furniture" onclick="filterCategory('furniture', this)">Furniture</button>
+  </div>
+  <div class="pf-filter-row" id="subFilterBags" style="display:none;">
+    <button class="pf-sub-btn active" onclick="filterClient('all', this)">All Bags</button>
+    <button class="pf-sub-btn" onclick="filterClient('stanbic', this)">Stanbic Bank</button>
+    <button class="pf-sub-btn" onclick="filterClient('mof', this)">LuSE</button>
+    <button class="pf-sub-btn" onclick="filterClient('hobbiton', this)">Hobbiton</button>
+    <button class="pf-sub-btn" onclick="filterClient('airtel', this)">Airtel</button>
+  </div>
+  <div class="pf-filter-row" id="subFilterInterior" style="display:none;">
+    <button class="pf-sub-btn active" onclick="filterClient('all', this)">All Interior</button>
+    <button class="pf-sub-btn" onclick="filterClient('bongohive', this)">Bongohive</button>
+    <button class="pf-sub-btn" onclick="filterClient('hybrid', this)">Hybrid</button>
+    <button class="pf-sub-btn" onclick="filterClient('mosi-absa', this)">Mosi-oa-Tunya ABSA</button>
+  </div>
+  <div class="pf-filter-row" id="subFilterFurniture" style="display:none;">
+    <button class="pf-sub-btn active" onclick="filterClient('all', this)">All Furniture</button>
+    <button class="pf-sub-btn" onclick="filterClient('furn-absa', this)">ABSA</button>
+    <button class="pf-sub-btn" onclick="filterClient('latitude15', this)">Latitude15</button>
+    <button class="pf-sub-btn" onclick="filterClient('furn-bongohive', this)">Bongohive</button>
+    <button class="pf-sub-btn" onclick="filterClient('furn-hybrid', this)">Hybrid</button>
+  </div>
+</div>
+
+<!-- PROJECT: STANBIC -->
+<section class="pf-project" id="stanbic" data-category="bags" data-client="stanbic">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Stanbic Bank · Anakazi Banking</div>
+        <h2 style="margin-top:10px;">Embroidered Laptop Bags<br/>for <em>Anakazi Banking</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-2 reveal">
+        <img src="assets/stanbic1.jpg" alt="Stanbic embroidered laptop bag"/>
+        
+      </div>
+      <div class="pf-text reveal">
+        <p>Embroidered laptop bags for Anakazi Banking.</p>
+        <p>Embroidery remains one of the strongest branding methods for logos that are bold, simple, and built to stand out.</p>
+        <p>The result? A professional finish that carries your identity everywhere your team goes.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: LUSE -->
+<section class="pf-project" id="mof" data-category="bags" data-client="mof">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Financial Services · Corporate Branding</div>
+        <h2 style="margin-top:10px;">Lusaka Securities<br/><em>Exchange (LuSE)</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout">
+      <div class="pf-text reveal">
+        <p>The Lusaka Securities Exchange has elevated their corporate identity with custom branded bags from My Perfect Stitch — purpose-built for a professional team at the heart of Zambia's capital markets.</p>
+        <p>Get in touch today to learn how My Perfect Stitch can help your organisation tell its story through high-quality, branded bags.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Start Your Order</a>
+      </div>
+      <div class="pf-gallery g-main-plus reveal">
+        <img src="assets/mof1.jpg" alt="LuSE branded bag"/>
+        <img src="assets/mof2.jpg" alt="LuSE branded bag detail"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: HOBBITON -->
+<section class="pf-project" id="hobbiton" data-category="bags" data-client="hobbiton">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Tech Company · Team Identity</div>
+        <h2 style="margin-top:10px;">Branded Laptop Sleeves<br/>for <em>Hobbiton</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-2 reveal">
+        <img src="assets/hob.jpg" alt="Hobbiton laptop sleeve"/>
+        <img src="assets/hob1.jpg" alt="Hobbiton laptop sleeve detail"/>
+      </div>
+      <div class="pf-text reveal">
+        <p>Hobbiton's software development team is now equipped with branded laptop sleeves designed to reflect both their tech culture and brand identity.</p>
+        <p>As companies increasingly recognize the importance of personalized, functional accessories, we're here to provide solutions that enhance both team identity and professionalism.</p>
+        <p>As you plan for the year ahead, consider how your team carries your brand every day. Let's work together to design customized, high-quality bags that align with your 2026 goals.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Plan for 2026</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: AIRTEL -->
+<section class="pf-project" id="airtel" data-category="bags" data-client="airtel">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Telecoms · Dual-Option Branding</div>
+        <h2 style="margin-top:10px;">Laptop Sleeves for<br/><em>Airtel</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout">
+      <div class="pf-text reveal">
+        <p>For Airtel, we delivered two thoughtfully designed options — each serving a different work style.</p>
+        <ul>
+          <li>The <strong>new-design laptop sleeve with handles</strong> — for professionals who need structure, durability, and easy carry on the move.</li>
+          <li>The <strong>standard laptop sleeve</strong> — for those who prefer a lighter, sleek, and minimal everyday option.</li>
+        </ul>
+        <p>Same identity. Different needs. One brand experience.</p>
+        <p>We are currently taking orders for both options, customised to your organisation's branding and requirements.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Order Now</a>
+      </div>
+      <div class="pf-gallery g-2x2 reveal">
+        <img src="assets/airtel.jpg" alt="Airtel branded laptop sleeve"/>
+        <img src="assets/airtel1.jpg" alt="Airtel branded laptop sleeve with handles"/>
+        <img src="assets/airtel2.jpg" alt="Airtel standard laptop sleeve"/>
+        <img src="assets/airtel3.jpg" alt="Airtel laptop sleeve detail"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: BONGOHIVE -->
+<section class="pf-project" id="bongohive" data-category="interior" data-client="bongohive">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Innovation Hub · Interior Design</div>
+        <h2 style="margin-top:10px;">Interior Design for<br/><em>Bongohive</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-2x2 reveal">
+        <img src="assets/portfolio/bongohive/b1%20(1).jpg" alt="Bongohive interior design"/>
+        <img src="assets/portfolio/bongohive/b1%20(2).jpg" alt="Bongohive interior detail"/>
+        <img src="assets/portfolio/bongohive/b1%20(3).jpg" alt="Bongohive workspace design"/>
+        <img src="assets/portfolio/bongohive/b1%20(4).jpg" alt="Bongohive upholstery work"/>
+      </div>
+      <div class="pf-text reveal">
+        <p>Bongohive is one of Lusaka's most vibrant coworking and innovation hubs. We partnered with their team to design and execute an interior that reflects their collaborative, creative, and entrepreneurial culture.</p>
+        <p>The space needed to feel open, inspiring, and professional — an environment where ideas grow. Every detail, from upholstery to soft furnishings, was carefully considered to bring that vision to life.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: HYBRID -->
+<section class="pf-project" id="hybrid" data-category="interior" data-client="hybrid">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Corporate · Interior Design</div>
+        <h2 style="margin-top:10px;">Interior Design for<br/><em>Hybrid</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout">
+      <div class="pf-text reveal">
+        <p>For Hybrid, we delivered a tailored interior design project that blends functionality with a strong brand presence.</p>
+        <p>The brief called for a workspace that feels modern and purposeful — one that communicates the company's identity to both team members and visiting clients. We matched every material and finish to their brand palette for a cohesive result.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Start Your Project</a>
+      </div>
+      <div class="pf-gallery g-2x2 reveal">
+        <img src="assets/portfolio/hybrid/h1%20(1).jpg" alt="Hybrid interior design"/>
+        <img src="assets/portfolio/hybrid/h1%20(3).jpg" alt="Hybrid workspace detail"/>
+        <img src="assets/portfolio/hybrid/h1%20(4).jpg" alt="Hybrid office upholstery"/>
+        <img src="assets/portfolio/hybrid/h1%20(5).jpg" alt="Hybrid interior finish"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: MOSI-OA-TUNYA INNOVATION ABSA -->
+<section class="pf-project" id="mosi-absa" data-category="interior" data-client="mosi-absa">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Financial Services · Interior Design</div>
+        <h2 style="margin-top:10px;">Mosi-oa-Tunya Innovation Hub<br/>for <em>ABSA</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-main-plus reveal">
+        <img class="pf-img-main" src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mosi1%20(1).jpg" alt="ABSA Mosi-oa-Tunya innovation hub interior"/>
+        <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mosi1%20(2).jpg" alt="ABSA innovation hub detail"/>
+        <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mosi1%20(3).jpg" alt="ABSA innovation hub upholstery"/>
+      </div>
+      <div class="pf-text reveal">
+        <p>ABSA's Mosi-oa-Tunya Innovation space is a flagship initiative designed to foster creativity and collaboration within the financial sector.</p>
+        <p>We were privileged to contribute to the interior, creating an environment that bridges the professionalism of a leading African bank with the open, innovative spirit the space needed to embody.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Work With Us</a>
+      </div>
+    </div>
+    <div class="pf-gallery g-3 pf-gallery-full reveal">
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(1).jpg" alt="ABSA innovation hub — view 1"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(2).jpg" alt="ABSA innovation hub — view 2"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(3).jpg" alt="ABSA innovation hub — view 3"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(4).jpg" alt="ABSA innovation hub — view 4"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(5).jpg" alt="ABSA innovation hub — view 5"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(6).jpg" alt="ABSA innovation hub — view 6"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(7).jpg" alt="ABSA innovation hub — view 7"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(8).jpg" alt="ABSA innovation hub — view 8"/>
+      <img src="assets/portfolio/mosi-oa-tunya-innovation%20ABSA/mos%20(9).jpg" alt="ABSA innovation hub — view 9"/>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — ABSA -->
+<section class="pf-project" id="furn-absa" data-category="furniture" data-client="furn-absa">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Financial Services · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>ABSA</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-main-plus reveal">
+        <img class="pf-img-main" src="assets/portfolio/furniture/absa%20(1).jpg" alt="ABSA custom furniture"/>
+        <img src="assets/portfolio/furniture/absa%20(2).jpg" alt="ABSA furniture detail"/>
+        <img src="assets/portfolio/furniture/absa%20(3).jpg" alt="ABSA furniture finish"/>
+      </div>
+      <div class="pf-text reveal">
+        <p>For ABSA, we designed and delivered bespoke furniture that meets the high standards of a leading African financial institution — combining durability, aesthetics, and brand alignment.</p>
+        <p>Every piece was crafted to complement the professional environment while reflecting ABSA's identity through material choice and finish.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Get a Quote</a>
+      </div>
+    </div>
+    <div class="pf-gallery g-2 pf-gallery-full reveal">
+      <img src="assets/portfolio/furniture/absa%20(4).jpg" alt="ABSA furniture — view 4"/>
+      <img src="assets/portfolio/furniture/absa%20(5).jpg" alt="ABSA furniture — view 5"/>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — LATITUDE15 -->
+<section class="pf-project" id="latitude15" data-category="furniture" data-client="latitude15">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Tech & Innovation · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>Latitude15</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout">
+      <div class="pf-text reveal">
+        <p>Latitude15 needed furniture that matched the premium and modern feel of their workspace. We delivered custom pieces built to their exact specifications — functional, refined, and built to last.</p>
+        <p>The result is a work environment that reflects the quality and professionalism Latitude15 is known for.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Start Your Project</a>
+      </div>
+      <div class="pf-gallery g-2 reveal">
+        <img src="assets/portfolio/furniture/latitude15%20(1).jpg" alt="Latitude15 custom furniture"/>
+        <img src="assets/portfolio/furniture/latitude15%20(2).jpg" alt="Latitude15 furniture detail"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — BONGOHIVE -->
+<section class="pf-project" id="furn-bongohive" data-category="furniture" data-client="furn-bongohive">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Innovation Hub · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>Bongohive</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout layout-wide">
+      <div class="pf-gallery g-main-plus reveal">
+        <img class="pf-img-main" src="assets/portfolio/furniture/bongohive%20(1).jpg" alt="Bongohive custom furniture"/>
+        <img src="assets/portfolio/furniture/bongohive%20(2).jpg" alt="Bongohive furniture detail"/>
+        <img src="assets/portfolio/furniture/bongohive%20(3).jpg" alt="Bongohive furniture finish"/>
+      </div>
+      <div class="pf-text reveal">
+        <p>Bongohive's collaborative spirit demanded furniture that is as dynamic as the people using it. We crafted custom pieces that support both focused work and open collaboration — built to move with the space.</p>
+        <p>Durable, thoughtfully designed, and perfectly aligned with the hub's creative identity.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT: FURNITURE — HYBRID -->
+<section class="pf-project" id="furn-hybrid" data-category="furniture" data-client="furn-hybrid">
+  <div class="pf-project-inner">
+    <div class="pf-project-header reveal">
+      <div style="width:100%">
+        <div class="pf-client-badge">Corporate · Custom Furniture</div>
+        <h2 style="margin-top:10px;">Custom Furniture for<br/><em>Hybrid</em></h2>
+      </div>
+    </div>
+    <div class="pf-layout">
+      <div class="pf-text reveal">
+        <p>For Hybrid, we produced custom furniture that elevates the office environment — designed to reflect the company's modern, professional brand while providing comfort and longevity.</p>
+        <p>Each piece was tailored to fit the specific dimensions and aesthetic of their workspace.</p>
+        <a href="https://wa.me/260968531630" target="_blank" class="pf-cta">Start Your Project</a>
+      </div>
+      <div class="pf-gallery g-2 reveal">
+        <img src="assets/portfolio/furniture/hybrid%20(1).jpg" alt="Hybrid custom furniture"/>
+        <img src="assets/portfolio/furniture/hybrid%20(2).jpg" alt="Hybrid furniture detail"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="pf-stats-strip">
+  <div>
+    <div class="pf-stat-num">200+</div>
+    <div class="pf-stat-lbl">Corporate Clients</div>
+  </div>
+  <div>
+    <div class="pf-stat-num">20,000+</div>
+    <div class="pf-stat-lbl">Bags Crafted</div>
+  </div>
+  <div>
+    <div class="pf-stat-num">100%</div>
+    <div class="pf-stat-lbl">Made in Zambia</div>
+  </div>
+  <div>
+    <div class="pf-stat-num">15+</div>
+    <div class="pf-stat-lbl">Industries Served</div>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="pf-cta-banner">
+  
+  <p>From concept to completion, we design and deliver solutions that fit your needs.</p>
+  <a href="https://wa.me/260968531630" target="_blank" class="btn-white">WhatsApp Us Now</a>
+</div>
+
+<!-- FOOTER -->
+<div class="pf-footer">
+  <p>© 2026 My Perfect Stitch. All rights reserved. Made with ❤️ in Zambia.</p>
+  <a href="index.html">← Back to Home</a>
+</div>
+
+<script>
+// Page loader
+function hideLoader() {
+  const loader = document.getElementById('page-loader');
+  if (loader) loader.classList.add('hidden');
+}
+setTimeout(hideLoader, 1500);
+window.addEventListener('load', () => setTimeout(hideLoader, 400));
+
+// Mobile menu
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function toggleMenu() {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+}
+function closeMenu() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+}
+
+document.addEventListener('click', e => {
+  if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+    closeMenu();
+  }
+});
+
+// Nav scroll shadow
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow = window.scrollY > 30 ? '0 4px 20px rgba(0,0,0,0.2)' : 'none';
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Project filter
+function filterCategory(cat, btn) {
+  document.querySelectorAll('.pf-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('subFilterBags').style.display = cat === 'bags' ? 'flex' : 'none';
+  document.getElementById('subFilterInterior').style.display = cat === 'interior' ? 'flex' : 'none';
+  document.getElementById('subFilterFurniture').style.display = cat === 'furniture' ? 'flex' : 'none';
+  document.querySelectorAll('.pf-sub-btn').forEach(b => b.classList.remove('active'));
+  if (cat === 'bags') document.querySelector('#subFilterBags .pf-sub-btn').classList.add('active');
+  if (cat === 'interior') document.querySelector('#subFilterInterior .pf-sub-btn').classList.add('active');
+  if (cat === 'furniture') document.querySelector('#subFilterFurniture .pf-sub-btn').classList.add('active');
+  applyProjectFilter(cat, 'all');
+}
+function filterClient(client, btn) {
+  document.querySelectorAll('.pf-sub-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const activeCat = document.querySelector('.pf-filter-btn.active').dataset.cat;
+  applyProjectFilter(activeCat, client);
+}
+function applyProjectFilter(cat, client) {
+  document.querySelectorAll('.pf-project').forEach(section => {
+    let show = true;
+    if (cat !== 'all' && section.dataset.category !== cat) show = false;
+    if (client !== 'all' && section.dataset.client !== client) show = false;
+    section.style.display = show ? '' : 'none';
+  });
+}
+
+// Scroll to project if hash present
+if (window.location.hash) {
+  setTimeout(() => {
+    const el = document.querySelector(window.location.hash);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 600);
+}
+
+/* ===== QUOTE MODAL ===== */
+const TOTAL_STEPS = 5;
+function openQuoteModal() { document.getElementById('quoteModal').classList.add('active'); document.body.style.overflow = 'hidden'; showQStep(1); }
+function closeQuoteModal() { document.getElementById('quoteModal').classList.remove('active'); document.body.style.overflow = ''; }
+function handleOverlayClick(e) { if (e.target === document.getElementById('quoteModal')) closeQuoteModal(); }
+function showQStep(n) {
+  for (let i = 1; i <= TOTAL_STEPS; i++) { const el = document.getElementById('qstep-' + i); if (el) el.style.display = (i === n) ? 'block' : 'none'; }
+  document.getElementById('quoteProgressBar').style.width = (((n-1)/(TOTAL_STEPS-1))*100) + '%';
+}
+function qNext(step) {
+  const err = document.getElementById('err-' + step); err.textContent = '';
+  if (step === 1) { const sel = document.querySelector('input[name="service"]:checked'); if (!sel) { err.textContent = 'Please select a service to continue.'; return; } }
+  if (step === 2) { const qty = document.getElementById('qQty').value.trim(); if (!qty || isNaN(qty) || Number(qty) < 1) { err.textContent = 'Please enter a valid quantity.'; return; } }
+  if (step === 3) { const desc = document.getElementById('qDesc').value.trim(); if (desc.length < 10) { err.textContent = 'Please describe your order in a bit more detail.'; return; } }
+  if (step === 4) { const nm = document.getElementById('qName').value.trim(); const ph = document.getElementById('qPhone').value.trim(); if (!nm) { err.textContent = 'Please enter your name.'; return; } if (!ph) { err.textContent = 'Please enter your phone / WhatsApp number.'; return; } buildReview(); }
+  showQStep(step + 1);
+}
+function qBack(step) { showQStep(step - 1); }
+function buildReview() {
+  const sv = (document.querySelector('input[name="service"]:checked')||{}).value||'---';
+  const qt = document.getElementById('qQty').value||'---';
+  const bg = document.getElementById('qBudget').value||'Not specified';
+  const dc = document.getElementById('qDesc').value||'---';
+  const dl = document.getElementById('qDeadline').value||'Not specified';
+  const nm = document.getElementById('qName').value||'---';
+  const ph = document.getElementById('qPhone').value||'---';
+  document.getElementById('qReviewBox').innerHTML = '<strong>Service:</strong> '+sv+'<br><strong>Quantity:</strong> '+qt+' pieces<br><strong>Budget:</strong> ZMW '+bg+'<br><strong>Deadline:</strong> '+dl+'<br><strong>Description:</strong> '+qesc(dc)+'<br><strong>Name:</strong> '+qesc(nm)+'<br><strong>Phone:</strong> '+qesc(ph);
+}
+function qesc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sendQuoteToWhatsApp() {
+  const sv = (document.querySelector('input[name="service"]:checked')||{}).value||'---';
+  const qt = document.getElementById('qQty').value||'---';
+  const bg = document.getElementById('qBudget').value||'Not specified';
+  const dc = document.getElementById('qDesc').value||'---';
+  const dl = document.getElementById('qDeadline').value||'Not specified';
+  const nm = document.getElementById('qName').value||'---';
+  const ph = document.getElementById('qPhone').value||'---';
+  const msg = 'QUOTE REQUEST - My Perfect Stitch\n\nService: '+sv+'\nQuantity: '+qt+' pieces\nBudget: ZMW '+bg+'\nDeadline: '+dl+'\n\nDescription:\n'+dc+'\n\nName: '+nm+'\nPhone: '+ph;
+  window.open('https://wa.me/260968531630?text='+encodeURIComponent(msg),'_blank');
+  closeQuoteModal();
+}
+
+</script>
+<!-- ===== QUOTE MODAL ===== -->
+<div id="quoteModal" class="qmodal-overlay" onclick="handleOverlayClick(event)">
+  <div class="qmodal-box">
+    <button class="qmodal-close" onclick="closeQuoteModal()" aria-label="Close">&times;</button>
+    <div class="qmodal-progress"><div class="qmodal-progress-bar" id="quoteProgressBar"></div></div>
+    <form id="quoteForm" onsubmit="return false;">
+      <div class="qstep" id="qstep-1">
+        <div class="qstep-header"><span class="qstep-num">01 / 05</span><h2 class="qstep-title">What service are you looking for?</h2><p class="qstep-desc">Select the option that best describes your order.</p></div>
+        <div class="qchoices">
+          <label class="qchoice"><input type="radio" name="service" value="Branded Corporate Bags"/> <span>Branded Corporate Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Conference &amp; Event Bags"/> <span>Conference &amp; Event Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Retail / Individual Bags"/> <span>Retail / Individual Bags</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Custom Bag Design"/> <span>Custom Bag Design</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Custom Furniture"/> <span>Custom Furniture</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Furniture Reupholstery &amp; Repairs"/> <span>Furniture Reupholstery &amp; Repairs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Interior Design &amp; Fit-Outs"/> <span>Interior Design &amp; Fit-Outs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Other / General Enquiry"/> <span>Other / General Enquiry</span></label>
+        </div>
+        <p class="qerr" id="err-1"></p>
+        <div class="qnav"><button type="button" class="qbtn-next" onclick="qNext(1)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-2" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">02 / 05</span><h2 class="qstep-title">How many pieces do you need?</h2><p class="qstep-desc">Give us an approximate quantity.</p></div>
+        <div class="qfield"><label for="qQty">Number of pieces</label><input type="number" id="qQty" name="quantity" min="1" placeholder="e.g. 10"/></div>
+        <div class="qfield"><label for="qBudget">Approximate budget (ZMW)</label><input type="text" id="qBudget" name="budget" placeholder="e.g. 5000"/></div>
+        <p class="qerr" id="err-2"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(2)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(2)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-3" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">03 / 05</span><h2 class="qstep-title">Describe what you want</h2><p class="qstep-desc">Include fabric preferences, colours, style details, or any inspiration.</p></div>
+        <div class="qfield"><label for="qDesc">Description</label><textarea id="qDesc" name="description" rows="5" placeholder="e.g. Navy blue corporate shirts with gold embroidery logo..."></textarea></div>
+        <p class="qerr" id="err-3"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(3)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(3)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-4" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">04 / 05</span><h2 class="qstep-title">When do you need it?</h2><p class="qstep-desc">Tell us your deadline and how to reach you.</p></div>
+        <div class="qfield"><label for="qDeadline">Required by (date)</label><input type="date" id="qDeadline" name="deadline"/></div>
+        <div class="qfield"><label for="qName">Your name</label><input type="text" id="qName" name="name" placeholder="Full name"/></div>
+        <div class="qfield"><label for="qPhone">Your phone / WhatsApp number</label><input type="tel" id="qPhone" name="phone" placeholder="e.g. 0968 000 000"/></div>
+        <p class="qerr" id="err-4"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(4)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(4)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-5" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">05 / 05</span><h2 class="qstep-title">Review your quote request</h2><p class="qstep-desc">Check the details below then send via WhatsApp.</p></div>
+        <div class="qreview" id="qReviewBox"></div>
+        <p class="qerr" id="err-5"></p>
+        <div class="qnav">
+          <button type="button" class="qbtn-back" onclick="qBack(5)">&larr; Back</button>
+          <button type="button" class="qbtn-send" onclick="sendQuoteToWhatsApp()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:6px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Send via WhatsApp
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

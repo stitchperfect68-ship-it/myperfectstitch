@@ -1,0 +1,21 @@
+﻿.page-hero{background:#100736;padding:100px 5% 40px;text-align:center;border-bottom:3px solid #F9B040}
+.page-hero h1{font-family:var(--font-display);font-size:2rem;font-weight:700;color:#fff}
+.page-hero h1 em{color:#F9B040;font-style:italic}
+.checkout-section{padding:60px 5%;background:var(--cream)}
+.checkout-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+.checkout-form{background:#fff;border-radius:6px;padding:32px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.checkout-form h3{font-size:1.1rem;font-weight:700;color:#100736;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #e8e4f0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.8rem;font-weight:700;color:#333;margin-bottom:6px;letter-spacing:.04em}
+.form-group input,.form-group textarea,.form-group select{width:100%;border:2px solid #e0dce8;border-radius:4px;padding:10px 14px;font-family:var(--font-body);font-size:.9rem;color:#1a1a1a;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group textarea:focus{border-color:#F9B040}
+.btn-pay{width:100%;background:#F9B040;color:#100736;border:none;padding:14px;border-radius:4px;font-family:var(--font-body);font-size:.9rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-pay:hover{background:#fdd085}
+.order-summary{background:#fff;border-radius:6px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.order-summary h3{font-size:1.1rem;font-weight:700;color:#100736;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #e8e4f0}
+.summary-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0eef8;font-size:.88rem}
+.summary-item:last-child{border-bottom:none}
+.summary-total{display:flex;justify-content:space-between;padding:14px 0 0;font-weight:700;font-size:1.05rem;color:#100736;margin-top:8px;border-top:2px solid #100736}
+.linco-badge{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:12px;color:#888;font-size:.78rem}
+@media(max-width:768px){.checkout-inner{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}

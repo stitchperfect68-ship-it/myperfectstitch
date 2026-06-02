@@ -1,0 +1,26 @@
+﻿.page-hero{background:#100736;padding:120px 5% 60px;text-align:center;border-bottom:3px solid #F9B040}
+.page-hero-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(249,176,64,.7);font-weight:700;margin-bottom:10px}
+.page-hero h1{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:#fff}
+.page-hero h1 em{color:#F9B040;font-style:italic}
+.gallery-section{padding:60px 5%;background:var(--cream)}
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px;justify-content:center}
+.filter-btn{background:transparent;border:2px solid #e0dce8;color:#555;padding:8px 22px;border-radius:20px;font-family:var(--font-body);font-size:.82rem;font-weight:600;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.filter-btn:hover,.filter-btn.active{border-color:#100736;background:#100736;color:#F9B040}
+.gallery-grid{columns:4;gap:16px;column-gap:16px}
+.gallery-item{break-inside:avoid;margin-bottom:16px;position:relative;overflow:hidden;border-radius:4px;cursor:pointer}
+.gallery-item img{width:100%;display:block;transition:transform .4s ease}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-item-overlay{position:absolute;inset:0;background:rgba(16,7,54,.5);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:16px}
+.gallery-item:hover .gallery-item-overlay{opacity:1}
+.gallery-item-label{color:#F9B040;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;background:rgba(0,0,0,.4);padding:4px 10px;border-radius:3px}
+.lightbox{display:none;position:fixed;inset:0;z-index:9000;background:rgba(5,2,18,.95);align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lightbox-inner{position:relative;max-width:90vw;max-height:90vh}
+.lightbox-img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px}
+.lightbox-close{position:absolute;top:-40px;right:0;background:none;border:none;color:rgba(255,255,255,.7);font-size:2rem;cursor:pointer;line-height:1;transition:color .2s}
+.lightbox-close:hover{color:#F9B040}
+.lightbox-nav{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.lightbox-nav:hover{background:rgba(249,176,64,.3)}
+.lb-prev{left:20px}.lb-next{right:20px}
+@media(max-width:960px){.gallery-grid{columns:3}}
+@media(max-width:600px){.gallery-grid{columns:2}}

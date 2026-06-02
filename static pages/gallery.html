@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gallery — My Perfect Stitch</title>
+<link rel="icon" type="image/jpeg" href="assets/extracted/img_01.jpg"/>
+<link rel="apple-touch-icon" href="assets/extracted/img_01.jpg"/>
+<meta name="description" content="Browse our gallery of custom bags, furniture, and interiors — all designed and made in Lusaka, Zambia."/>
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Gallery — My Perfect Stitch"/>
+<meta property="og:description" content="Browse our gallery of custom bags, furniture, and interiors — all designed and made in Lusaka, Zambia."/>
+<meta property="og:image" content="assets/extracted/img_01.jpg"/>
+<meta property="og:image:alt" content="My Perfect Stitch — Lusaka, Zambia"/>
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Gallery — My Perfect Stitch"/>
+<meta name="twitter:description" content="Browse our gallery of custom bags, furniture, and interiors — all designed and made in Lusaka, Zambia."/>
+<meta name="twitter:image" content="assets/extracted/img_01.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com/"/>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/></noscript>
+<style>
+:root {
+  --navy:       #100736;
+  --navy-deep:  #0a0422;
+  --gold:       #F9B040;
+  --gold-light: #fdd085;
+  --gold-dark:  #d4880a;
+  --white:      #ffffff;
+  --cream:      #faf8f3;
+  --font: 'Poppins', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--cream); color: #1a1a1a; overflow-x: hidden; }
+
+/* ===== PAGE LOADER ===== */
+#page-loader {
+  position: fixed; inset: 0; z-index: 9000;
+  background: var(--navy); display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#page-loader.hidden { opacity: 0; visibility: hidden; }
+.loader-logo { text-align: center; }
+.loader-logo span { display: block; font-size: 2rem; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; }
+.loader-logo small { display: block; font-size: 0.65rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 4px; }
+.loader-bar { width: 120px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 16px auto 0; overflow: hidden; }
+.loader-fill { height: 100%; width: 0; background: var(--gold); border-radius: 2px; animation: loadFill 0.8s ease forwards; }
+@keyframes loadFill { to { width: 100%; } }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: #140f37; border-bottom: 3px solid var(--gold);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+.nav-logo-text { color: #fff; font-family: var(--font); line-height: 1.2; }
+.nav-logo-text strong { font-size: 1rem; display: block; }
+.nav-logo-text span { font-size: 0.6rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.15em; }
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a { text-decoration: none; color: rgba(255,255,255,0.9); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+.nav-cta { background: var(--gold) !important; color: #100736 !important; padding: 8px 20px; border-radius: 3px; font-weight: 700 !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--gold-light) !important; }
+.nav-quote-btn {
+  background: transparent; border: 2px solid var(--gold); color: var(--gold);
+  padding: 7px 18px; border-radius: 3px; font-family: var(--font);
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.nav-quote-btn:hover { background: var(--gold); color: var(--navy); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.hamburger span { width: 24px; height: 2px; background: white; transition: transform 0.3s ease, opacity 0.3s ease; display: block; transform-origin: center; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none; background: #140f37; padding: 20px 5%;
+  border-bottom: 3px solid var(--gold);
+  position: fixed; top: 71px; left: 0; right: 0; z-index: 999;
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 12px 0; text-decoration: none; color: white; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.mobile-quote-btn {
+  display: block; width: 100%; margin-top: 12px;
+  background: var(--gold); color: var(--navy); border: none;
+  padding: 13px 0; font-family: var(--font);
+  font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; cursor: pointer; border-radius: 3px;
+}
+
+/* ===== HERO BANNER ===== */
+.gallery-hero {
+  padding: 120px 5% 60px;
+  background: linear-gradient(135deg, #100736 0%, #1a0f4a 60%, #2d1a6e 100%);
+  text-align: center; position: relative; overflow: hidden;
+}
+.gallery-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpolygon points='30,5 55,30 30,55 5,30' fill='none' stroke='rgba(249,176,64,0.08)' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+.gallery-hero-inner { position: relative; z-index: 1; }
+.gallery-hero .sec-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; margin-bottom: 14px;
+}
+.gallery-hero .sec-label::before { content: ''; width: 28px; height: 3px; background: var(--gold); border-radius: 2px; }
+.gallery-hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 14px; }
+.gallery-hero h1 em { font-style: italic; color: var(--gold); }
+.gallery-hero p { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 10px;
+  padding: 36px 5% 28px; background: #fff;
+  border-bottom: 1px solid #ede9f5; position: sticky; top: 68px; z-index: 100;
+}
+.filter-btn {
+  background: transparent; border: 2px solid #ddd; color: #555;
+  padding: 8px 22px; border-radius: 50px; font-family: var(--font);
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+.filter-btn.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+.filter-count {
+  display: inline-block; background: rgba(255,255,255,0.25); color: inherit;
+  font-size: 0.68rem; font-weight: 700; padding: 1px 7px; border-radius: 10px;
+  margin-left: 6px; vertical-align: middle;
+}
+.filter-btn.active .filter-count { background: rgba(255,255,255,0.25); }
+
+/* ===== GALLERY GRID ===== */
+.gallery-section { padding: 48px 5% 80px; }
+.gallery-grid {
+  columns: 4; column-gap: 14px;
+}
+.gallery-item {
+  break-inside: avoid; margin-bottom: 14px;
+  border-radius: 5px; overflow: hidden; position: relative;
+  cursor: pointer; display: block;
+}
+.gallery-item img {
+  width: 100%; display: block;
+  transition: transform 0.4s ease; border-radius: 5px;
+}
+.gallery-item:hover img { transform: scale(1.04); }
+.gallery-item-overlay {
+  position: absolute; inset: 0; border-radius: 5px;
+  background: linear-gradient(to top, rgba(16,7,54,0.7) 0%, transparent 55%);
+  opacity: 0; transition: opacity 0.3s ease;
+  display: flex; align-items: flex-end; padding: 14px;
+}
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+.gallery-item-label {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--gold);
+}
+.gallery-item.hidden { display: none; }
+
+/* No results */
+.gallery-empty {
+  text-align: center; padding: 60px 20px; display: none;
+  color: #888; font-size: 0.95rem;
+}
+.gallery-empty.visible { display: block; }
+
+/* ===== LIGHTBOX ===== */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 9998;
+  background: rgba(5,2,20,0.92); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+.lightbox.active { display: flex; }
+.lightbox-inner { position: relative; max-width: 900px; width: 100%; }
+.lightbox-img { width: 100%; max-height: 85vh; object-fit: contain; border-radius: 6px; display: block; }
+.lightbox-close {
+  position: absolute; top: -16px; right: -16px;
+  background: var(--gold); border: none; color: var(--navy);
+  width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem;
+  cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.lightbox-close:hover { background: var(--gold-light); }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.12); border: none; color: #fff;
+  width: 44px; height: 44px; border-radius: 50%; font-size: 1.2rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; backdrop-filter: blur(4px);
+}
+.lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+.lightbox-prev { left: -56px; }
+.lightbox-next { right: -56px; }
+.lightbox-caption {
+  text-align: center; margin-top: 14px;
+  font-size: 0.8rem; color: rgba(255,255,255,0.55); letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* ===== QUOTE MODAL ===== */
+.qmodal-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(10,4,34,0.78); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 16px; }
+.qmodal-overlay.active { display: flex; }
+.qmodal-box { background: #fff; border-radius: 6px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.45); animation: qSlideUp 0.3s ease; }
+@keyframes qSlideUp { from { opacity:0; transform: translateY(28px); } to { opacity:1; transform: translateY(0); } }
+.qmodal-progress { height: 4px; background: #e8e4f0; border-radius: 4px 4px 0 0; overflow: hidden; }
+.qmodal-progress-bar { height: 100%; background: linear-gradient(90deg,#F9B040,#d4880a); transition: width 0.4s ease; }
+.qmodal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 1.6rem; line-height: 1; color: #555; cursor: pointer; z-index: 2; transition: color 0.2s; }
+.qmodal-close:hover { color: #100736; }
+.qstep { padding: 36px 36px 28px; }
+.qstep-header { margin-bottom: 24px; }
+.qstep-num { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.qstep-title { font-size: 1.35rem; font-weight: 700; color: var(--navy); margin: 6px 0 8px; }
+.qstep-desc { font-size: 0.88rem; color: #555; line-height: 1.6; }
+.qchoices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.qchoice { display: flex; align-items: center; gap: 10px; border: 2px solid #e0dce8; border-radius: 4px; padding: 10px 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; font-size: 0.87rem; color: #222; }
+.qchoice:hover { border-color: var(--gold); background: #fffbf2; }
+.qchoice input[type=radio] { accent-color: var(--gold); width: 16px; height: 16px; flex-shrink: 0; }
+.qchoice:has(input:checked) { border-color: var(--gold); background: #fffbf2; font-weight: 600; }
+.qfield { margin-bottom: 18px; }
+.qfield label { display: block; font-size: 0.82rem; font-weight: 600; color: #333; margin-bottom: 6px; }
+.qfield input, .qfield textarea { width: 100%; border: 2px solid #e0dce8; border-radius: 4px; padding: 11px 14px; font-family: var(--font); font-size: 0.9rem; color: #1a1a1a; outline: none; transition: border-color 0.2s; resize: vertical; }
+.qfield input:focus, .qfield textarea:focus { border-color: var(--gold); }
+.qerr { font-size: 0.8rem; color: #c0392b; min-height: 18px; margin-bottom: 4px; }
+.qnav { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+.qbtn-back { background: transparent; border: 2px solid #ccc; color: #555; padding: 10px 22px; border-radius: 3px; font-family: var(--font); font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.qbtn-back:hover { border-color: var(--navy); color: var(--navy); }
+.qbtn-next { background: var(--navy); color: #fff; border: none; padding: 10px 28px; border-radius: 3px; font-family: var(--font); font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.qbtn-next:hover { background: #1a0f4a; }
+.qbtn-send { background: #25D366; color: #fff; border: none; padding: 12px 28px; border-radius: 3px; font-family: var(--font); font-size: 0.88rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; transition: background 0.2s; }
+.qbtn-send:hover { background: #1ebe5d; }
+.qreview { background: #f9f7ff; border: 2px solid #e0dce8; border-radius: 4px; padding: 18px 20px; font-size: 0.88rem; line-height: 1.9; color: #222; }
+.qreview strong { color: var(--navy); }
+
+/* ===== FOOTER ===== */
+.gal-footer {
+  background: var(--navy); padding: 28px 5%;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  border-top: 3px solid var(--gold);
+}
+.gal-footer p { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+.gal-footer a { color: var(--gold); text-decoration: none; font-size: 0.82rem; font-weight: 600; }
+.gal-footer a:hover { color: var(--gold-light); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .gallery-grid { columns: 3; }
+  .lightbox-prev { left: -44px; }
+  .lightbox-next { right: -44px; }
+}
+@media (max-width: 600px) {
+  .gallery-grid { columns: 1; }
+  .filter-bar { padding: 20px 5% 16px; gap: 8px; }
+  .filter-btn { padding: 7px 14px; font-size: 0.72rem; }
+  .lightbox-prev, .lightbox-next { display: none; }
+}
+@media (max-width: 520px) { .qstep { padding: 28px 20px 20px; } .qchoices { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="page-loader">
+  <div class="loader-logo">
+    <span>MPS</span>
+    <small>My Perfect Stitch</small>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/extracted/img_01.jpg" alt="My Perfect Stitch Logo"/>
+      <div class="nav-logo-text">
+        <strong>My Perfect Stitch</strong>
+        <span>Creating Happiness</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#shop">Shop</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="https://wa.me/260968531630" target="_blank" class="nav-cta">Order Now</a></li>
+      <li><button class="nav-quote-btn" onclick="openQuoteModal()">Request a Quote</button></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMenu()">Home</a>
+  <a href="index.html#about" onclick="closeMenu()">About</a>
+  <a href="index.html#shop" onclick="closeMenu()">Shop</a>
+  <a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
+  <a href="events.html" onclick="closeMenu()">Events</a>
+  <a href="gallery.html" onclick="closeMenu()">Gallery</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+  <a href="https://wa.me/260968531630" target="_blank" onclick="closeMenu()">Order on WhatsApp</a>
+  <button class="mobile-quote-btn" onclick="closeMenu(); openQuoteModal()">Request a Quote</button>
+</div>
+
+<!-- HERO -->
+<section class="gallery-hero">
+  <div class="gallery-hero-inner">
+    <div class="sec-label">Our Work</div>
+    <h1>The MPS <em>Gallery</em></h1>
+    <p>Bags, furniture, and interior spaces — a showcase of everything we design and build in Lusaka, Zambia.</p>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar" id="filterBar">
+  <button class="filter-btn active" data-filter="all" onclick="filterGallery('all', this)">All <span class="filter-count" id="count-all"></span></button>
+  <button class="filter-btn" data-filter="bags" onclick="filterGallery('bags', this)">Bags <span class="filter-count" id="count-bags"></span></button>
+  <button class="filter-btn" data-filter="furniture" onclick="filterGallery('furniture', this)">Custom Furniture <span class="filter-count" id="count-furniture"></span></button>
+  <button class="filter-btn" data-filter="interior" onclick="filterGallery('interior', this)">Interior <span class="filter-count" id="count-interior"></span></button>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="gallery-grid" id="galleryGrid">
+
+    <!-- BAGS -->
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags5.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags6.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags7.webp" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags8.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags9.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags10.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags11.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags12.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags13.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags15.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/bags20.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+    <div class="gallery-item" data-category="bags" onclick="openLightbox(this)">
+      <img src="assets/gallery/hob1.jpg" alt="Bags" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Bags</span></div>
+    </div>
+
+    <!-- FURNITURE -->
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture1.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture2.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture3.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture4.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture5.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture6.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+    <div class="gallery-item" data-category="furniture" onclick="openLightbox(this)">
+      <img src="assets/gallery/furniture8.jpg" alt="Furniture" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Furniture</span></div>
+    </div>
+
+    <!-- INTERIORS -->
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior1.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior2.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior3.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior4.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior5.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior6.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior7.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior8.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior9.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior10.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior11.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior12.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior13.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior14.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior15.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior16.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior17.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior18.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior19.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+    <div class="gallery-item" data-category="interior" onclick="openLightbox(this)">
+      <img src="assets/gallery/interior20.jpg" alt="Interiors" loading="lazy"/>
+      <div class="gallery-item-overlay"><span class="gallery-item-label">Interiors</span></div>
+    </div>
+
+  </div>
+  <div class="gallery-empty" id="galleryEmpty">No images found in this category.</div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+    <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+    <img class="lightbox-img" id="lightboxImg" src="#" alt=""/>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<!-- QUOTE MODAL -->
+<div id="quoteModal" class="qmodal-overlay" onclick="handleOverlayClick(event)">
+  <div class="qmodal-box">
+    <button class="qmodal-close" onclick="closeQuoteModal()" aria-label="Close">&times;</button>
+    <div class="qmodal-progress"><div class="qmodal-progress-bar" id="quoteProgressBar"></div></div>
+    <form id="quoteForm" onsubmit="return false;">
+      <div class="qstep" id="qstep-1">
+        <div class="qstep-header"><span class="qstep-num">01 / 05</span><h2 class="qstep-title">What service are you looking for?</h2><p class="qstep-desc">Select the option that best describes your order.</p></div>
+        <div class="qchoices">
+          <label class="qchoice"><input type="radio" name="service" value="Custom Clothing Design"/> <span>Custom Clothing Design</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Corporate Uniforms"/> <span>Corporate Uniforms</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="School Uniforms"/> <span>School Uniforms</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Alterations &amp; Repairs"/> <span>Alterations &amp; Repairs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Event / Occasion Wear"/> <span>Event / Occasion Wear</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Other"/> <span>Other</span></label>
+        </div>
+        <p class="qerr" id="err-1"></p>
+        <div class="qnav"><button type="button" class="qbtn-next" onclick="qNext(1)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-2" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">02 / 05</span><h2 class="qstep-title">How many pieces do you need?</h2><p class="qstep-desc">Give us an approximate quantity.</p></div>
+        <div class="qfield"><label for="qQty">Number of pieces</label><input type="number" id="qQty" name="quantity" min="1" placeholder="e.g. 10"/></div>
+        <div class="qfield"><label for="qBudget">Approximate budget (ZMW)</label><input type="text" id="qBudget" name="budget" placeholder="e.g. 5000"/></div>
+        <p class="qerr" id="err-2"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(2)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(2)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-3" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">03 / 05</span><h2 class="qstep-title">Describe what you want</h2><p class="qstep-desc">Include fabric preferences, colours, style details, or any inspiration.</p></div>
+        <div class="qfield"><label for="qDesc">Description</label><textarea id="qDesc" name="description" rows="5" placeholder="e.g. Navy blue corporate shirts with gold embroidery logo..."></textarea></div>
+        <p class="qerr" id="err-3"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(3)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(3)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-4" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">04 / 05</span><h2 class="qstep-title">When do you need it?</h2><p class="qstep-desc">Tell us your deadline and how to reach you.</p></div>
+        <div class="qfield"><label for="qDeadline">Required by (date)</label><input type="date" id="qDeadline" name="deadline"/></div>
+        <div class="qfield"><label for="qName">Your name</label><input type="text" id="qName" name="name" placeholder="Full name"/></div>
+        <div class="qfield"><label for="qPhone">Your phone / WhatsApp number</label><input type="tel" id="qPhone" name="phone" placeholder="e.g. 0968 000 000"/></div>
+        <p class="qerr" id="err-4"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(4)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(4)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-5" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">05 / 05</span><h2 class="qstep-title">Review your quote request</h2><p class="qstep-desc">Check the details below then send via WhatsApp.</p></div>
+        <div class="qreview" id="qReviewBox"></div>
+        <p class="qerr" id="err-5"></p>
+        <div class="qnav">
+          <button type="button" class="qbtn-back" onclick="qBack(5)">&larr; Back</button>
+          <button type="button" class="qbtn-send" onclick="sendQuoteToWhatsApp()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:6px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Send via WhatsApp
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="gal-footer">
+  <p>&copy; 2026 My Perfect Stitch. All rights reserved.</p>
+  <a href="index.html">&#8592; Back to Home</a>
+</div>
+
+<script>
+// Page loader
+function hideLoader() {
+  const loader = document.getElementById('page-loader');
+  if (loader) loader.classList.add('hidden');
+}
+setTimeout(hideLoader, 1500);
+window.addEventListener('load', () => setTimeout(hideLoader, 400));
+
+// Mobile menu
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+function toggleMenu() {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+}
+function closeMenu() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+}
+document.addEventListener('click', e => {
+  if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburger.contains(e.target)) closeMenu();
+});
+
+// ===== FILTER =====
+const allItems = Array.from(document.querySelectorAll('.gallery-item'));
+const counts = { all: allItems.length };
+allItems.forEach(item => {
+  const cat = item.dataset.category;
+  counts[cat] = (counts[cat] || 0) + 1;
+});
+Object.entries(counts).forEach(([key, val]) => {
+  const el = document.getElementById('count-' + key);
+  if (el) el.textContent = val;
+});
+
+function filterGallery(category, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  let visible = 0;
+  allItems.forEach(item => {
+    const show = category === 'all' || item.dataset.category === category;
+    item.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('galleryEmpty').classList.toggle('visible', visible === 0);
+}
+
+// Auto-filter from URL hash (e.g. gallery.html#bags)
+(function() {
+  const hash = window.location.hash.replace('#', '');
+  if (hash && ['bags','furniture','interior'].includes(hash)) {
+    const btn = document.querySelector('.filter-btn[data-filter="' + hash + '"]');
+    if (btn) filterGallery(hash, btn);
+  }
+})();
+
+// ===== LIGHTBOX =====
+let lightboxItems = [];
+let lightboxIndex = 0;
+
+function buildLightboxList() {
+  lightboxItems = allItems.filter(item => !item.classList.contains('hidden'));
+}
+
+function openLightbox(el) {
+  buildLightboxList();
+  lightboxIndex = lightboxItems.indexOf(el);
+  showLightboxItem(lightboxIndex);
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function showLightboxItem(idx) {
+  const item = lightboxItems[idx];
+  const img = item.querySelector('img');
+  const label = item.querySelector('.gallery-item-label').textContent;
+  document.getElementById('lightboxImg').src = img.src;
+  document.getElementById('lightboxCaption').textContent = label + ' — ' + (idx + 1) + ' / ' + lightboxItems.length;
+}
+
+function lightboxNav(dir) {
+  lightboxIndex = (lightboxIndex + dir + lightboxItems.length) % lightboxItems.length;
+  showLightboxItem(lightboxIndex);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function handleLightboxClick(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('active')) return;
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// ===== QUOTE MODAL =====
+const TOTAL_STEPS = 5;
+function openQuoteModal() { document.getElementById('quoteModal').classList.add('active'); document.body.style.overflow = 'hidden'; showQStep(1); }
+function closeQuoteModal() { document.getElementById('quoteModal').classList.remove('active'); document.body.style.overflow = ''; }
+function handleOverlayClick(e) { if (e.target === document.getElementById('quoteModal')) closeQuoteModal(); }
+function showQStep(n) {
+  for (let i = 1; i <= TOTAL_STEPS; i++) { const el = document.getElementById('qstep-' + i); if (el) el.style.display = (i === n) ? 'block' : 'none'; }
+  document.getElementById('quoteProgressBar').style.width = (((n-1)/(TOTAL_STEPS-1))*100) + '%';
+}
+function qNext(step) {
+  const err = document.getElementById('err-' + step); err.textContent = '';
+  if (step === 1) { const sel = document.querySelector('input[name="service"]:checked'); if (!sel) { err.textContent = 'Please select a service to continue.'; return; } }
+  if (step === 2) { const qty = document.getElementById('qQty').value.trim(); if (!qty || isNaN(qty) || Number(qty) < 1) { err.textContent = 'Please enter a valid quantity.'; return; } }
+  if (step === 3) { const desc = document.getElementById('qDesc').value.trim(); if (desc.length < 10) { err.textContent = 'Please describe your order in a bit more detail.'; return; } }
+  if (step === 4) { const nm = document.getElementById('qName').value.trim(); const ph = document.getElementById('qPhone').value.trim(); if (!nm) { err.textContent = 'Please enter your name.'; return; } if (!ph) { err.textContent = 'Please enter your phone number.'; return; } buildReview(); }
+  showQStep(step + 1);
+}
+function qBack(step) { showQStep(step - 1); }
+function buildReview() {
+  const sv = (document.querySelector('input[name="service"]:checked')||{}).value||'---';
+  const qt = document.getElementById('qQty').value||'---';
+  const bg = document.getElementById('qBudget').value||'Not specified';
+  const dc = document.getElementById('qDesc').value||'---';
+  const dl = document.getElementById('qDeadline').value||'Not specified';
+  const nm = document.getElementById('qName').value||'---';
+  const ph = document.getElementById('qPhone').value||'---';
+  document.getElementById('qReviewBox').innerHTML = '<strong>Service:</strong> '+sv+'<br><strong>Quantity:</strong> '+qt+' pieces<br><strong>Budget:</strong> ZMW '+bg+'<br><strong>Deadline:</strong> '+dl+'<br><strong>Description:</strong> '+qesc(dc)+'<br><strong>Name:</strong> '+qesc(nm)+'<br><strong>Phone:</strong> '+qesc(ph);
+}
+function qesc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sendQuoteToWhatsApp() {
+  const sv = (document.querySelector('input[name="service"]:checked')||{}).value||'---';
+  const qt = document.getElementById('qQty').value||'---';
+  const bg = document.getElementById('qBudget').value||'Not specified';
+  const dc = document.getElementById('qDesc').value||'---';
+  const dl = document.getElementById('qDeadline').value||'Not specified';
+  const nm = document.getElementById('qName').value||'---';
+  const ph = document.getElementById('qPhone').value||'---';
+  const msg = 'QUOTE REQUEST - My Perfect Stitch\n\nService: '+sv+'\nQuantity: '+qt+' pieces\nBudget: ZMW '+bg+'\nDeadline: '+dl+'\n\nDescription:\n'+dc+'\n\nName: '+nm+'\nPhone: '+ph;
+  window.open('https://wa.me/260968531630?text='+encodeURIComponent(msg),'_blank');
+  closeQuoteModal();
+}
+</script>
+</body>
+</html>

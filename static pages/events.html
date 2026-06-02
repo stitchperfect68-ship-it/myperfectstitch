@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Events — My Perfect Stitch</title>
+<link rel="icon" type="image/jpeg" href="assets/extracted/img_01.jpg"/>
+<link rel="apple-touch-icon" href="assets/extracted/img_01.jpg"/>
+<meta name="description" content="See My Perfect Stitch in action at corporate events, exhibitions, and community showcases across Zambia."/>
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Events — My Perfect Stitch"/>
+<meta property="og:description" content="See My Perfect Stitch in action at corporate events, exhibitions, and community showcases across Zambia."/>
+<meta property="og:image" content="assets/extracted/img_01.jpg"/>
+<meta property="og:image:alt" content="My Perfect Stitch — Lusaka, Zambia"/>
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Events — My Perfect Stitch"/>
+<meta name="twitter:description" content="See My Perfect Stitch in action at corporate events, exhibitions, and community showcases across Zambia."/>
+<meta name="twitter:image" content="assets/extracted/img_01.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com/"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:   #140f37;
+  --orange: #F9B040;
+  --amber:  #FF8C00;
+  --font-display: 'Poppins', sans-serif;
+  --font-body:    'Poppins', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: #1a1a1a; background: #fff; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; }
+em { font-style: normal; color: var(--orange); }
+
+/* ===== PAGE LOADER ===== */
+#page-loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--navy);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 28px;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#page-loader.hidden { opacity: 0; visibility: hidden; }
+.loader-brand { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: 0.12em; text-transform: uppercase; }
+.loader-brand span { color: var(--orange); }
+.loader-thread { position: relative; width: 180px; height: 60px; }
+.loader-thread svg { width: 100%; height: 100%; overflow: visible; }
+.thread-path { fill: none; stroke: var(--orange); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 12 8; stroke-dashoffset: 200; animation: stitch 1.8s linear infinite; }
+.thread-path-back { fill: none; stroke: rgba(255,140,0,0.18); stroke-width: 2.5; stroke-linecap: round; }
+.needle { animation: needleMove 1.8s linear infinite; }
+@keyframes stitch { to { stroke-dashoffset: 0; } }
+@keyframes needleMove { 0% { transform: translateX(0px); } 100% { transform: translateX(180px); } }
+.loader-dots { display: flex; gap: 10px; }
+.loader-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); animation: dotBounce 1.2s ease-in-out infinite; }
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; background: var(--amber); }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; background: #FFA726; }
+@keyframes dotBounce { 0%,80%,100% { transform: scale(0.7); opacity: 0.5; } 40% { transform: scale(1.3); opacity: 1; } }
+.loader-stripe { position: absolute; bottom: 0; left: 0; right: 0; height: 6px; background: #F9B040; }
+
+/* ===== NAV ===== */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--navy); border-bottom: 5px solid var(--orange); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; }
+.nav-logo { display: flex; align-items: center; gap: 12px; }
+.nav-logo-badge { width: 42px; height: 42px; border-radius: 50%; background: var(--amber); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; color: #fff; }
+.nav-logo-text { color: #fff; font-family: var(--font-display); line-height: 1.2; }
+.nav-logo-text strong { font-size: 1rem; display: block; }
+.nav-logo-text span { font-size: 0.6rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.15em; }
+.nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.9); font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--amber); }
+.nav-cta { background: var(--orange) !important; color: #fff !important; padding: 8px 20px; border-radius: 3px; font-weight: 700 !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--amber) !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.hamburger span { width: 24px; height: 2px; background: white; display: block; transition: transform 0.3s ease, opacity 0.3s ease; transform-origin: center; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu { display: none; background: var(--navy); padding: 20px 5%; border-bottom: 5px solid var(--orange); position: fixed; top: 73px; left: 0; right: 0; z-index: 999; }
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 12px 0; color: white; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+/* ===== HERO ===== */
+.ev-hero {
+  background: var(--navy);
+  padding: 160px 5% 80px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.ev-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 40% 60%, rgba(230,81,0,0.14) 0%, transparent 65%);
+  pointer-events: none;
+}
+.sec-label {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--amber); font-weight: 700; margin-bottom: 14px;
+}
+.sec-label::before { content: ''; width: 28px; height: 3px; background: var(--amber); border-radius: 2px; }
+.ev-hero h1 { font-family: var(--font-display); font-size: clamp(2.4rem,5vw,4rem); color: #fff; font-weight: 700; line-height: 1.15; margin-bottom: 18px; }
+.ev-hero p { color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.8; max-width: 540px; margin: 0 auto; }
+
+/* ===== FILTER ===== */
+.ev-filter {
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  padding: 32px 5%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky; top: 73px; z-index: 100;
+}
+.ev-filter-btn {
+  background: none; border: 2px solid #ddd; color: #555;
+  padding: 8px 22px; border-radius: 30px; font-family: var(--font-body);
+  font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+  cursor: pointer; transition: all 0.2s;
+}
+.ev-filter-btn:hover, .ev-filter-btn.active { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+/* ===== EVENT SECTIONS ===== */
+.ev-event {
+  padding: 90px 5%;
+  scroll-margin-top: 150px;
+}
+.ev-event:nth-child(even) { background: #f9f5f0; }
+
+.ev-event-inner { max-width: 1200px; margin: 0 auto; }
+
+/* Tag + heading */
+.ev-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--orange); font-weight: 700; margin-bottom: 10px;
+}
+.ev-tag::before { content: ''; width: 20px; height: 3px; background: var(--orange); border-radius: 2px; }
+.ev-event-inner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  color: var(--navy); font-weight: 700; line-height: 1.2;
+  margin-bottom: 40px;
+}
+
+/* Two-column layout */
+.ev-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start; }
+.ev-layout.text-first .ev-text { order: 1; }
+.ev-layout.text-first .ev-gallery { order: 2; }
+
+.ev-text p { font-size: 1rem; line-height: 1.85; color: #444; margin-bottom: 16px; }
+.ev-text p:last-child { margin-bottom: 0; }
+
+/* Galleries */
+.ev-gallery { display: grid; gap: 10px; }
+
+/* 1 image */
+.ev-gallery.g1 { grid-template-columns: 1fr; }
+.ev-gallery.g1 img { height: 420px; width: 100%; object-fit: cover; border-radius: 4px; }
+
+/* 2 images */
+.ev-gallery.g2 { grid-template-columns: 1fr 1fr; }
+.ev-gallery.g2 img { height: 300px; width: 100%; object-fit: cover; border-radius: 4px; }
+
+/* 3 images: 1 tall left + 2 stacked right */
+.ev-gallery.g3 { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+.ev-gallery.g3 .g-main { grid-row: span 2; height: 100%; min-height: 400px; object-fit: cover; border-radius: 4px; width: 100%; }
+.ev-gallery.g3 img:not(.g-main) { height: 195px; object-fit: cover; border-radius: 4px; width: 100%; }
+
+/* 5 images: full-width hero + 2x2 grid */
+.ev-gallery.g5 { grid-template-columns: 1fr 1fr; }
+.ev-gallery.g5 .g-hero { grid-column: span 2; height: 340px; object-fit: cover; border-radius: 4px; width: 100%; }
+.ev-gallery.g5 img:not(.g-hero) { height: 200px; object-fit: cover; border-radius: 4px; width: 100%; }
+
+/* 7 images: hero + 3x2 */
+.ev-gallery.g7 { grid-template-columns: repeat(3,1fr); }
+.ev-gallery.g7 .g-hero { grid-column: span 3; height: 360px; object-fit: cover; border-radius: 4px; width: 100%; }
+.ev-gallery.g7 img:not(.g-hero) { height: 200px; object-fit: cover; border-radius: 4px; width: 100%; }
+
+.ev-gallery img { transition: transform 0.4s ease; cursor: zoom-in; }
+.ev-gallery img:hover { transform: scale(1.02); }
+
+/* ===== LIGHTBOX ===== */
+#lightbox {
+  display: none; position: fixed; inset: 0; z-index: 9998;
+  background: rgba(0,0,0,0.92);
+  align-items: center; justify-content: center;
+}
+#lightbox.open { display: flex; }
+#lightbox img { max-width: 90vw; max-height: 88vh; border-radius: 4px; object-fit: contain; }
+#lightbox-close {
+  position: absolute; top: 20px; right: 28px;
+  background: none; border: none; color: #fff; font-size: 2.4rem;
+  cursor: pointer; line-height: 1; opacity: 0.75; transition: opacity 0.2s;
+}
+#lightbox-close:hover { opacity: 1; }
+#lightbox-prev, #lightbox-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.1); border: none; color: #fff;
+  font-size: 1.8rem; padding: 14px 18px; cursor: pointer;
+  border-radius: 3px; transition: background 0.2s;
+}
+#lightbox-prev:hover, #lightbox-next:hover { background: rgba(255,255,255,0.22); }
+#lightbox-prev { left: 20px; }
+#lightbox-next { right: 20px; }
+
+/* ===== STATS STRIP ===== */
+.ev-stats {
+  background: var(--navy);
+  display: flex; justify-content: center; gap: 80px;
+  padding: 52px 5%; flex-wrap: wrap; text-align: center;
+}
+.ev-stat-num { font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; color: var(--amber); line-height: 1; }
+.ev-stat-lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.6); margin-top: 6px; }
+
+/* ===== CTA BANNER ===== */
+.ev-cta-banner { background: var(--orange); padding: 70px 5%; text-align: center; }
+.ev-cta-banner h2 { font-family: var(--font-display); font-size: clamp(1.8rem,3.5vw,2.8rem); color: #fff; font-weight: 700; margin-bottom: 14px; }
+.ev-cta-banner p { color: rgba(255,255,255,0.85); font-size: 1rem; max-width: 500px; margin: 0 auto 32px; line-height: 1.8; }
+.btn-white { display: inline-block; background: #fff; color: var(--orange); padding: 14px 36px; border-radius: 3px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.2s; }
+.btn-white:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+
+/* ===== FOOTER ===== */
+.ev-footer { background: var(--navy); padding: 40px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.ev-footer p { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+.ev-footer a { color: var(--amber); font-size: 0.8rem; font-weight: 600; transition: opacity 0.2s; }
+.ev-footer a:hover { opacity: 0.75; }
+
+/* ===== REVEAL ===== */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .ev-layout, .ev-layout.text-first { grid-template-columns: 1fr; }
+  .ev-layout.text-first .ev-text { order: 2; }
+  .ev-layout.text-first .ev-gallery { order: 1; }
+  .ev-stats { gap: 40px; }
+}
+@media (max-width: 600px) {
+  .ev-event { padding: 60px 5%; }
+  .ev-hero { padding: 130px 5% 60px; }
+  .ev-gallery.g3 { grid-template-columns: 1fr; }
+  .ev-gallery.g3 .g-main { grid-row: span 1; min-height: 260px; }
+  .ev-gallery.g5 { grid-template-columns: 1fr 1fr; }
+  .ev-gallery.g7 { grid-template-columns: 1fr 1fr; }
+  .ev-gallery.g7 .g-hero { grid-column: span 2; }
+}
+
+.nav-quote-btn {
+  background: transparent; border: 2px solid #F9B040; color: #F9B040;
+  padding: 7px 18px; border-radius: 3px; font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s, color 0.2s;
+}
+.nav-quote-btn:hover { background: #F9B040; color: #100736; }
+.mobile-quote-btn {
+  display: block; width: 100%; margin-top: 12px;
+  background: #F9B040; color: #100736; border: none;
+  padding: 13px 0; font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; cursor: pointer; border-radius: 3px;
+}
+.qmodal-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(10,4,34,0.78); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 16px; }
+.qmodal-overlay.active { display: flex; }
+.qmodal-box { background: #fff; border-radius: 6px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.45); animation: qSlideUp 0.3s ease; }
+@keyframes qSlideUp { from { opacity:0; transform: translateY(28px); } to { opacity:1; transform: translateY(0); } }
+.qmodal-progress { height: 4px; background: #e8e4f0; border-radius: 4px 4px 0 0; overflow: hidden; }
+.qmodal-progress-bar { height: 100%; background: linear-gradient(90deg,#F9B040,#d4880a); transition: width 0.4s ease; }
+.qmodal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 1.6rem; line-height: 1; color: #555; cursor: pointer; z-index: 2; transition: color 0.2s; }
+.qmodal-close:hover { color: #100736; }
+.qstep { padding: 36px 36px 28px; }
+.qstep-header { margin-bottom: 24px; }
+.qstep-num { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #F9B040; }
+.qstep-title { font-size: 1.35rem; font-weight: 700; color: #100736; margin: 6px 0 8px; }
+.qstep-desc { font-size: 0.88rem; color: #555; line-height: 1.6; }
+.qchoices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+.qchoice { display: flex; align-items: center; gap: 10px; border: 2px solid #e0dce8; border-radius: 4px; padding: 10px 14px; cursor: pointer; transition: border-color 0.2s, background 0.2s; font-size: 0.87rem; color: #222; }
+.qchoice:hover { border-color: #F9B040; background: #fffbf2; }
+.qchoice input[type=radio] { accent-color: #F9B040; width: 16px; height: 16px; flex-shrink: 0; }
+.qchoice:has(input:checked) { border-color: #F9B040; background: #fffbf2; font-weight: 600; }
+.qfield { margin-bottom: 18px; }
+.qfield label { display: block; font-size: 0.82rem; font-weight: 600; color: #333; margin-bottom: 6px; }
+.qfield input, .qfield textarea { width: 100%; border: 2px solid #e0dce8; border-radius: 4px; padding: 11px 14px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: #1a1a1a; outline: none; transition: border-color 0.2s; resize: vertical; }
+.qfield input:focus, .qfield textarea:focus { border-color: #F9B040; }
+.qerr { font-size: 0.8rem; color: #c0392b; min-height: 18px; margin-bottom: 4px; }
+.qnav { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+.qbtn-back { background: transparent; border: 2px solid #ccc; color: #555; padding: 10px 22px; border-radius: 3px; font-family: 'Poppins', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.qbtn-back:hover { border-color: #100736; color: #100736; }
+.qbtn-next { background: #100736; color: #fff; border: none; padding: 10px 28px; border-radius: 3px; font-family: 'Poppins', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.qbtn-next:hover { background: #1a0f4a; }
+.qbtn-send { background: #25D366; color: #fff; border: none; padding: 12px 28px; border-radius: 3px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; transition: background 0.2s; }
+.qbtn-send:hover { background: #1ebe5d; }
+.qreview { background: #f9f7ff; border: 2px solid #e0dce8; border-radius: 4px; padding: 18px 20px; font-size: 0.88rem; line-height: 1.9; color: #222; }
+.qreview strong { color: #100736; }
+@media (max-width: 520px) { .qstep { padding: 28px 20px 20px; } .qchoices { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-brand">My Perfect <span>Stitch</span></div>
+  <div class="loader-thread">
+    <svg viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+      <path class="thread-path-back" d="M0 30 Q45 10 90 30 Q135 50 180 30"/>
+      <path class="thread-path" d="M0 30 Q45 10 90 30 Q135 50 180 30"/>
+      <g class="needle" transform="translate(-18,0)">
+        <rect x="0" y="27" width="18" height="3" rx="1.5" fill="#fff"/>
+        <ellipse cx="2.5" cy="28.5" rx="1.5" ry="1" fill="#140f37"/>
+        <line x1="0" y1="28.5" x2="-8" y2="28.5" stroke="#F9B040" stroke-width="1.5" stroke-dasharray="3 2"/>
+      </g>
+    </svg>
+  </div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-stripe"></div>
+</div>
+
+<!-- TOP BORDER -->
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/extracted/img_01.jpg" alt="My Perfect Stitch Logo" style="width:48px;height:48px;border-radius:50%;object-fit:cover;"/>
+      <div class="nav-logo-text">
+        <strong>My Perfect Stitch</strong>
+        <span>Creating Happiness</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#shop">Shop</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="events.html" class="active">Events</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="https://wa.me/260968531630" target="_blank" class="nav-cta">Order Now</a></li>
+      <li><button class="nav-quote-btn" onclick="openQuoteModal()">Request a Quote</button></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMenu()">Home</a>
+  <a href="index.html#about" onclick="closeMenu()">About</a>
+  <a href="index.html#shop" onclick="closeMenu()">Shop</a>
+  <a href="portfolio.html" onclick="closeMenu()">Portfolio</a>
+  <a href="events.html" onclick="closeMenu()">Events</a>
+  <a href="gallery.html" onclick="closeMenu()">Gallery</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+  <a href="https://wa.me/260968531630" target="_blank" onclick="closeMenu()">Order Now</a>
+  <button class="mobile-quote-btn" onclick="closeMenu(); openQuoteModal()">Request a Quote</button>
+</div>
+
+<!-- HERO -->
+<div class="ev-hero">
+  <div class="reveal">
+    <div class="sec-label">Events &amp; Milestones</div>
+    <h1>Stories Worth <em>Sharing</em></h1>
+    <p>From awards to workshops — moments that define who we are and how we grow, one stitch at a time.</p>
+  </div>
+</div>
+
+<!-- FILTER -->
+<div class="ev-filter">
+  <button class="ev-filter-btn active" onclick="filterEvents('all', this)">All Events</button>
+  <button class="ev-filter-btn" onclick="filterEvents('award', this)">Award</button>
+  <button class="ev-filter-btn" onclick="filterEvents('iwd', this)">Women's Day</button>
+  <button class="ev-filter-btn" onclick="filterEvents('workshop', this)">Workshop</button>
+</div>
+
+<!-- ======================== EVENT: AWARD ======================== -->
+<section class="ev-event" id="award" data-event="award">
+  <div class="ev-event-inner">
+    <div class="reveal">
+      <div class="ev-tag">She Entrepreneur Founders Summit 2026</div>
+      <h2>Business Excellence <em>Award</em></h2>
+    </div>
+
+    <div class="ev-layout">
+      <!-- Gallery: 5 images — hero spanning full width + 2x2 -->
+      <div class="ev-gallery g5 reveal">
+        <img class="g-hero" src="assets/award.jpg"  alt="Ruth Mooto receiving Business Excellence Award"/>
+        <img src="assets/award1.jpg" alt="She Entrepreneur Founders Summit 2026"/>
+        <img src="assets/award2.jpg" alt="She Entrepreneur Founders Summit 2026"/>
+        <img src="assets/award3.jpg" alt="She Entrepreneur Founders Summit 2026"/>
+        <img src="assets/award4.jpg" alt="She Entrepreneur Founders Summit 2026"/>
+      </div>
+
+      <div class="ev-text reveal">
+        <p>Our Founder &amp; CEO <strong>Ruth Mooto</strong> was a speaker and Business Excellence Award recipient at the <strong>She Entrepreneur Founders Summit 2026</strong> in Lusaka.</p>
+        <p>A proud moment for My Perfect Stitch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== EVENT: INTERNATIONAL WOMEN'S DAY ======================== -->
+<section class="ev-event" id="iwd" data-event="iwd">
+  <div class="ev-event-inner">
+    <div class="reveal">
+      <div class="ev-tag">International Women's Day</div>
+      <h2>Celebrating the Women of <em>My Perfect Stitch</em></h2>
+    </div>
+
+    <div class="ev-layout text-first">
+      <div class="ev-text reveal">
+        <p>We celebrate the women of My Perfect Stitch, and women everywhere.</p>
+        <p>Women who continue to learn, grow, and support one another every day.</p>
+        <p>This year's International Women's Day theme, <strong>"Give to Gain,"</strong> reminds us that when we uplift and support one another, everyone moves forward.</p>
+        <p>Happy International Women's Day.</p>
+      </div>
+
+      <!-- Gallery: 7 images — hero spanning 3 cols + 2 rows of 3 -->
+      <div class="ev-gallery g7 reveal">
+        <img class="g-hero" src="assets/women.jpg"  alt="International Women's Day — My Perfect Stitch team"/>
+        <img src="assets/women1.jpg" alt="Women of My Perfect Stitch"/>
+        <img src="assets/women2.jpg" alt="Women of My Perfect Stitch"/>
+        <img src="assets/women3.jpg" alt="Women of My Perfect Stitch"/>
+        <img src="assets/women4.jpg" alt="Women of My Perfect Stitch"/>
+        <img src="assets/women5.jpg" alt="Women of My Perfect Stitch"/>
+        <img src="assets/women6.jpg" alt="Women of My Perfect Stitch"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== EVENT: WORKSHOP ======================== -->
+<section class="ev-event" id="workshop" data-event="workshop">
+  <div class="ev-event-inner">
+    <div class="reveal">
+      <div class="ev-tag">Leather Training · Time &amp; Tide Foundation</div>
+      <h2>One Week of <em>Hands-On</em> Leather Training</h2>
+    </div>
+
+    <div class="ev-layout">
+      <!-- Gallery: 1 image -->
+      <div class="ev-gallery g1 reveal">
+        <img src="assets/workshop.jpg" alt="Leather training workshop with Fine Stitches Leather"/>
+      </div>
+
+      <div class="ev-text reveal">
+        <p>We wrapped up a one week, hands-on leather training for three members of our tailoring team, delivered in collaboration with <strong>Fine Stitches Leather</strong>.</p>
+        <p>Throughout the week, the team strengthened their leather techniques — from precise cutting and sewing to clean, professional finishing.</p>
+        <p>This training, supported through the <strong>Time and Tide Foundation</strong> grant, is part of our continued investment in craftsmanship and capacity building.</p>
+        <p>The learning continues — and it shows in the work. Proud of the team for committing to growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="ev-stats">
+  <div>
+    <div class="ev-stat-num">3+</div>
+    <div class="ev-stat-lbl">Events &amp; Milestones</div>
+  </div>
+  <div>
+    <div class="ev-stat-num">1</div>
+    <div class="ev-stat-lbl">Award Won</div>
+  </div>
+  <div>
+    <div class="ev-stat-num">100%</div>
+    <div class="ev-stat-lbl">Made in Zambia</div>
+  </div>
+  <div>
+    <div class="ev-stat-num">2026</div>
+    <div class="ev-stat-lbl">Still Growing</div>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="ev-cta-banner">
+  <h2>Be Part of Our Story</h2>
+  <p>Partner with My Perfect Stitch for your next event, corporate gifting, or team branding project.</p>
+  <a href="https://wa.me/260968531630" target="_blank" class="btn-white">WhatsApp Us Now</a>
+</div>
+
+<!-- FOOTER -->
+<div class="ev-footer">
+  <p>© 2026 My Perfect Stitch. All rights reserved. Made with ❤️ in Zambia.</p>
+  <a href="index.html">← Back to Home</a>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">&#215;</button>
+  <button id="lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+  <img id="lightbox-img" src="#" alt=""/>
+  <button id="lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+</div>
+
+<script>
+// Page loader
+function hideLoader() {
+  const loader = document.getElementById('page-loader');
+  if (loader) loader.classList.add('hidden');
+}
+setTimeout(hideLoader, 1500);
+window.addEventListener('load', () => setTimeout(hideLoader, 400));
+
+// Nav
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function toggleMenu() {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+}
+function closeMenu() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+}
+
+document.addEventListener('click', e => {
+  if (mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+    closeMenu();
+  }
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow = window.scrollY > 30 ? '0 4px 20px rgba(0,0,0,0.2)' : 'none';
+});
+
+// Reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Filter
+function filterEvents(type, btn) {
+  document.querySelectorAll('.ev-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ev-event').forEach(sec => {
+    sec.style.display = (type === 'all' || sec.dataset.event === type) ? '' : 'none';
+  });
+}
+
+// Lightbox
+let lbImages = [];
+let lbIndex  = 0;
+
+document.querySelectorAll('.ev-gallery img').forEach(img => {
+  img.addEventListener('click', () => {
+    const gallery = img.closest('.ev-gallery');
+    lbImages = Array.from(gallery.querySelectorAll('img')).map(i => i.src);
+    lbIndex  = lbImages.indexOf(img.src);
+    openLightbox();
+  });
+});
+
+function openLightbox() {
+  document.getElementById('lightbox-img').src = lbImages[lbIndex];
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lightboxNav(dir) {
+  lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+  document.getElementById('lightbox-img').src = lbImages[lbIndex];
+}
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'ArrowLeft')  lightboxNav(-1);
+});
+
+// Deep link
+if (window.location.hash) {
+  setTimeout(() => {
+    const el = document.querySelector(window.location.hash);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 600);
+}
+
+/* ===== QUOTE MODAL ===== */
+const TOTAL_STEPS = 5;
+function openQuoteModal() { document.getElementById('quoteModal').classList.add('active'); document.body.style.overflow = 'hidden'; showQStep(1); }
+function closeQuoteModal() { document.getElementById('quoteModal').classList.remove('active'); document.body.style.overflow = ''; }
+function handleOverlayClick(e) { if (e.target === document.getElementById('quoteModal')) closeQuoteModal(); }
+function showQStep(n) {
+  for (let i = 1; i <= TOTAL_STEPS; i++) { const el = document.getElementById('qstep-' + i); if (el) el.style.display = (i === n) ? 'block' : 'none'; }
+  document.getElementById('quoteProgressBar').style.width = (((n-1)/(TOTAL_STEPS-1))*100) + '%';
+}
+function qNext(step) {
+  const err = document.getElementById('err-' + step); err.textContent = '';
+  if (step === 1) { const sel = document.querySelector('input[name="service"]:checked'); if (!sel) { err.textContent = 'Please select a service to continue.'; return; } }
+  if (step === 2) { const qty = document.getElementById('qQty').value.trim(); if (!qty || isNaN(qty) || Number(qty) < 1) { err.textContent = 'Please enter a valid quantity.'; return; } }
+  if (step === 3) { const desc = document.getElementById('qDesc').value.trim(); if (desc.length < 10) { err.textContent = 'Please describe your order in a bit more detail.'; return; } }
+  if (step === 4) { const nm = document.getElementById('qName').value.trim(); const ph = document.getElementById('qPhone').value.trim(); if (!nm) { err.textContent = 'Please enter your name.'; return; } if (!ph) { err.textContent = 'Please enter your phone / WhatsApp number.'; return; } buildReview(); }
+  showQStep(step + 1);
+}
+function qBack(step) { showQStep(step - 1); }
+function buildReview() {
+  const sv = (document.querySelector('input[name="service"]:checked')||{}).value||'---';
+  const qt = document.getElementById('qQty').value||'---';
+  const bg = document.getElementById('qBudget').value||'Not specified';
+  const dc = document.getElementById('qDesc').value||'---';
+  const dl = document.getElementById('qDeadline').value||'Not specified';
+  const nm = document.getElementById('qName').value||'---';
+  const ph = document.getElementById('qPhone').value||'---';
+  document.getElementById('qReviewBox').innerHTML = '<strong>Service:</strong> '+sv+'<br><strong>Quantity:</strong> '+qt+' pieces<br><strong>Budget:</strong> ZMW '+bg+'<br><strong>Deadline:</strong> '+dl+'<br><strong>Description:</strong> '+qesc(dc)+'<br><strong>Name:</strong> '+qesc(nm)+'<br><strong>Phone:</strong> '+qesc(ph);
+}
+function qesc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sendQuoteToWhatsApp() {
+  const sv = (document.querySelector('input[name="service"]:checked')||{}).value||'---';
+  const qt = document.getElementById('qQty').value||'---';
+  const bg = document.getElementById('qBudget').value||'Not specified';
+  const dc = document.getElementById('qDesc').value||'---';
+  const dl = document.getElementById('qDeadline').value||'Not specified';
+  const nm = document.getElementById('qName').value||'---';
+  const ph = document.getElementById('qPhone').value||'---';
+  const msg = 'QUOTE REQUEST - My Perfect Stitch\n\nService: '+sv+'\nQuantity: '+qt+' pieces\nBudget: ZMW '+bg+'\nDeadline: '+dl+'\n\nDescription:\n'+dc+'\n\nName: '+nm+'\nPhone: '+ph;
+  window.open('https://wa.me/260968531630?text='+encodeURIComponent(msg),'_blank');
+  closeQuoteModal();
+}
+
+</script>
+<!-- ===== QUOTE MODAL ===== -->
+<div id="quoteModal" class="qmodal-overlay" onclick="handleOverlayClick(event)">
+  <div class="qmodal-box">
+    <button class="qmodal-close" onclick="closeQuoteModal()" aria-label="Close">&times;</button>
+    <div class="qmodal-progress"><div class="qmodal-progress-bar" id="quoteProgressBar"></div></div>
+    <form id="quoteForm" onsubmit="return false;">
+      <div class="qstep" id="qstep-1">
+        <div class="qstep-header"><span class="qstep-num">01 / 05</span><h2 class="qstep-title">What service are you looking for?</h2><p class="qstep-desc">Select the option that best describes your order.</p></div>
+        <div class="qchoices">
+          <label class="qchoice"><input type="radio" name="service" value="Custom Clothing Design"/> <span>Custom Clothing Design</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Corporate Uniforms"/> <span>Corporate Uniforms</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="School Uniforms"/> <span>School Uniforms</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Alterations &amp; Repairs"/> <span>Alterations &amp; Repairs</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Event / Occasion Wear"/> <span>Event / Occasion Wear</span></label>
+          <label class="qchoice"><input type="radio" name="service" value="Other"/> <span>Other</span></label>
+        </div>
+        <p class="qerr" id="err-1"></p>
+        <div class="qnav"><button type="button" class="qbtn-next" onclick="qNext(1)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-2" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">02 / 05</span><h2 class="qstep-title">How many pieces do you need?</h2><p class="qstep-desc">Give us an approximate quantity.</p></div>
+        <div class="qfield"><label for="qQty">Number of pieces</label><input type="number" id="qQty" name="quantity" min="1" placeholder="e.g. 10"/></div>
+        <div class="qfield"><label for="qBudget">Approximate budget (ZMW)</label><input type="text" id="qBudget" name="budget" placeholder="e.g. 5000"/></div>
+        <p class="qerr" id="err-2"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(2)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(2)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-3" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">03 / 05</span><h2 class="qstep-title">Describe what you want</h2><p class="qstep-desc">Include fabric preferences, colours, style details, or any inspiration.</p></div>
+        <div class="qfield"><label for="qDesc">Description</label><textarea id="qDesc" name="description" rows="5" placeholder="e.g. Navy blue corporate shirts with gold embroidery logo..."></textarea></div>
+        <p class="qerr" id="err-3"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(3)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(3)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-4" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">04 / 05</span><h2 class="qstep-title">When do you need it?</h2><p class="qstep-desc">Tell us your deadline and how to reach you.</p></div>
+        <div class="qfield"><label for="qDeadline">Required by (date)</label><input type="date" id="qDeadline" name="deadline"/></div>
+        <div class="qfield"><label for="qName">Your name</label><input type="text" id="qName" name="name" placeholder="Full name"/></div>
+        <div class="qfield"><label for="qPhone">Your phone / WhatsApp number</label><input type="tel" id="qPhone" name="phone" placeholder="e.g. 0968 000 000"/></div>
+        <p class="qerr" id="err-4"></p>
+        <div class="qnav"><button type="button" class="qbtn-back" onclick="qBack(4)">&larr; Back</button><button type="button" class="qbtn-next" onclick="qNext(4)">Next &rarr;</button></div>
+      </div>
+      <div class="qstep" id="qstep-5" style="display:none;">
+        <div class="qstep-header"><span class="qstep-num">05 / 05</span><h2 class="qstep-title">Review your quote request</h2><p class="qstep-desc">Check the details below then send via WhatsApp.</p></div>
+        <div class="qreview" id="qReviewBox"></div>
+        <p class="qerr" id="err-5"></p>
+        <div class="qnav">
+          <button type="button" class="qbtn-back" onclick="qBack(5)">&larr; Back</button>
+          <button type="button" class="qbtn-send" onclick="sendQuoteToWhatsApp()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:6px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Send via WhatsApp
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+
+</html>
