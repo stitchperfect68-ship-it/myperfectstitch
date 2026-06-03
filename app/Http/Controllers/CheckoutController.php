@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\BroadpayLincoService;
 use App\Services\CartService;
+use App\Services\LencoService;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
     public function __construct(
-        private CartService $cart,
+        private CartService  $cart,
         private OrderService $orderService,
-        private BroadpayLincoService $linco,
+        private LencoService $lenco,
     ) {}
 
     public function index()
@@ -33,21 +33,23 @@ class CheckoutController extends Controller
         }
 
         $validated = $request->validate([
-            'name'    => 'required|string|max:255',
-            'phone'   => 'required|string|max:30',
-            'email'   => 'nullable|email|max:255',
-            'street'  => 'nullable|string|max:255',
-            'city'    => 'nullable|string|max:100',
-            'notes'   => 'nullable|string|max:1000',
+            'name'          => 'required|string|max:255',
+            'phone'         => 'required|string|max:30',
+            'email'         => 'nullable|email|max:255',
+            'street'        => 'nullable|string|max:255',
+            'city'          => 'nullable|string|max:100',
+            'notes'         => 'nullable|string|max:1000',
+            'momo_phone'    => 'required|string|max:30',
+            'momo_operator' => 'required|in:airtel,mtn,zamtel',
         ]);
 
         $validated['customer_id'] = auth('customer')->id();
 
         try {
             $order = $this->orderService->createFromCart($validated);
-            $payment = $this->linco->initiatePayment($order);
+            $this->lenco->initiateMobileMoney($order, $validated['momo_phone'], $validated['momo_operator']);
 
-            return redirect($payment['url']);
+            return redirect()->route('payment.pending', $order->ref);
         } catch (\RuntimeException $e) {
             return back()->withInput()->with('error', $e->getMessage());
         }

@@ -49,8 +49,9 @@ Route::middleware('supabase.auth')->group(function () {
 });
 
 // ── Payment ───────────────────────────────────────────────────────────────────
-Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
-Route::post('/payment/webhook', [PaymentController::class, 'webhook'])
+Route::get('/payment/pending/{ref}',  [PaymentController::class, 'pending'])->name('payment.pending');
+Route::get('/payment/status/{ref}',   [PaymentController::class, 'status'])->name('payment.status');
+Route::post('/payment/webhook',       [PaymentController::class, 'webhook'])
     ->name('payment.webhook')
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
