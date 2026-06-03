@@ -433,9 +433,10 @@ function _initSupabase() {
         await fetch(window.SUPABASE_SIGNOUT_URL, { method: 'POST', headers: { 'X-CSRF-TOKEN': window.CSRF_TOKEN } }).catch(() => {});
       }
     });
-    _sbClient.auth.getSession().then(({ data: { session } }) => {
+    _sbClient.auth.getSession().then(async ({ data: { session } }) => {
       _sbSession = session;
       _updateNavAuth(session);
+      if (session) await _syncWithLaravel(session.access_token);
       window._sbReady = true;
       document.dispatchEvent(new Event('sb:ready'));
     });
