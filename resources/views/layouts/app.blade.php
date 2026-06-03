@@ -16,6 +16,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/></noscript>
 @yield('preload')
 <link rel="stylesheet" href="{{ asset('css/mps.css') }}"/>
+<link rel="stylesheet" href="{{ asset('css/profile-panel.css') }}"/>
 @stack('styles')
 @yield('head_extra')
 <script>
@@ -72,7 +73,8 @@
       <div class="nav-auth-wrap">
         <button class="nav-auth-btn" id="navAuthBtn" onclick="toggleNavAuthMenu()"><i class="fas fa-user"></i> Sign In</button>
         <div class="nav-auth-dropdown" id="navAuthDropdown" style="display:none">
-          <a href="{{ route('customer.orders') }}" class="nav-auth-dd-item"><i class="fas fa-box"></i> My Orders</a>
+          <a href="#" class="nav-auth-dd-item" onclick="openProfilePanel();return false"><i class="fas fa-user-circle"></i> My Profile</a>
+          <a href="#" class="nav-auth-dd-item" onclick="openProfilePanel('orders');return false"><i class="fas fa-box"></i> My Orders</a>
           <button class="nav-auth-dd-item" onclick="sbSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
         </div>
       </div>
@@ -476,8 +478,11 @@ function _updateNavAuth(session) {
           <i class="fas fa-user-circle"></i>
           <span>${name}</span>
         </div>
-        <a href="{{ route('customer.orders') }}" onclick="closeMenu()" class="mobile-auth-link">
+        <a href="#" onclick="closeMenu();openProfilePanel('orders')" class="mobile-auth-link">
           <i class="fas fa-box"></i> My Orders
+        </a>
+        <a href="#" onclick="closeMenu();openProfilePanel('settings')" class="mobile-auth-link">
+          <i class="fas fa-user-cog"></i> Profile Settings
         </a>
         <button class="mobile-auth-link mobile-signout-btn" onclick="closeMenu();sbSignOut()">
           <i class="fas fa-sign-out-alt"></i> Sign Out
@@ -628,6 +633,190 @@ document.addEventListener('click', e => {
 
 _initSupabase();
 </script>
+
+{{-- ── User Profile Panel ────────────────────────────────────────────────── --}}
+<div class="pp-overlay" id="ppOverlay" onclick="if(event.target===this)closeProfilePanel()">
+  <div class="pp-drawer" id="ppDrawer">
+    <button class="pp-close" onclick="closeProfilePanel()">×</button>
+
+    {{-- Header --}}
+    <div class="pp-head">
+      <div class="pp-avatar" id="ppAvatar">?</div>
+      <div class="pp-name" id="ppName">Loading…</div>
+      <div class="pp-email" id="ppEmail"></div>
+      <div class="pp-since" id="ppSince"></div>
+    </div>
+
+    {{-- Stats bar --}}
+    <div class="pp-stats">
+      <div class="pp-stat"><div class="pp-stat-val" id="ppStatOrders">—</div><div class="pp-stat-label">Orders</div></div>
+      <div class="pp-stat"><div class="pp-stat-val" id="ppStatActive">—</div><div class="pp-stat-label">Active</div></div>
+      <div class="pp-stat"><div class="pp-stat-val" id="ppStatSpent">—</div><div class="pp-stat-label">Spent (K)</div></div>
+    </div>
+
+    {{-- Tabs --}}
+    <div class="pp-tabs">
+      <button class="pp-tab active" data-tab="overview" onclick="ppSwitchTab('overview')">Overview</button>
+      <button class="pp-tab" data-tab="orders" onclick="ppSwitchTab('orders')">Orders</button>
+      <button class="pp-tab" data-tab="settings" onclick="ppSwitchTab('settings')">Settings</button>
+    </div>
+
+    {{-- Body --}}
+    <div class="pp-body">
+      <div id="pp-loader" class="pp-loader"><i class="fas fa-circle-notch"></i><span>Loading your profile…</span></div>
+
+      {{-- Overview --}}
+      <div class="pp-panel" id="pp-overview">
+        <p class="pp-section-title">Recent Orders</p>
+        <div id="ppRecentOrders"></div>
+        <div style="text-align:center;margin-top:16px">
+          <a href="#" onclick="ppSwitchTab('orders');return false" style="font-size:.8rem;color:#F9B040;font-weight:700">View all orders →</a>
+        </div>
+      </div>
+
+      {{-- Orders --}}
+      <div class="pp-panel" id="pp-orders">
+        <p class="pp-section-title">All Orders</p>
+        <div id="ppAllOrders"></div>
+      </div>
+
+      {{-- Settings --}}
+      <div class="pp-panel" id="pp-settings">
+        <p class="pp-section-title">Profile Settings</p>
+        <form id="ppProfileForm" onsubmit="ppSaveProfile(event)">
+          <div class="pp-field">
+            <label>Full Name</label>
+            <input type="text" id="ppFieldName" name="name" required/>
+          </div>
+          <div class="pp-field">
+            <label>Phone / WhatsApp</label>
+            <input type="tel" id="ppFieldPhone" name="phone"/>
+          </div>
+          <div class="pp-field">
+            <label>Email</label>
+            <input type="email" id="ppFieldEmail" disabled/>
+          </div>
+          <button type="submit" class="pp-save-btn" id="ppSaveBtn">Save Changes</button>
+          <div class="pp-msg" id="ppMsg"></div>
+        </form>
+        <button class="pp-signout" onclick="closeProfilePanel();sbSignOut()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PP_DATA_URL = '{{ route("customer.profile.data") }}';
+const PP_UPDATE_URL = '{{ route("customer.profile.update.ajax") }}';
+let _ppData = null;
+
+function openProfilePanel(tab) {
+  if (!_sbSession?.user) { openAuthModal(); return; }
+  document.getElementById('ppOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  ppLoadData(tab || 'overview');
+}
+function closeProfilePanel() {
+  document.getElementById('ppOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function ppSwitchTab(tab) {
+  document.querySelectorAll('.pp-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.pp-panel').forEach(p => p.classList.toggle('active', p.id === 'pp-' + tab));
+}
+
+async function ppLoadData(tab) {
+  document.getElementById('pp-loader').style.display = 'block';
+  document.querySelectorAll('.pp-panel').forEach(p => p.classList.remove('active'));
+  ppSwitchTab(tab || 'overview');
+  try {
+    const r = await fetch(PP_DATA_URL, { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } });
+    if (!r.ok) throw new Error('not ok');
+    _ppData = await r.json();
+    ppRender(_ppData);
+  } catch(e) {
+    document.getElementById('pp-loader').innerHTML = '<p style="color:#c0392b;font-size:.85rem">Could not load profile. Please try again.</p>';
+  }
+}
+
+function ppRender(d) {
+  document.getElementById('pp-loader').style.display = 'none';
+
+  // Header
+  document.getElementById('ppAvatar').textContent = d.customer.initials || '?';
+  document.getElementById('ppName').textContent   = d.customer.name;
+  document.getElementById('ppEmail').textContent  = d.customer.email || '';
+  document.getElementById('ppSince').textContent  = 'Member since ' + d.customer.member_since;
+
+  // Stats
+  document.getElementById('ppStatOrders').textContent = d.stats.total_orders;
+  document.getElementById('ppStatActive').textContent = d.stats.active_orders;
+  document.getElementById('ppStatSpent').textContent  = Number(d.stats.total_spent).toLocaleString();
+
+  // Recent orders (overview — last 3)
+  const recent = d.orders.slice(0, 3);
+  document.getElementById('ppRecentOrders').innerHTML = recent.length
+    ? recent.map(ppOrderCard).join('')
+    : '<div class="pp-empty"><i class="fas fa-shopping-bag"></i><p>No orders yet.</p></div>';
+
+  // All orders
+  document.getElementById('ppAllOrders').innerHTML = d.orders.length
+    ? d.orders.map(ppOrderCard).join('')
+    : '<div class="pp-empty"><i class="fas fa-shopping-bag"></i><p>No orders yet.</p></div>';
+
+  // Settings form
+  document.getElementById('ppFieldName').value  = d.customer.name || '';
+  document.getElementById('ppFieldPhone').value = d.customer.phone || '';
+  document.getElementById('ppFieldEmail').value = d.customer.email || '';
+
+  // Show active panel
+  document.querySelector('.pp-panel.active')?.classList.add('active');
+}
+
+function ppOrderCard(o) {
+  const colors = { yellow:'pp-badge-yellow', blue:'pp-badge-blue', indigo:'pp-badge-indigo', purple:'pp-badge-purple', orange:'pp-badge-orange', green:'pp-badge-green', red:'pp-badge-red', gray:'pp-badge-gray' };
+  const badgeCls = colors[o.status_color] || 'pp-badge-gray';
+  return `<div class="pp-order">
+    <div class="pp-order-icon"><i class="fas fa-box"></i></div>
+    <div class="pp-order-info">
+      <div class="pp-order-ref">${o.ref}</div>
+      <div class="pp-order-meta">${o.date} · ${o.items_count} item${o.items_count !== 1 ? 's' : ''}</div>
+    </div>
+    <div class="pp-order-right">
+      <div class="pp-order-amount">K${Number(o.total).toLocaleString()}</div>
+      <div><span class="pp-badge ${badgeCls}">${o.status_label}</span></div>
+    </div>
+  </div>`;
+}
+
+async function ppSaveProfile(e) {
+  e.preventDefault();
+  const btn = document.getElementById('ppSaveBtn');
+  const msg = document.getElementById('ppMsg');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  msg.className = 'pp-msg';
+  try {
+    const r = await fetch(PP_UPDATE_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': window.CSRF_TOKEN, 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify({ name: document.getElementById('ppFieldName').value, phone: document.getElementById('ppFieldPhone').value })
+    });
+    const data = await r.json();
+    if (data.success) {
+      msg.textContent = 'Profile updated!'; msg.className = 'pp-msg ok';
+      document.getElementById('ppName').textContent = data.name;
+      if (_ppData) _ppData.customer.name = data.name;
+    } else { throw new Error(); }
+  } catch(err) {
+    msg.textContent = 'Could not save. Please try again.'; msg.className = 'pp-msg err';
+  }
+  btn.disabled = false; btn.textContent = 'Save Changes';
+}
+</script>
+
 @yield('scripts')
 </body>
 </html>

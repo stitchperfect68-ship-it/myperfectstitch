@@ -28,7 +28,6 @@ class DashboardController extends Controller
     public function profile()
     {
         $customer = auth('customer')->user();
-
         return view('customer.profile', compact('customer'));
     }
 
@@ -49,5 +48,50 @@ class DashboardController extends Controller
         ]);
 
         return back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function profileData()
+    {
+        $customer = auth('customer')->user();
+        $orders   = $customer->orders()->with('items', 'payment')->latest()->get();
+
+        $nameParts = explode(' ', trim($customer->name));
+        $initials  = strtoupper(substr($nameParts[0], 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
+
+        return response()->json([
+            'customer' => [
+                'id'           => $customer->id,
+                'name'         => $customer->name,
+                'email'        => $customer->email,
+                'phone'        => $customer->phone,
+                'initials'     => $initials,
+                'member_since' => $customer->created_at->format('M Y'),
+            ],
+            'stats' => [
+                'total_orders'  => $orders->count(),
+                'total_spent'   => $orders->whereIn('status', ['paid','processing','ready','dispatched','delivered'])->sum('total'),
+                'active_orders' => $orders->whereIn('status', ['paid','processing','ready','dispatched'])->count(),
+            ],
+            'orders' => $orders->map(fn($o) => [
+                'ref'          => $o->ref,
+                'status'       => $o->status,
+                'status_label' => $o->status_label,
+                'status_color' => $o->status_color,
+                'total'        => $o->total,
+                'items_count'  => $o->items->count(),
+                'date'         => $o->created_at->format('d M Y'),
+            ])->values(),
+        ]);
+    }
+
+    public function updateProfileAjax(Request $request)
+    {
+        $customer  = auth('customer')->user();
+        $validated = $request->validate([
+            'name'  => 'required|string|max:255',
+            'phone' => 'nullable|string|max:30',
+        ]);
+        $customer->update($validated);
+        return response()->json(['success' => true, 'name' => $customer->name]);
     }
 }

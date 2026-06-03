@@ -72,6 +72,8 @@ Route::prefix('account')->name('customer.')->group(function () {
         Route::get('/orders/{ref}', [CustomerDashboard::class, 'showOrder'])->name('order.show');
         Route::get('/profile', [CustomerDashboard::class, 'profile'])->name('profile');
         Route::put('/profile', [CustomerDashboard::class, 'updateProfile'])->name('profile.update');
+        Route::get('/profile-data', [CustomerDashboard::class, 'profileData'])->name('profile.data');
+        Route::put('/profile-update-ajax', [CustomerDashboard::class, 'updateProfileAjax'])->name('profile.update.ajax');
     });
 });
 
