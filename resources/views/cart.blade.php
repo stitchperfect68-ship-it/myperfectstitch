@@ -18,6 +18,11 @@
         <a href="{{ route('home') }}#shop" class="btn-red">Browse Products</a>
       </div>
     @else
+      {{-- Remove forms live outside the update form to avoid illegal nesting --}}
+      @foreach($cart->all() as $id => $item)
+        <form id="remove-{{ $id }}" method="POST" action="{{ route('cart.remove', $id) }}">@csrf</form>
+      @endforeach
+
       <form method="POST" action="{{ route('cart.update') }}">
         @csrf
         <table class="cart-table">
@@ -27,20 +32,17 @@
           <tbody>
             @foreach($cart->all() as $id => $item)
               <tr>
-                <td style="display:flex;align-items:center;gap:12px">
+                <td class="td-product">
                   @if($item['image'])
                     <img class="cart-img" src="{{ str_starts_with($item['image'],'assets/') ? asset($item['image']) : \Illuminate\Support\Facades\Storage::disk('public')->url($item['image']) }}" alt="{{ $item['name'] }}"/>
                   @endif
                   <span style="font-weight:600">{{ $item['name'] }}</span>
                 </td>
-                <td>K{{ number_format($item['price'],0) }}</td>
-                <td><input type="number" name="items[{{ $id }}]" value="{{ $item['quantity'] }}" min="1" class="qty-input"/></td>
-                <td style="font-weight:700">K{{ number_format($item['price'] * $item['quantity'],0) }}</td>
+                <td data-label="Price">K{{ number_format($item['price'],0) }}</td>
+                <td data-label="Qty"><input type="number" name="items[{{ $id }}]" value="{{ $item['quantity'] }}" min="1" class="qty-input"/></td>
+                <td data-label="Subtotal" style="font-weight:700">K{{ number_format($item['price'] * $item['quantity'],0) }}</td>
                 <td>
-                  <form method="POST" action="{{ route('cart.remove', $id) }}" style="display:inline">
-                    @csrf
-                    <button type="submit" class="remove-btn"><i class="fas fa-trash-alt"></i></button>
-                  </form>
+                  <button type="submit" form="remove-{{ $id }}" class="remove-btn"><i class="fas fa-trash-alt"></i></button>
                 </td>
               </tr>
             @endforeach
@@ -51,7 +53,7 @@
         </div>
       </form>
 
-      <div style="display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start">
+      <div class="cart-summary-wrap">
         <div></div>
         <div class="cart-summary">
           <h3 style="font-size:1rem;font-weight:700;color:#100736;margin-bottom:16px">Order Summary</h3>
