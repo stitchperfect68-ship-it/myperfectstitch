@@ -34,7 +34,7 @@ Route::get('/auth/login',             fn() => view('auth.supabase-login'))->name
 Route::get('/auth/callback',          fn() => view('auth.supabase-callback'))->name('auth.callback');
 
 // ── Quote form (requires Supabase auth) ───────────────────────────────────────
-Route::post('/quote', [QuoteController::class, 'store'])->name('quote.store')->middleware('supabase.auth');
+Route::post('/quote', [QuoteController::class, 'store'])->name('quote.store')->middleware('auth:customer');
 
 // ── Cart ──────────────────────────────────────────────────────────────────────
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -42,8 +42,8 @@ Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.a
 Route::post('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
-// ── Checkout (requires Supabase auth) ────────────────────────────────────────
-Route::middleware('supabase.auth')->group(function () {
+// ── Checkout (requires Laravel customer session) ──────────────────────────────
+Route::middleware('auth:customer')->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 });
