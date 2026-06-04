@@ -650,8 +650,7 @@ document.addEventListener('click', e => {
 });
 
 function _setTokenCookie(token) {
-  // 8-hour expiry, SameSite=Lax so it's sent on all same-site navigations
-  document.cookie = 'sb_token=' + encodeURIComponent(token) + '; path=/; max-age=28800; SameSite=Lax';
+  document.cookie = 'sb_token=' + token + '; path=/; max-age=28800; SameSite=Lax';
 }
 function _clearTokenCookie() {
   document.cookie = 'sb_token=; path=/; max-age=0; SameSite=Lax';

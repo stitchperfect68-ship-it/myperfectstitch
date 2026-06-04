@@ -24,6 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->redirectGuestsTo(fn (\Illuminate\Http\Request $request) => route('auth.login'));
+
+        // sb_token is set by JavaScript so it must not go through Laravel's encryption
+        $middleware->encryptCookies(except: ['sb_token']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
