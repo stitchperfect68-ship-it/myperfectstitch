@@ -445,15 +445,26 @@ function _initSupabase() {
   } catch(e) { console.warn('Supabase init failed:', e); }
 }
 
+let _syncDone = false;
+let _syncPromise = null;
+
 async function _syncWithLaravel(token) {
-  try {
-    const r = await fetch(window.SUPABASE_SYNC_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': window.CSRF_TOKEN, 'X-Supabase-Token': token }
-    });
-    const data = await r.json();
-    if (data.success && _sbPendingAction) { const fn = _sbPendingAction; _sbPendingAction = null; fn(); }
-  } catch(e) {}
+  _syncDone = false;
+  _syncPromise = (async () => {
+    try {
+      const r = await fetch(window.SUPABASE_SYNC_URL, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': window.CSRF_TOKEN, 'X-Supabase-Token': token }
+      });
+      const data = await r.json();
+      if (data.success) {
+        _syncDone = true;
+        if (_sbPendingAction) { const fn = _sbPendingAction; _sbPendingAction = null; fn(); }
+      }
+    } catch(e) { _syncDone = true; /* allow through on network error */ }
+  })();
+  return _syncPromise;
 }
 
 function _updateNavAuth(session) {
@@ -595,8 +606,11 @@ function requireAuth(action) {
 }
 
 // Checkout helper — call from any "Proceed to Checkout" button
-function goToCheckout() {
-  requireAuth(() => { window.location.href = '{{ route("checkout.index") }}'; });
+async function goToCheckout() {
+  if (!_sbConfigured) { window.location.href = '{{ route("checkout.index") }}'; return; }
+  if (!_sbSession?.user) { openAuthModal(); return; }
+  if (!_syncDone && _syncPromise) await _syncPromise;
+  window.location.href = '{{ route("checkout.index") }}';
 }
 
 // ── Patch openQuoteModal to require auth ──────────────────────────────────────
@@ -625,10 +639,7 @@ window.sendQuoteToWhatsApp = function() {
 // Patch cart "Add to Cart" and checkout links
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-auth-action="checkout"]');
-  if (btn) {
-    e.preventDefault();
-    requireAuth(() => { window.location.href = '{{ route("checkout.index") }}'; });
-  }
+  if (btn) { e.preventDefault(); goToCheckout(); }
 });
 
 _initSupabase();
