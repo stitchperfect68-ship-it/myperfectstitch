@@ -4,15 +4,16 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class VerifySupabaseAuth
 {
     public function handle(Request $request, Closure $next): mixed
     {
-        // Bypass entirely when Supabase credentials are not yet configured
-        $url    = config('supabase.url', '');
-        $secret = config('supabase.jwt_secret', '');
-        if (!$url || !$secret || str_contains($url, 'your-project-ref')) {
+        $url = config('supabase.url', '');
+
+        // Bypass when Supabase is not configured
+        if (!$url || str_contains($url, 'your-project-ref')) {
             return $next($request);
         }
 
@@ -22,7 +23,7 @@ class VerifySupabaseAuth
             return $this->unauthorised($request, 'Authentication required.');
         }
 
-        $user = $this->verifyToken($token);
+        $user = $this->verifyToken($token, $url);
 
         if (!$user) {
             return $this->unauthorised($request, 'Invalid or expired session. Please sign in again.');
@@ -36,42 +37,31 @@ class VerifySupabaseAuth
 
     private function extractToken(Request $request): ?string
     {
-        // 1. Authorization: Bearer <token>
-        $header = $request->bearerToken();
-        if ($header) return $header;
-
-        // 2. X-Supabase-Token header
-        $custom = $request->header('X-Supabase-Token');
-        if ($custom) return $custom;
-
-        // 3. supabase_token cookie / request field (for form submissions)
+        if ($header = $request->bearerToken()) return $header;
+        if ($custom = $request->header('X-Supabase-Token')) return $custom;
         return $request->input('supabase_token') ?? $request->cookie('sb_token');
     }
 
-    private function verifyToken(string $token): ?array
+    private function verifyToken(string $token, string $url): ?array
     {
-        $secret = config('supabase.jwt_secret');
-        $url    = config('supabase.url');
-
-        // If no config yet, allow through in dev to avoid lockout during setup
-        if (!$secret || !$url || str_contains($url, 'your-project-ref')) {
-            return ['id' => 'dev', 'email' => 'dev@localhost'];
-        }
-
-        // Verify HS256 JWT locally (no external HTTP call needed)
         try {
-            [$headerB64, $payloadB64, $sigB64] = explode('.', $token);
+            $response = Http::withHeaders([
+                'Authorization' => "Bearer {$token}",
+                'apikey'        => config('supabase.anon_key'),
+            ])->timeout(5)->get("{$url}/auth/v1/user");
 
-            $sig      = base64_decode(strtr($sigB64, '-_', '+/') . str_repeat('=', (4 - strlen($sigB64) % 4) % 4));
-            $expected = hash_hmac('sha256', "$headerB64.$payloadB64", $secret, true);
+            if (!$response->successful()) return null;
 
-            if (!hash_equals($expected, $sig)) return null;
+            $user = $response->json();
 
-            $payload = json_decode(base64_decode(strtr($payloadB64, '-_', '+/') . str_repeat('=', (4 - strlen($payloadB64) % 4) % 4)), true);
-
-            if (!$payload || ($payload['exp'] ?? 0) < time()) return null;
-
-            return $payload;
+            // Normalise to the shape the rest of the app expects
+            return [
+                'sub'           => $user['id'] ?? null,
+                'id'            => $user['id'] ?? null,
+                'email'         => $user['email'] ?? null,
+                'user_metadata' => $user['user_metadata'] ?? [],
+                'exp'           => PHP_INT_MAX, // Supabase already validated expiry
+            ];
         } catch (\Throwable) {
             return null;
         }
@@ -79,11 +69,10 @@ class VerifySupabaseAuth
 
     private function unauthorised(Request $request, string $message): mixed
     {
-        if ($request->expectsJson() || $request->is('api/*')) {
+        if ($request->expectsJson() || $request->is('api/*') || $request->ajax()) {
             return response()->json(['error' => $message], 401);
         }
 
-        // Web redirect — include intended URL so we can restore after login
         return redirect()->route('auth.login')->with('intended', $request->fullUrl());
     }
 }
