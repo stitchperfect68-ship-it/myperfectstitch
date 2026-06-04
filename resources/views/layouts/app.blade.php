@@ -613,11 +613,20 @@ function requireAuth(action) {
 }
 
 // Checkout helper — call from any "Proceed to Checkout" button
-async function goToCheckout() {
+function goToCheckout() {
   if (!_sbConfigured) { window.location.href = '{{ route("checkout.index") }}'; return; }
   if (!_sbSession?.user) { openAuthModal(); return; }
-  if (!_syncDone && _syncPromise) await _syncPromise;
-  window.location.href = '{{ route("checkout.index") }}';
+
+  // POST the token directly to the server — guaranteed session before checkout loads
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '{{ route("auth.token.login") }}';
+  form.innerHTML =
+    '<input type="hidden" name="_token" value="' + window.CSRF_TOKEN + '">' +
+    '<input type="hidden" name="sb_token" value="' + _sbSession.access_token + '">' +
+    '<input type="hidden" name="redirect" value="' + '{{ route("checkout.index") }}' + '">';
+  document.body.appendChild(form);
+  form.submit();
 }
 
 // ── Patch openQuoteModal to require auth ──────────────────────────────────────

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class SupabaseAuthController extends Controller
@@ -58,6 +59,65 @@ class SupabaseAuthController extends Controller
                 'email' => $customer->email,
             ],
         ]);
+    }
+
+    /**
+     * Accept a Supabase token via POST body, verify it directly with Supabase,
+     * create the Laravel customer session, then redirect to the intended destination.
+     * This bypasses all cookie/header issues for browser navigation.
+     */
+    public function tokenLogin(Request $request)
+    {
+        $token    = $request->input('sb_token');
+        $redirect = $request->input('redirect', route('checkout.index'));
+
+        if (!$token) {
+            return redirect()->route('auth.login');
+        }
+
+        $url = config('supabase.url');
+
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => "Bearer {$token}",
+                'apikey'        => config('supabase.anon_key'),
+            ])->timeout(8)->get("{$url}/auth/v1/user");
+
+            if (!$response->successful()) {
+                return redirect()->route('auth.login');
+            }
+
+            $supaUser   = $response->json();
+            $email       = $supaUser['email'] ?? null;
+            $supabaseId  = $supaUser['id'] ?? null;
+
+            if (!$email) {
+                return redirect()->route('auth.login');
+            }
+
+            $customer = Customer::firstOrCreate(
+                ['email' => $email],
+                [
+                    'name'        => $supaUser['user_metadata']['full_name']
+                                     ?? $supaUser['user_metadata']['name']
+                                     ?? explode('@', $email)[0],
+                    'password'    => bcrypt(Str::random(32)),
+                    'supabase_id' => $supabaseId,
+                    'is_active'   => true,
+                ]
+            );
+
+            if (!$customer->supabase_id && $supabaseId) {
+                $customer->update(['supabase_id' => $supabaseId]);
+            }
+
+            Auth::guard('customer')->login($customer, remember: true);
+
+        } catch (\Throwable) {
+            return redirect()->route('auth.login');
+        }
+
+        return redirect($redirect);
     }
 
     /**
