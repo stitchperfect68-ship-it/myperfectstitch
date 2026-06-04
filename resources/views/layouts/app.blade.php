@@ -428,17 +428,24 @@ function _initSupabase() {
     _sbClient.auth.onAuthStateChange(async (event, session) => {
       _sbSession = session;
       _updateNavAuth(session);
-      if (session && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
-        await _syncWithLaravel(session.access_token);
+      if (session) {
+        _setTokenCookie(session.access_token);
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          await _syncWithLaravel(session.access_token);
+        }
       }
       if (event === 'SIGNED_OUT') {
-        await fetch(window.SUPABASE_SIGNOUT_URL, { method: 'POST', headers: { 'X-CSRF-TOKEN': window.CSRF_TOKEN } }).catch(() => {});
+        _clearTokenCookie();
+        await fetch(window.SUPABASE_SIGNOUT_URL, { method: 'POST', credentials: 'same-origin', headers: { 'X-CSRF-TOKEN': window.CSRF_TOKEN } }).catch(() => {});
       }
     });
     _sbClient.auth.getSession().then(async ({ data: { session } }) => {
       _sbSession = session;
       _updateNavAuth(session);
-      if (session) await _syncWithLaravel(session.access_token);
+      if (session) {
+        _setTokenCookie(session.access_token);
+        await _syncWithLaravel(session.access_token);
+      }
       window._sbReady = true;
       document.dispatchEvent(new Event('sb:ready'));
     });
@@ -641,6 +648,14 @@ document.addEventListener('click', e => {
   const btn = e.target.closest('[data-auth-action="checkout"]');
   if (btn) { e.preventDefault(); goToCheckout(); }
 });
+
+function _setTokenCookie(token) {
+  // 8-hour expiry, SameSite=Lax so it's sent on all same-site navigations
+  document.cookie = 'sb_token=' + encodeURIComponent(token) + '; path=/; max-age=28800; SameSite=Lax';
+}
+function _clearTokenCookie() {
+  document.cookie = 'sb_token=; path=/; max-age=0; SameSite=Lax';
+}
 
 _initSupabase();
 </script>

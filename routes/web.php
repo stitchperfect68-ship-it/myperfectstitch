@@ -42,8 +42,8 @@ Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.a
 Route::post('/cart/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
-// ── Checkout (requires Laravel customer session) ──────────────────────────────
-Route::middleware('auth:customer')->group(function () {
+// ── Checkout ──────────────────────────────────────────────────────────────────
+Route::middleware('customer.auth')->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 });
@@ -67,7 +67,7 @@ Route::prefix('account')->name('customer.')->group(function () {
         Route::post('/register', [CustomerAuthController::class, 'register'])->name('register.post');
     });
 
-    Route::middleware('auth:customer')->group(function () {
+    Route::middleware('customer.auth')->group(function () {
         Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('logout');
         Route::get('/orders', [CustomerDashboard::class, 'orders'])->name('orders');
         Route::get('/orders/{ref}', [CustomerDashboard::class, 'showOrder'])->name('order.show');

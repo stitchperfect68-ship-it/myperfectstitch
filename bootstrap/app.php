@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission'         => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'supabase.auth'      => \App\Http\Middleware\VerifySupabaseAuth::class,
+            'customer.auth'      => \App\Http\Middleware\RequireCustomerAuth::class,
         ]);
 
         $middleware->redirectGuestsTo(fn (\Illuminate\Http\Request $request) => route('auth.login'));
