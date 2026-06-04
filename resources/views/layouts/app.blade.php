@@ -613,20 +613,35 @@ function requireAuth(action) {
 }
 
 // Checkout helper — call from any "Proceed to Checkout" button
-function goToCheckout() {
+async function goToCheckout() {
   if (!_sbConfigured) { window.location.href = '{{ route("checkout.index") }}'; return; }
   if (!_sbSession?.user) { openAuthModal(); return; }
 
-  // POST the token directly to the server — guaranteed session before checkout loads
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = '{{ route("auth.token.login") }}';
-  form.innerHTML =
-    '<input type="hidden" name="_token" value="' + window.CSRF_TOKEN + '">' +
-    '<input type="hidden" name="sb_token" value="' + _sbSession.access_token + '">' +
-    '<input type="hidden" name="redirect" value="' + '{{ route("checkout.index") }}' + '">';
-  document.body.appendChild(form);
-  form.submit();
+  const token = _sbSession.access_token;
+  if (!token) { openAuthModal(); return; }
+
+  try {
+    const r = await fetch('{{ route("auth.token.login") }}', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': window.CSRF_TOKEN,
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({ sb_token: token }),
+    });
+
+    const data = await r.json();
+
+    if (data.ok) {
+      window.location.href = '{{ route("checkout.index") }}';
+    } else {
+      alert('Sign-in error: ' + (data.reason || 'unknown') + '\n' + (data.msg || data.body || ''));
+    }
+  } catch(e) {
+    alert('Network error reaching auth server: ' + e.message);
+  }
 }
 
 // ── Patch openQuoteModal to require auth ──────────────────────────────────────

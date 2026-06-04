@@ -68,23 +68,32 @@ class SupabaseAuthController extends Controller
      */
     public function tokenLogin(Request $request)
     {
-        $token    = $request->input('sb_token');
-        $redirect = $request->input('redirect', route('checkout.index'));
+        $token = $request->input('sb_token');
 
         if (!$token) {
-            return redirect()->route('auth.login');
+            return response()->json(['ok' => false, 'reason' => 'no_token'], 400);
         }
 
-        $url = config('supabase.url');
+        $url     = config('supabase.url');
+        $anonKey = config('supabase.anon_key');
+
+        if (!$url || str_contains($url, 'your-project-ref')) {
+            return response()->json(['ok' => false, 'reason' => 'supabase_not_configured'], 500);
+        }
 
         try {
             $response = Http::withHeaders([
                 'Authorization' => "Bearer {$token}",
-                'apikey'        => config('supabase.anon_key'),
-            ])->timeout(8)->get("{$url}/auth/v1/user");
+                'apikey'        => $anonKey,
+            ])->timeout(10)->get("{$url}/auth/v1/user");
 
             if (!$response->successful()) {
-                return redirect()->route('auth.login');
+                return response()->json([
+                    'ok'     => false,
+                    'reason' => 'supabase_rejected',
+                    'status' => $response->status(),
+                    'body'   => $response->body(),
+                ], 401);
             }
 
             $supaUser   = $response->json();
@@ -92,7 +101,7 @@ class SupabaseAuthController extends Controller
             $supabaseId  = $supaUser['id'] ?? null;
 
             if (!$email) {
-                return redirect()->route('auth.login');
+                return response()->json(['ok' => false, 'reason' => 'no_email'], 422);
             }
 
             $customer = Customer::firstOrCreate(
@@ -113,11 +122,11 @@ class SupabaseAuthController extends Controller
 
             Auth::guard('customer')->login($customer, remember: true);
 
-        } catch (\Throwable) {
-            return redirect()->route('auth.login');
-        }
+            return response()->json(['ok' => true]);
 
-        return redirect($redirect);
+        } catch (\Throwable $e) {
+            return response()->json(['ok' => false, 'reason' => 'exception', 'msg' => $e->getMessage()], 500);
+        }
     }
 
     /**
