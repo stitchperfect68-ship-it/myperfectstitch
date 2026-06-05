@@ -637,7 +637,7 @@ async function goToCheckout() {
     if (data.ok) {
       window.location.href = '{{ route("checkout.index") }}';
     } else {
-      alert('Sign-in error: ' + (data.reason || 'unknown') + '\n' + (data.msg || data.body || ''));
+      alert('Sign-in error: ' + JSON.stringify(data));
     }
   } catch(e) {
     alert('Network error reaching auth server: ' + e.message);

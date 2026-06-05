@@ -29,7 +29,9 @@ Route::get('/shop/{product:slug}', [ShopController::class, 'show'])->name('shop.
 // ── Supabase Auth sync ────────────────────────────────────────────────────────
 Route::post('/auth/supabase/sync',    [SupabaseAuthController::class, 'sync'])->name('auth.supabase.sync')->middleware('supabase.auth');
 Route::post('/auth/supabase/signout', [SupabaseAuthController::class, 'signout'])->name('auth.supabase.signout');
-Route::post('/auth/token-login',      [SupabaseAuthController::class, 'tokenLogin'])->name('auth.token.login');
+Route::post('/auth/token-login', [SupabaseAuthController::class, 'tokenLogin'])
+    ->name('auth.token.login')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 Route::get('/auth/login',             fn() => view('auth.supabase-login'))->name('auth.login');
 // OAuth redirect landing page — Supabase JS picks up the token from the URL fragment automatically
 Route::get('/auth/callback',          fn() => view('auth.supabase-callback'))->name('auth.callback');
