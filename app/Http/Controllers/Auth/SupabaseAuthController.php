@@ -71,14 +71,14 @@ class SupabaseAuthController extends Controller
         $token = $request->input('sb_token');
 
         if (!$token) {
-            return response()->json(['ok' => false, 'reason' => 'no_token'], 400);
+            return redirect()->route('auth.login');
         }
 
         $url     = config('supabase.url');
         $anonKey = config('supabase.anon_key');
 
         if (!$url || str_contains($url, 'your-project-ref')) {
-            return response()->json(['ok' => false, 'reason' => 'supabase_not_configured'], 500);
+            return redirect()->route('auth.login');
         }
 
         try {
@@ -88,12 +88,8 @@ class SupabaseAuthController extends Controller
             ])->timeout(10)->get("{$url}/auth/v1/user");
 
             if (!$response->successful()) {
-                return response()->json([
-                    'ok'     => false,
-                    'reason' => 'supabase_rejected',
-                    'status' => $response->status(),
-                    'body'   => $response->body(),
-                ], 401);
+                return redirect()->route('auth.login')
+                    ->with('error', 'Session expired. Please sign in again.');
             }
 
             $supaUser   = $response->json();
@@ -101,7 +97,7 @@ class SupabaseAuthController extends Controller
             $supabaseId  = $supaUser['id'] ?? null;
 
             if (!$email) {
-                return response()->json(['ok' => false, 'reason' => 'no_email'], 422);
+                return redirect()->route('auth.login');
             }
 
             $customer = Customer::firstOrCreate(
@@ -122,10 +118,11 @@ class SupabaseAuthController extends Controller
 
             Auth::guard('customer')->login($customer, remember: true);
 
-            return response()->json(['ok' => true]);
+            return redirect()->route('checkout.index');
 
         } catch (\Throwable $e) {
-            return response()->json(['ok' => false, 'reason' => 'exception', 'msg' => $e->getMessage()], 500);
+            return redirect()->route('auth.login')
+                ->with('error', 'Sign-in failed: ' . $e->getMessage());
         }
     }
 

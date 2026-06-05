@@ -613,35 +613,19 @@ function requireAuth(action) {
 }
 
 // Checkout helper — call from any "Proceed to Checkout" button
-async function goToCheckout() {
+function goToCheckout() {
   if (!_sbConfigured) { window.location.href = '{{ route("checkout.index") }}'; return; }
   if (!_sbSession?.user) { openAuthModal(); return; }
-
   const token = _sbSession.access_token;
   if (!token) { openAuthModal(); return; }
-
-  try {
-    const r = await fetch('{{ route("auth.token.login") }}', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': window.CSRF_TOKEN,
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({ sb_token: token }),
-    });
-
-    const data = await r.json();
-
-    if (data.ok) {
-      window.location.href = '{{ route("checkout.index") }}';
-    } else {
-      alert('Sign-in error: ' + JSON.stringify(data));
-    }
-  } catch(e) {
-    alert('Network error reaching auth server: ' + e.message);
-  }
+  // Use a native form POST so the browser handles the session cookie
+  // before loading checkout — eliminates CSRF race conditions with fetch
+  const f = document.createElement('form');
+  f.method = 'POST';
+  f.action = '{{ route("auth.token.login") }}';
+  f.innerHTML = '<input type="hidden" name="sb_token" value="' + token + '">';
+  document.body.appendChild(f);
+  f.submit();
 }
 
 // ── Patch openQuoteModal to require auth ──────────────────────────────────────
