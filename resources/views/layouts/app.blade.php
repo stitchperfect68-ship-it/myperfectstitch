@@ -486,8 +486,7 @@ function _updateNavAuth(session) {
       btn.innerHTML = `<i class="fas fa-user-circle"></i> ${name} <span class="nav-auth-arrow">&#9660;</span>`;
       btn.classList.add('sb-logged-in');
     }
-    const dd = document.getElementById('navAuthDropdown');
-    if (dd) dd.style.display = '';
+    // Keep dropdown hidden until user clicks — do not change its display here
 
     // Mobile menu auth section
     if (mobileSection) {

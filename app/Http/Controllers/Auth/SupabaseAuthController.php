@@ -48,8 +48,11 @@ class SupabaseAuthController extends Controller
             $customer->update(['supabase_id' => $supabaseId]);
         }
 
-        // Start a Laravel customer session
-        Auth::guard('customer')->login($customer, remember: true);
+        // Only login (which regenerates session) if not already authenticated —
+        // calling login() on every sync invalidates the CSRF token in rendered forms
+        if (!Auth::guard('customer')->check()) {
+            Auth::guard('customer')->login($customer, remember: true);
+        }
 
         return response()->json([
             'success'  => true,
@@ -116,7 +119,9 @@ class SupabaseAuthController extends Controller
                 $customer->update(['supabase_id' => $supabaseId]);
             }
 
-            Auth::guard('customer')->login($customer, remember: true);
+            if (!Auth::guard('customer')->check()) {
+                Auth::guard('customer')->login($customer, remember: true);
+            }
 
             return redirect()->route('checkout.index');
 
