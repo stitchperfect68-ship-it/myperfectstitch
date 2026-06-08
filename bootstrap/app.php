@@ -23,7 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'customer.auth'      => \App\Http\Middleware\RequireCustomerAuth::class,
         ]);
 
-        $middleware->redirectGuestsTo(fn (\Illuminate\Http\Request $request) => route('auth.login'));
+        $middleware->redirectGuestsTo(function (\Illuminate\Http\Request $request) {
+            return $request->is('admin*') ? route('login') : route('auth.login');
+        });
 
         // sb_token is set by JavaScript so it must not go through Laravel's encryption
         $middleware->encryptCookies(except: ['sb_token']);
