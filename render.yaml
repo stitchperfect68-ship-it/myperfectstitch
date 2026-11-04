@@ -1,0 +1,65 @@
+databases:
+  - name: myperfectstitch-db
+    databaseName: myperfectstitch
+    user: myperfectstitch
+    plan: free
+
+services:
+  - type: web
+    name: myperfectstitch
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /up
+    autoDeploy: true
+    envVars:
+      - key: APP_NAME
+        value: My Perfect Stitch
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: info
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        fromDatabase:
+          name: myperfectstitch-db
+          property: connectionString
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: MAIL_MAILER
+        value: log
+      - key: LENCO_API_KEY
+        sync: false
+      - key: LENCO_PUBLIC_KEY
+        sync: false
+      - key: LENCO_WEBHOOK_SECRET
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: BROADPAY_MERCHANT_ID
+        sync: false
+      - key: BROADPAY_API_KEY
+        sync: false
+      - key: BROADPAY_SECRET_KEY
+        sync: false
