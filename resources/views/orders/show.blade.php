@@ -43,10 +43,30 @@
       </table>
 
       @if($order->payment)
+        @php
+          $method = $order->payment->payment_method;
+          $methodLabel = match (true) {
+            $method === 'card' => 'Card',
+            str_starts_with((string) $method, 'mobile_money:') => 'Mobile Money · ' . ucfirst(str_replace('mobile_money:', '', $method)),
+            default => $method ? ucfirst($method) : '—',
+          };
+        @endphp
         <div style="margin-top:20px;background:#f9f7ff;border-radius:4px;padding:14px 16px;font-size:.85rem">
           <span style="font-weight:700;color:#100736">Payment:</span>
           <span style="margin-left:8px;color:{{ $order->payment->status === 'completed' ? '#065f46' : '#888' }}">{{ ucfirst($order->payment->status) }}</span>
+          <span style="margin-left:8px;color:#888">· {{ $methodLabel }}</span>
           @if($order->payment->paid_at)<span style="margin-left:8px;color:#888"> · Paid on {{ $order->payment->paid_at->format('d M Y, H:i') }}</span>@endif
+          @if($order->status === 'pending_payment')
+            <div style="margin-top:10px">
+              @if($order->payment->status === 'failed')
+                <span style="color:#991b1b">Payment failed. Please contact us to complete this order.</span>
+              @elseif($method === 'card')
+                <a href="{{ route('payment.card', $order->ref) }}" style="color:#100736;font-weight:700;text-decoration:underline">Complete card payment</a>
+              @else
+                <a href="{{ route('payment.pending', $order->ref) }}" style="color:#100736;font-weight:700;text-decoration:underline">Complete mobile money payment</a>
+              @endif
+            </div>
+          @endif
         </div>
       @endif
     </div>

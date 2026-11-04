@@ -6,17 +6,17 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        Schema::disableForeignKeyConstraints();
         ProductImage::truncate();
         Product::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        Schema::enableForeignKeyConstraints();
 
         $bags      = ProductCategory::where('slug', 'bags')->first();
         $furniture = ProductCategory::where('slug', 'furniture')->first();

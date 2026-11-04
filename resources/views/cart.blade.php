@@ -15,7 +15,7 @@
         <i class="fas fa-shopping-bag"></i>
         <h3>Your cart is empty</h3>
         <p>Looks like you haven't added anything yet. Explore our collection!</p>
-        <a href="{{ route('home') }}#shop" class="btn-red">Browse Products</a>
+        <a href="{{ route('shop.index') }}" class="btn-red">Browse Products</a>
       </div>
     @else
       {{-- Remove forms live outside the update form to avoid illegal nesting --}}
@@ -61,7 +61,7 @@
           <div class="cart-summary-row"><span>Shipping</span><span style="color:#888;font-style:italic">Calculated at checkout</span></div>
           <div class="cart-summary-row"><span>Total</span><span>K{{ number_format($cart->total(),0) }}</span></div>
           <button onclick="goToCheckout()" class="btn-checkout">Proceed to Checkout →</button>
-          <a href="{{ route('home') }}#shop" class="btn-continue">← Continue Shopping</a>
+          <a href="{{ route('shop.index') }}" class="btn-continue">← Continue Shopping</a>
         </div>
       </div>
     @endif

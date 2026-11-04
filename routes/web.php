@@ -24,6 +24,7 @@ Route::get('/events', [EventController::class, 'index'])->name('events');
 Route::get('/context', [ContextController::class, 'index'])->name('context');
 
 // ── Shop ──────────────────────────────────────────────────────────────────────
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/{product:slug}', [ShopController::class, 'show'])->name('shop.show');
 
 // ── Supabase Auth sync ────────────────────────────────────────────────────────
@@ -53,10 +54,12 @@ Route::middleware('auth:customer')->group(function () {
 
 // ── Payment ───────────────────────────────────────────────────────────────────
 Route::get('/payment/pending/{ref}',  [PaymentController::class, 'pending'])->name('payment.pending');
+Route::get('/payment/card/{ref}',     [PaymentController::class, 'card'])->name('payment.card');
+Route::post('/payment/verify/{ref}',  [PaymentController::class, 'verify'])->name('payment.verify');
+Route::get('/payment/callback',       [PaymentController::class, 'callback'])->name('payment.callback');
 Route::get('/payment/status/{ref}',   [PaymentController::class, 'status'])->name('payment.status');
 Route::post('/payment/webhook',       [PaymentController::class, 'webhook'])
-    ->name('payment.webhook')
-    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    ->name('payment.webhook');
 
 // ── Order tracking ────────────────────────────────────────────────────────────
 Route::get('/orders/{ref}', [OrderController::class, 'show'])->name('orders.show');

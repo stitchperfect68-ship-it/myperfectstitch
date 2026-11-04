@@ -55,7 +55,7 @@
     <ul class="nav-links">
       <li><a href="{{ route('home') }}">Home</a></li>
       <li><a href="{{ route('context') }}">About</a></li>
-      <li><a href="{{ route('home') }}#shop">Shop</a></li>
+      <li><a href="{{ route('shop.index') }}">Shop</a></li>
       <li><a href="{{ route('portfolio') }}">Portfolio</a></li>
       <li><a href="{{ route('events') }}">Events</a></li>
       <li><a href="{{ route('gallery') }}">Gallery</a></li>
@@ -73,8 +73,8 @@
       <div class="nav-auth-wrap">
         <button class="nav-auth-btn" id="navAuthBtn" onclick="toggleNavAuthMenu()"><i class="fas fa-user"></i> Sign In</button>
         <div class="nav-auth-dropdown" id="navAuthDropdown" style="display:none">
-          <a href="#" class="nav-auth-dd-item" onclick="openProfilePanel();return false"><i class="fas fa-user-circle"></i> My Profile</a>
-          <a href="#" class="nav-auth-dd-item" onclick="openProfilePanel('orders');return false"><i class="fas fa-box"></i> My Orders</a>
+          <a href="{{ route('customer.profile') }}" class="nav-auth-dd-item"><i class="fas fa-user-circle"></i> My Profile</a>
+          <a href="{{ route('customer.orders') }}" class="nav-auth-dd-item"><i class="fas fa-box"></i> My Orders</a>
           <button class="nav-auth-dd-item" onclick="sbSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
         </div>
       </div>
@@ -87,7 +87,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="{{ route('home') }}" onclick="closeMenu()">Home</a>
   <a href="{{ route('context') }}" onclick="closeMenu()">About</a>
-  <a href="{{ route('home') }}#shop" onclick="closeMenu()">Shop</a>
+  <a href="{{ route('shop.index') }}" onclick="closeMenu()">Shop</a>
   <a href="{{ route('portfolio') }}" onclick="closeMenu()">Portfolio</a>
   <a href="{{ route('events') }}" onclick="closeMenu()">Events</a>
   <a href="{{ route('gallery') }}" onclick="closeMenu()">Gallery</a>
@@ -316,7 +316,7 @@
       <h4>Quick Links</h4>
       <a href="{{ route('home') }}">Home</a>
       <a href="{{ route('context') }}">About Us</a>
-      <a href="{{ route('home') }}#shop">Shop</a>
+      <a href="{{ route('shop.index') }}">Shop</a>
       <a href="{{ route('portfolio') }}">Portfolio</a>
       <a href="{{ route('events') }}">Events</a>
       <a href="{{ route('home') }}#corporate">Services</a>
@@ -351,8 +351,8 @@ const searchIndex=[
   {title:'Portfolio',sub:'Client projects',url:'{{ route("portfolio") }}',icon:'fa-folder-open'},
   {title:'Events',sub:'Events & news',url:'{{ route("events") }}',icon:'fa-calendar'},
   {title:'About Us',sub:'Our story',url:'{{ route("context") }}',icon:'fa-info-circle'},
-  {title:'Shop — Bags',sub:'Custom bags',url:'{{ route("home") }}#shop',icon:'fa-shopping-bag'},
-  {title:'Shop — Furniture',sub:'Bespoke furniture',url:'{{ route("home") }}#shop',icon:'fa-couch'},
+  {title:'Shop — Bags',sub:'Custom bags',url:'{{ route("shop.index", ["category" => "bags"]) }}',icon:'fa-shopping-bag'},
+  {title:'Shop — Furniture',sub:'Bespoke furniture',url:'{{ route("shop.index", ["category" => "furniture"]) }}',icon:'fa-couch'},
   {title:'Get a Quote',sub:'Request a custom order',url:'#',icon:'fa-envelope',action:'openQuoteModal'},
   {title:'Cart',sub:'Your shopping cart',url:'{{ route("cart.index") }}',icon:'fa-shopping-cart'},
 ];
@@ -495,10 +495,10 @@ function _updateNavAuth(session) {
           <i class="fas fa-user-circle"></i>
           <span>${name}</span>
         </div>
-        <a href="#" onclick="closeMenu();openProfilePanel('orders')" class="mobile-auth-link">
+        <a href="{{ route('customer.orders') }}" onclick="closeMenu()" class="mobile-auth-link">
           <i class="fas fa-box"></i> My Orders
         </a>
-        <a href="#" onclick="closeMenu();openProfilePanel('settings')" class="mobile-auth-link">
+        <a href="{{ route('customer.profile') }}" onclick="closeMenu()" class="mobile-auth-link">
           <i class="fas fa-user-cog"></i> Profile Settings
         </a>
         <button class="mobile-auth-link mobile-signout-btn" onclick="closeMenu();sbSignOut()">

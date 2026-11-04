@@ -29,6 +29,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // sb_token is set by JavaScript so it must not go through Laravel's encryption
         $middleware->encryptCookies(except: ['sb_token']);
+
+        // Lenco signs the raw request body; it cannot send a CSRF token.
+        $middleware->validateCsrfTokens(except: ['payment/webhook']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

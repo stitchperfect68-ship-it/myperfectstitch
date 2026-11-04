@@ -5,17 +5,17 @@ namespace Database\Seeders;
 use App\Models\PortfolioImage;
 use App\Models\PortfolioProject;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class PortfolioSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        Schema::disableForeignKeyConstraints();
         PortfolioImage::truncate();
         PortfolioProject::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        Schema::enableForeignKeyConstraints();
 
         $projects = [
             // ── BAGS ──────────────────────────────────────────────────────────────

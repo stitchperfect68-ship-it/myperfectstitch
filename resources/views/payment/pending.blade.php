@@ -42,7 +42,7 @@
         <div class="pending-step"><span class="pending-step-num">3</span><span>Enter your mobile money PIN to authorise.</span></div>
       </div>
       <div class="pending-timer">This page refreshes automatically &mdash; time remaining: <span id="countdown">2:00</span></div>
-      <button class="btn-cancel" onclick="cancelPending()">Cancel &amp; Return to Checkout</button>
+      <button class="btn-cancel" onclick="cancelPending()">Cancel &amp; Return Home</button>
     </div>
 
     {{-- Success state --}}
@@ -58,8 +58,8 @@
     <div id="stateFailed" style="display:none">
       <div class="pending-icon failed"><i class="fas fa-times"></i></div>
       <h1 class="pending-title">Payment Failed</h1>
-      <p class="pending-sub">The payment was not completed. This could be due to insufficient funds, an incorrect PIN, or a timeout. Please try again.</p>
-      <a href="{{ route('checkout.index') }}" class="btn-retry">Try Again</a>
+      <p class="pending-sub">The payment was not completed. This could be due to insufficient funds, an incorrect PIN, or a timeout. Please contact us so we can help you complete this order.</p>
+      <a href="{{ route('orders.show', $order->ref) }}" class="btn-retry">View Order</a>
     </div>
 
     {{-- Timeout state --}}
@@ -69,7 +69,7 @@
       <p class="pending-sub">We did not receive confirmation within 2 minutes. If you completed the payment on your phone, it will still be processed and your order updated shortly.</p>
       <div class="pending-ref">{{ $order->ref }}</div>
       <a href="{{ route('orders.show', $order->ref) }}" class="btn-retry" style="display:block;text-align:center;margin-bottom:10px">Check Order Status</a>
-      <a href="{{ route('checkout.index') }}" style="font-size:.82rem;color:#888">Return to checkout</a>
+      <a href="{{ route('home') }}" style="font-size:.82rem;color:#888">Continue shopping</a>
     </div>
 
   </div>
@@ -125,7 +125,7 @@ async function poll() {
 }
 
 function cancelPending() {
-  window.location.href = '{{ route("checkout.index") }}';
+  window.location.href = '{{ route("home") }}';
 }
 
 updateCountdown();

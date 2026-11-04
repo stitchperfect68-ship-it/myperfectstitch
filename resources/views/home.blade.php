@@ -301,6 +301,7 @@
             'desc'        => $p->short_description ?? $p->subcategory?->name ?? '',
             'image'       => $img ? (str_starts_with($img,'assets/') ? asset($img) : \Illuminate\Support\Facades\Storage::disk('public')->url($img)) : '',
             'cart_url'    => route('cart.add', $p->id),
+            'url'         => route('shop.show', $p),
         ];
     })->values()->toArray();
   @endphp
@@ -344,6 +345,9 @@
   </div>
   <div class="load-more-wrap" id="loadMoreWrap">
     <button class="load-more-btn" onclick="loadMoreShop()">Load More</button>
+  </div>
+  <div style="text-align:center;margin-top:20px">
+    <a href="{{ route('shop.index') }}" class="load-more-btn" style="display:inline-block;text-decoration:none">View All Products</a>
   </div>
 </section>
 
@@ -493,6 +497,7 @@
         <h2 id="pmName" class="pm-name"></h2>
         <div id="pmPrice" class="pm-price"></div>
         <p id="pmDesc" class="pm-desc"></p>
+        <a id="pmDetailsLink" href="#" style="display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#100736;text-decoration:none;margin-bottom:18px">View full details <i class="fas fa-arrow-right"></i></a>
 
         <div class="pm-qty-row" id="pmQtyRow">
           <span class="pm-qty-label">Quantity</span>
@@ -653,6 +658,7 @@ function openProductModal(productId) {
   document.getElementById('pmName').textContent = p.name;
   document.getElementById('pmPrice').textContent = p.formatted;
   document.getElementById('pmDesc').textContent = p.desc || '';
+  document.getElementById('pmDetailsLink').href = p.url || '#';
   document.getElementById('pmQty').value = 1;
 
   // Show qty + add-to-cart only for priced items
