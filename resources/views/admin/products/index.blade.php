@@ -32,7 +32,7 @@
             <td>
               @php $img = $product->primary_image_path; @endphp
               @if($img)
-                <img src="{{ str_starts_with($img,'assets/') ? asset($img) : \Illuminate\Support\Facades\Storage::disk('public')->url($img) }}" style="width:48px;height:48px;object-fit:cover;border-radius:4px;border:2px solid #e8e4f0"/>
+                <img src="{{ str_starts_with($img,'assets/') ? asset($img) : \App\Services\MediaService::urlFor($img) }}" style="width:48px;height:48px;object-fit:cover;border-radius:4px;border:2px solid #e8e4f0"/>
               @else
                 <div style="width:48px;height:48px;background:#f0f2f5;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#ccc"><i class="fas fa-image"></i></div>
               @endif

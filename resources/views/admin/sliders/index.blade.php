@@ -22,7 +22,7 @@
                 $imgSrc = $slider->image_path
                   ? (str_starts_with($slider->image_path,'assets/')
                       ? asset($slider->image_path)
-                      : \Illuminate\Support\Facades\Storage::disk('public')->url($slider->image_path))
+                      : \App\Services\MediaService::urlFor($slider->image_path))
                   : null;
               @endphp
               @if($imgSrc)

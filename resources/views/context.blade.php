@@ -51,7 +51,7 @@
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px" class="reveal">
         @foreach($team as $member)
           <div style="text-align:center">
-            <img style="width:100%;aspect-ratio:1;border-radius:6px;object-fit:cover;border:3px solid #e8e4f0;margin-bottom:12px" src="{{ $member->photo ? \Illuminate\Support\Facades\Storage::disk('public')->url($member->photo) : 'https://i.ibb.co/YFDJ9zPQ/bb-29.jpg' }}" alt="{{ $member->name }}" loading="lazy"/>
+            <img style="width:100%;aspect-ratio:1;border-radius:6px;object-fit:cover;border:3px solid #e8e4f0;margin-bottom:12px" src="{{ $member->photo ? \App\Services\MediaService::urlFor($member->photo) : 'https://i.ibb.co/YFDJ9zPQ/bb-29.jpg' }}" alt="{{ $member->name }}" loading="lazy"/>
             <div style="font-weight:700;font-size:.95rem;color:#100736;margin-bottom:4px">{{ $member->name }}</div>
             <div style="font-size:.78rem;color:#888;text-transform:uppercase;letter-spacing:.08em">{{ $member->role }}</div>
           </div>

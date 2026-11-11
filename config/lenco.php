@@ -10,7 +10,14 @@ return [
     // Optional. If omitted the webhook hash key is derived as SHA256(api_key)
     'webhook_secret' => env('LENCO_WEBHOOK_SECRET', ''),
 
-    'base_url'       => env('LENCO_BASE_URL', 'https://api.lenco.co'),
+    // API base. Accepts either the host or the full versioned path:
+    // production: https://api.lenco.co/access/v2
+    // sandbox:    https://sandbox.lenco.co/access/v2
+    'base_url'       => env('LENCO_BASE_URL', 'https://api.lenco.co/access/v2'),
+
+    // Inline widget script:
+    // production: https://pay.lenco.co/js/v1/inline.js
+    // sandbox:    https://pay.sandbox.lenco.co/js/v1/inline.js
     'inline_url'     => env('LENCO_INLINE_URL', 'https://pay.lenco.co/js/v1/inline.js'),
     'country'        => env('LENCO_COUNTRY', 'zm'),
     'currency'       => env('LENCO_CURRENCY', 'ZMW'),

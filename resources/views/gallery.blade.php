@@ -27,7 +27,7 @@
     <div class="gallery-grid" id="galleryGrid">
       @foreach($items as $item)
         @php
-          $src = str_starts_with($item->path,'assets/') ? asset($item->path) : \Illuminate\Support\Facades\Storage::disk('public')->url($item->path);
+          $src = str_starts_with($item->path,'assets/') ? asset($item->path) : \App\Services\MediaService::urlFor($item->path);
         @endphp
         <div class="gallery-item" data-category="{{ $item->category }}" onclick="openLightbox(this)">
           <img src="{{ $src }}" alt="{{ $item->alt ?? ucfirst($item->category) }}" loading="lazy" data-src="{{ $src }}"/>

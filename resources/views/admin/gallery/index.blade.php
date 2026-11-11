@@ -43,7 +43,7 @@
   </div>
   <div style="padding:20px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
     @forelse($items as $item)
-      @php $src = str_starts_with($item->path,'assets/') ? asset($item->path) : \Illuminate\Support\Facades\Storage::disk('public')->url($item->path); @endphp
+      @php $src = str_starts_with($item->path,'assets/') ? asset($item->path) : \App\Services\MediaService::urlFor($item->path); @endphp
       <div style="position:relative;border-radius:6px;overflow:hidden;aspect-ratio:1;border:2px solid #e8e4f0;group">
         <img src="{{ $src }}" style="width:100%;height:100%;object-fit:cover" loading="lazy"/>
         <div style="position:absolute;inset:0;background:rgba(16,7,54,.7);opacity:0;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px" class="overlay" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">

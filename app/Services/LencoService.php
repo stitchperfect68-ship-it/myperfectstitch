@@ -24,7 +24,7 @@ class LencoService
         $this->apiKey        = (string) config('lenco.api_key', '');
         $this->publicKey     = (string) config('lenco.public_key', '');
         $this->webhookSecret = (string) config('lenco.webhook_secret', '');
-        $this->baseUrl       = rtrim((string) config('lenco.base_url', 'https://api.lenco.co'), '/');
+        $this->baseUrl       = $this->normaliseBaseUrl((string) config('lenco.base_url', 'https://api.lenco.co'));
         $this->country       = (string) config('lenco.country', 'zm');
         $this->currency      = (string) config('lenco.currency', 'ZMW');
         $this->bearer        = (string) config('lenco.bearer', 'customer');
@@ -64,7 +64,7 @@ class LencoService
         ];
 
         $response = Http::withHeaders($this->headers())
-            ->post("{$this->baseUrl}/access/v2/collections/mobile-money", $payload);
+            ->post("{$this->baseUrl}/collections/mobile-money", $payload);
 
         if (!$response->successful() || $response->json('status') !== true) {
             Log::error('Lenco mobile money initiation failed', [
@@ -155,7 +155,7 @@ class LencoService
     public function getCollection(string $reference, bool $logFailure = true): array
     {
         $response = Http::withHeaders($this->headers())
-            ->get("{$this->baseUrl}/access/v2/collections/status/{$reference}");
+            ->get("{$this->baseUrl}/collections/status/{$reference}");
 
         if (!$response->successful() || $response->json('status') !== true) {
             if ($logFailure) {
@@ -371,5 +371,20 @@ class LencoService
             'Accept'        => 'application/json',
             'Content-Type'  => 'application/json',
         ];
+    }
+
+    /**
+     * Accept either a host (https://sandbox.lenco.co) or the full versioned
+     * base (https://sandbox.lenco.co/access/v2) and always return the latter.
+     */
+    private function normaliseBaseUrl(string $baseUrl): string
+    {
+        $baseUrl = rtrim($baseUrl, '/');
+
+        if (!str_ends_with($baseUrl, '/access/v2')) {
+            $baseUrl .= '/access/v2';
+        }
+
+        return $baseUrl;
     }
 }

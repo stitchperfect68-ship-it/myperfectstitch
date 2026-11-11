@@ -299,7 +299,7 @@
             'price'       => $p->price,
             'formatted'   => $p->price > 0 ? 'K'.number_format($p->price, 0) : 'Price on Request',
             'desc'        => $p->short_description ?? $p->subcategory?->name ?? '',
-            'image'       => $img ? (str_starts_with($img,'assets/') ? asset($img) : \Illuminate\Support\Facades\Storage::disk('public')->url($img)) : '',
+            'image'       => $img ? (str_starts_with($img,'assets/') ? asset($img) : \App\Services\MediaService::urlFor($img)) : '',
             'cart_url'    => route('cart.add', $p->id),
             'url'         => route('shop.show', $p),
         ];
@@ -311,7 +311,7 @@
     @foreach($products as $product)
       @php
         $img = $product->primary_image_path;
-        $imgSrc = $img ? (str_starts_with($img,'assets/') ? asset($img) : \Illuminate\Support\Facades\Storage::disk('public')->url($img)) : '';
+        $imgSrc = $img ? (str_starts_with($img,'assets/') ? asset($img) : \App\Services\MediaService::urlFor($img)) : '';
       @endphp
       <div class="product-card" data-parent="{{ $product->category?->slug ?? '' }}" data-sub="{{ $product->subcategory?->slug ?? '' }}">
         @if($product->tag_label)

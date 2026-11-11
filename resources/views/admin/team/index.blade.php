@@ -20,7 +20,7 @@
             <td>
               <div style="display:flex;align-items:center;gap:10px">
                 @if($member->photo)
-                  <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($member->photo) }}" alt="{{ $member->name }}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #f0f2f5"/>
+                  <img src="{{ \App\Services\MediaService::urlFor($member->photo) }}" alt="{{ $member->name }}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #f0f2f5"/>
                 @else
                   <div style="width:36px;height:36px;border-radius:50%;background:#100736;display:flex;align-items:center;justify-content:center;color:#F9B040;font-weight:700;font-size:.85rem">{{ strtoupper(substr($member->name,0,1)) }}</div>
                 @endif

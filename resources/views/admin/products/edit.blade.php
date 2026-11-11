@@ -51,7 +51,7 @@
           @if($product->images->count())
             <div class="img-preview-grid" id="existingImages">
               @foreach($product->images as $img)
-                @php $src = str_starts_with($img->path,'assets/') ? asset($img->path) : \Illuminate\Support\Facades\Storage::disk('public')->url($img->path); @endphp
+                @php $src = str_starts_with($img->path,'assets/') ? asset($img->path) : \App\Services\MediaService::urlFor($img->path); @endphp
                 <div class="img-preview-item" id="img-{{ $img->id }}">
                   <img src="{{ $src }}"/>
                   @if($img->is_primary)<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(249,176,64,.8);color:#100736;font-size:.55rem;font-weight:800;text-align:center;padding:2px">PRIMARY</div>@endif

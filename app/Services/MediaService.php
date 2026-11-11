@@ -10,20 +10,28 @@ class MediaService
 {
     public function upload(UploadedFile $file, string $folder = 'uploads'): string
     {
-        $filename  = Str::uuid() . '.' . $file->getClientOriginalExtension();
-        $path      = $file->storeAs($folder, $filename, 'public');
+        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
 
-        return $path;
+        return $file->storeAs($folder, $filename, $this->disk());
     }
 
     public function delete(?string $path): void
     {
-        if ($path && Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
+        if ($path && Storage::disk($this->disk())->exists($path)) {
+            Storage::disk($this->disk())->delete($path);
         }
     }
 
     public function url(?string $path): ?string
+    {
+        return self::urlFor($path);
+    }
+
+    /**
+     * Resolve a stored media path to a public URL using the configured media
+     * disk (local "public" in development, "r2" in production).
+     */
+    public static function urlFor(?string $path): ?string
     {
         if (!$path) return null;
 
@@ -32,6 +40,11 @@ class MediaService
             return asset($path);
         }
 
-        return Storage::disk('public')->url($path);
+        return Storage::disk(config('filesystems.media_disk', 'public'))->url($path);
+    }
+
+    private function disk(): string
+    {
+        return (string) config('filesystems.media_disk', 'public');
     }
 }

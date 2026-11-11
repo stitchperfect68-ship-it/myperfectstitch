@@ -12,7 +12,7 @@
   $images = $product->images;
   $firstImage = $images->first();
   $firstPath = $firstImage?->path;
-  $mainSrc = $firstPath ? (str_starts_with($firstPath, 'assets/') ? asset($firstPath) : \Illuminate\Support\Facades\Storage::disk('public')->url($firstPath)) : '';
+  $mainSrc = $firstPath ? (str_starts_with($firstPath, 'assets/') ? asset($firstPath) : \App\Services\MediaService::urlFor($firstPath)) : '';
   $whatsappMessage = urlencode('Hi, I am interested in ' . $product->name . ' (' . route('shop.show', $product) . ')');
 @endphp
 
@@ -48,7 +48,7 @@
           <div class="pd-thumbs">
             @foreach ($images as $image)
               @php
-                $thumbSrc = str_starts_with($image->path, 'assets/') ? asset($image->path) : \Illuminate\Support\Facades\Storage::disk('public')->url($image->path);
+                $thumbSrc = str_starts_with($image->path, 'assets/') ? asset($image->path) : \App\Services\MediaService::urlFor($image->path);
               @endphp
               <button type="button" class="pd-thumb {{ $loop->first ? 'active' : '' }}" data-src="{{ $thumbSrc }}" onclick="selectProductImage(this)" aria-label="View image {{ $loop->iteration }}">
                 <img src="{{ $thumbSrc }}" alt="{{ $image->alt ?? $product->name }}"/>
@@ -133,7 +133,7 @@
           @foreach ($related as $item)
             @php
               $img = $item->primary_image_path;
-              $imgSrc = $img ? (str_starts_with($img, 'assets/') ? asset($img) : \Illuminate\Support\Facades\Storage::disk('public')->url($img)) : '';
+              $imgSrc = $img ? (str_starts_with($img, 'assets/') ? asset($img) : \App\Services\MediaService::urlFor($img)) : '';
             @endphp
             <article class="product-card">
               @if ($item->tag_label)

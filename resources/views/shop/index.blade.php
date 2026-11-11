@@ -109,7 +109,7 @@
             @foreach ($products as $product)
               @php
                 $img = $product->primary_image_path;
-                $imgSrc = $img ? (str_starts_with($img, 'assets/') ? asset($img) : \Illuminate\Support\Facades\Storage::disk('public')->url($img)) : '';
+                $imgSrc = $img ? (str_starts_with($img, 'assets/') ? asset($img) : \App\Services\MediaService::urlFor($img)) : '';
               @endphp
               <article class="product-card">
                 @if ($product->tag_label)

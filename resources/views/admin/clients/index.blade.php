@@ -20,7 +20,7 @@
             <td>
               <div style="display:flex;align-items:center;gap:10px">
                 @if($client->logo_path)
-                  <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($client->logo_path) }}" alt="{{ $client->name }}" style="width:32px;height:32px;border-radius:4px;object-fit:contain;background:#f5f5f5;padding:2px;border:1px solid #eee"/>
+                  <img src="{{ \App\Services\MediaService::urlFor($client->logo_path) }}" alt="{{ $client->name }}" style="width:32px;height:32px;border-radius:4px;object-fit:contain;background:#f5f5f5;padding:2px;border:1px solid #eee"/>
                 @else
                   <div style="width:32px;height:32px;border-radius:4px;background:#f0f2f5;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:#888">{{ strtoupper(substr($client->name,0,2)) }}</div>
                 @endif

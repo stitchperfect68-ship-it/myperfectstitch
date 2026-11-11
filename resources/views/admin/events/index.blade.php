@@ -24,7 +24,7 @@
                   @php
                     $src = str_starts_with($hero->path,'assets/')
                       ? asset($hero->path)
-                      : \Illuminate\Support\Facades\Storage::disk('public')->url($hero->path);
+                      : \App\Services\MediaService::urlFor($hero->path);
                   @endphp
                   <img src="{{ $src }}" alt="" style="width:52px;height:36px;object-fit:cover;border-radius:4px;border:1px solid #eee"/>
                 @else

@@ -34,7 +34,7 @@
               <tr>
                 <td class="td-product">
                   @if($item['image'])
-                    <img class="cart-img" src="{{ str_starts_with($item['image'],'assets/') ? asset($item['image']) : \Illuminate\Support\Facades\Storage::disk('public')->url($item['image']) }}" alt="{{ $item['name'] }}"/>
+                    <img class="cart-img" src="{{ str_starts_with($item['image'],'assets/') ? asset($item['image']) : \App\Services\MediaService::urlFor($item['image']) }}" alt="{{ $item['name'] }}"/>
                   @endif
                   <span style="font-weight:600">{{ $item['name'] }}</span>
                 </td>
