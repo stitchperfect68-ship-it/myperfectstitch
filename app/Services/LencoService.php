@@ -50,13 +50,14 @@ class LencoService
      * Lenco responds with status "pay-offline" while the customer authorises
      * the payment on their handset. We then rely on the webhook / status requery.
      */
-    public function initiateMobileMoney(Order $order, string $phone, string $operator): array
+    public function initiateMobileMoney(Order $order, string $phone, string $operator, ?string $reference = null): array
     {
-        $operator = strtolower($operator);
+        $operator  = strtolower($operator);
+        $reference = $reference ?: $order->ref;
 
         $payload = [
             'amount'    => (float) $order->total,
-            'reference' => $order->ref,
+            'reference' => $reference,
             'phone'     => $this->normalisePhone($phone),
             'operator'  => $operator,
             'country'   => $this->country,
@@ -83,7 +84,7 @@ class LencoService
             [
                 'transaction_id'   => $data['id'] ?? null,
                 'lenco_reference'  => $data['lencoReference'] ?? null,
-                'payment_reference' => $order->ref,
+                'payment_reference' => $reference,
                 'gateway'          => 'lenco',
                 'amount'           => $order->total,
                 'fee'              => $data['fee'] ?? null,

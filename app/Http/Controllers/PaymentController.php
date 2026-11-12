@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Services\LencoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
@@ -155,6 +156,59 @@ class PaymentController extends Controller
         }
 
         return response()->json(['status' => 'pending']);
+    }
+
+    /**
+     * Re-initiate a mobile money collection when the customer did not receive
+     * or complete the previous prompt. A fresh reference is required because
+     * Lenco rejects duplicate collection references.
+     */
+    public function retryMobileMoney(string $ref, LencoService $lenco)
+    {
+        $order = Order::where('ref', $ref)->with('payment')->firstOrFail();
+
+        if (in_array($order->status, self::PAID_STATUSES, true)) {
+            return redirect()->route('orders.show', $ref)->with('success', 'Payment already received.');
+        }
+
+        $payment = $order->payment;
+
+        if (!$payment || !str_starts_with((string) $payment->payment_method, 'mobile_money')) {
+            return redirect()->route('orders.show', $ref)
+                ->with('error', 'This order is not awaiting a mobile money payment.');
+        }
+
+        try {
+            $data = $lenco->syncFromGateway($order, false);
+
+            if (($data['status'] ?? null) === 'successful') {
+                return redirect()->route('orders.show', $ref)->with('success', 'Payment already received.');
+            }
+        } catch (\Throwable) {
+            // No collection to sync yet; safe to create a fresh one.
+        }
+
+        $operator = $payment->operator ?: str_replace('mobile_money:', '', (string) $payment->payment_method);
+        $phone    = $payment->gateway_response['mobileMoneyDetails']['phone'] ?? $order->customer_phone;
+
+        if (!$operator || !$phone) {
+            return redirect()->route('orders.show', $ref)
+                ->with('error', 'We could not retry this payment. Please contact us.');
+        }
+
+        try {
+            $lenco->initiateMobileMoney(
+                $order,
+                $phone,
+                $operator,
+                $order->ref . '-R' . Str::upper(Str::random(8))
+            );
+        } catch (\Throwable $e) {
+            return redirect()->route('orders.show', $ref)->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('payment.pending', $ref)
+            ->with('success', 'A new payment prompt has been sent to your phone.');
     }
 
     /**

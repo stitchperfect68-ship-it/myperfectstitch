@@ -14,6 +14,7 @@
   $firstPath = $firstImage?->path;
   $mainSrc = $firstPath ? (str_starts_with($firstPath, 'assets/') ? asset($firstPath) : \App\Services\MediaService::urlFor($firstPath)) : '';
   $whatsappMessage = urlencode('Hi, I am interested in ' . $product->name . ' (' . route('shop.show', $product) . ')');
+  $inCart = array_key_exists($product->id, app(\App\Services\CartService::class)->all());
 @endphp
 
 <section class="pd-page">
@@ -98,7 +99,10 @@
                 <input type="number" id="pdQty" name="quantity" value="1" min="1" max="{{ $product->track_stock ? $product->stock_qty : 999 }}" readonly/>
                 <button type="button" onclick="adjustProductQty(1)" aria-label="Increase quantity">+</button>
               </div>
-              <button type="submit" class="pd-add"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+              <button type="submit" class="pd-add"><i class="fas fa-shopping-bag"></i> {{ $inCart ? 'Add More' : 'Add to Cart' }}</button>
+              @if ($inCart)
+                <button type="button" class="pd-add" onclick="goToCheckout()"><i class="fas fa-credit-card"></i> Proceed to Checkout &rarr;</button>
+              @endif
             </form>
           @elseif ($product->price <= 0)
             <button type="button" class="pd-quote" onclick="openQuoteModal()"><i class="fas fa-pen"></i> Request a Quote</button>

@@ -2,7 +2,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--cream);color:#1a1a1a;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:#140f37;border-bottom:3px solid #F9B040}
+#mainNav{position:fixed;top:0;left:0;right:0;z-index:1000;background:#140f37;border-bottom:3px solid #F9B040}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px}
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
 .nav-logo img{width:48px;height:48px;border-radius:50%;object-fit:cover}

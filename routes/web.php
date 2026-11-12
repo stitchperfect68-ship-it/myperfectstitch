@@ -58,6 +58,7 @@ Route::get('/payment/card/{ref}',     [PaymentController::class, 'card'])->name(
 Route::post('/payment/verify/{ref}',  [PaymentController::class, 'verify'])->name('payment.verify');
 Route::get('/payment/callback',       [PaymentController::class, 'callback'])->name('payment.callback');
 Route::get('/payment/status/{ref}',   [PaymentController::class, 'status'])->name('payment.status');
+Route::post('/payment/retry/{ref}',   [PaymentController::class, 'retryMobileMoney'])->name('payment.retry');
 Route::post('/payment/webhook',       [PaymentController::class, 'webhook'])
     ->name('payment.webhook');
 

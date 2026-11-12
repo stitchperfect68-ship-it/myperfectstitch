@@ -58,7 +58,11 @@
     <div id="stateFailed" style="display:none">
       <div class="pending-icon failed"><i class="fas fa-times"></i></div>
       <h1 class="pending-title">Payment Failed</h1>
-      <p class="pending-sub">The payment was not completed. This could be due to insufficient funds, an incorrect PIN, or a timeout. Please contact us so we can help you complete this order.</p>
+      <p class="pending-sub">The payment was not completed. This could be due to insufficient funds, an incorrect PIN, or a timeout. You can retry the payment or contact us for help.</p>
+      <form method="POST" action="{{ route('payment.retry', $order->ref) }}" style="margin-bottom:10px">
+        @csrf
+        <button type="submit" class="btn-retry" style="width:100%">Retry Payment</button>
+      </form>
       <a href="{{ route('orders.show', $order->ref) }}" class="btn-retry">View Order</a>
     </div>
 
@@ -66,8 +70,12 @@
     <div id="stateTimeout" style="display:none">
       <div class="pending-icon"><i class="fas fa-clock"></i></div>
       <h1 class="pending-title">Payment Timed Out</h1>
-      <p class="pending-sub">We did not receive confirmation within 2 minutes. If you completed the payment on your phone, it will still be processed and your order updated shortly.</p>
+      <p class="pending-sub">We did not receive confirmation within 2 minutes. If you completed the payment on your phone, it will still be processed and your order updated shortly. If you did not receive the prompt, retry below.</p>
       <div class="pending-ref">{{ $order->ref }}</div>
+      <form method="POST" action="{{ route('payment.retry', $order->ref) }}" style="margin-bottom:10px">
+        @csrf
+        <button type="submit" class="btn-retry" style="width:100%">Retry Payment</button>
+      </form>
       <a href="{{ route('orders.show', $order->ref) }}" class="btn-retry" style="display:block;text-align:center;margin-bottom:10px">Check Order Status</a>
       <a href="{{ route('home') }}" style="font-size:.82rem;color:#888">Continue shopping</a>
     </div>
