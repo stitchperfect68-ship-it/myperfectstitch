@@ -7,6 +7,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
@@ -248,11 +249,36 @@ class ProductSeeder extends Seeder
 
             ProductImage::create([
                 'product_id' => $product->id,
-                'path'       => $data['img'],
+                'path'       => $this->storeImage($data['img'], $data['cat']),
                 'alt'        => $data['name'],
                 'is_primary' => true,
                 'sort_order' => 0,
             ]);
         }
+    }
+
+    private function storeImage(string $path, string $category): string
+    {
+        if (config('filesystems.media_disk') !== 'r2') {
+            return $path;
+        }
+
+        $localPath = public_path($path);
+        if (!is_file($localPath)) {
+            return $path;
+        }
+
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        $key = 'products/' . $category . '/' . Str::slug(pathinfo($path, PATHINFO_FILENAME)) . '.' . $extension;
+
+        $disk = Storage::disk('r2');
+        if (!$disk->exists($key)) {
+            $stored = $disk->put($key, file_get_contents($localPath));
+            if (!$stored) {
+                throw new \RuntimeException("Failed to upload {$path} to R2.");
+            }
+        }
+
+        return $key;
     }
 }

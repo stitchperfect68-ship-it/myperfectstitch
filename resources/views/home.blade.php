@@ -466,7 +466,7 @@
         <div class="ci"><div class="ci-icon">📍</div><div class="ci-detail"><h4>Location</h4><p>25 Parliament Road, Olympia<br/>Lusaka, Zambia</p></div></div>
         <div class="ci"><div class="ci-icon">📞</div><div class="ci-detail"><h4>Phone / WhatsApp</h4><a href="tel:+{{ $whatsappNumber }}">+{{ $whatsappNumber }}</a></div></div>
         <div class="ci"><div class="ci-icon">✉️</div><div class="ci-detail"><h4>Email</h4><a href="mailto:{{ \App\Models\Setting::get('contact_email','info@myperfectstitch.co.zm') }}">{{ \App\Models\Setting::get('contact_email','info@myperfectstitch.co.zm') }}</a></div></div>
-        <div class="ci"><div class="ci-icon">🌐</div><div class="ci-detail"><h4>Website</h4><a href="https://myperfectstitch.co/" target="_blank">myperfectstitch.co</a></div></div>
+        <div class="ci"><div class="ci-icon">🌐</div><div class="ci-detail"><h4>Website</h4><a href="{{ url('/') }}" target="_blank">myperfectstitch.co.zm</a></div></div>
       </div>
       <div class="cta-box">
         <h4>Let's Talk Business</h4>
