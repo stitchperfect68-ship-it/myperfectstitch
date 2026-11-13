@@ -30,12 +30,14 @@ class DashboardController extends Controller
         $pendingQuotes = Quote::where('status', 'new')->latest()->limit(5)->get();
 
         $revenueChart = Payment::where('status', 'completed')
-            ->selectRaw('MONTH(created_at) as month, YEAR(created_at) as year, SUM(amount) as total')
             ->whereYear('created_at', now()->year)
-            ->groupBy('year', 'month')
-            ->orderBy('month')
-            ->get()
-            ->keyBy('month');
+            ->get(['created_at', 'amount'])
+            ->groupBy(fn ($payment) => (int) $payment->created_at->format('n'))
+            ->map(fn ($payments, $month) => (object) [
+                'month' => (int) $month,
+                'year'  => now()->year,
+                'total' => $payments->sum('amount'),
+            ]);
 
         $orderStatusChart = Order::selectRaw('status, COUNT(*) as count')
             ->groupBy('status')

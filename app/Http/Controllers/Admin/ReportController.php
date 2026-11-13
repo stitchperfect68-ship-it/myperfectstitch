@@ -21,11 +21,12 @@ class ReportController extends Controller
 
         $monthly = Payment::where('status', 'completed')
             ->whereYear('created_at', $year)
-            ->selectRaw('MONTH(created_at) as month, SUM(amount) as total, COUNT(*) as count')
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get()
-            ->keyBy('month');
+            ->get(['created_at', 'amount'])
+            ->groupBy(fn ($payment) => (int) $payment->created_at->format('n'))
+            ->map(fn ($payments) => (object) [
+                'total' => $payments->sum('amount'),
+                'count' => $payments->count(),
+            ]);
 
         $data = [];
         for ($m = 1; $m <= 12; $m++) {
